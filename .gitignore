@@ -1,3 +1,9 @@
+# My
+*/*.o
+*/*.a
+.vscode/
+.DS_Store
+
 # Prerequisites
 *.d
 
