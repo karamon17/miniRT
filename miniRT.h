@@ -9,7 +9,7 @@
 #include "sphere.h"
 #include "camera.h"
 #include "scene.h"
+#include "view_plane.h"
 #include <mlx.h>
-
 
 #endif //MINIRT_PROJECT_MINIRT_H
