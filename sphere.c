@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-t_sphere   *sphere_new(t_vector *center, double radius)
+t_sphere   *sphere_new(t_vector *center, float radius)
 {
 	t_sphere	*sphere;
 

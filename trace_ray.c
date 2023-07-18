@@ -53,7 +53,7 @@ int sphere_intercept(t_sphere *sphere, t_camera *camera, t_vector *ray) {
 	oc = vector_subtract(camera->origin, sphere->center);
 	b = 2 * vector_dot_product(oc, ray);
 	c = vector_dot_product(oc, oc) - (sphere->radius * sphere->radius);
-	discr = b * b - (4 *c);
+	discr = b * b - (4 * c);
 	if (discr < 0)
 		return (0);
 	dist_1 = (-b - sqrt(discr)) / 2;

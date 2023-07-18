@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-t_vector	*vector_new(double x, double y, double z)
+t_vector	*vector_new(float x, float y, float z)
 {
 	t_vector	*vector;
 

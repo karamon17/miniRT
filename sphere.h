@@ -6,9 +6,9 @@
 typedef struct s_sphere
 {
 	t_vector	*center;
-	double		radius;
+	float		radius;
 } t_sphere;
 
-t_sphere   *sphere_new(t_vector *center, double radius);
+t_sphere   *sphere_new(t_vector *center, float radius);
 
 #endif //MINIRT_PROJECT_SPHERE_H
