@@ -4,27 +4,48 @@ CFLAGS = -Wall -Werror -Wextra -g
 
 CC = gcc
 
-SRC = camera.c\
-      main.c\
-      scene.c\
-      sphere.c\
-      trace_ray.c\
-      vector.c
+SRC_PATH = sources/
+OBJ_PATH = objects/
+LIBFT = ./libft/libft.a
+LIBFT_DIR = ./libft
 
 OBJS = $(SRC:.c=.o)
 
 MLX = -lmlx -framework OpenGL -framework AppKit
 
+SRC		= camera.c\
+          main.c\
+          scene.c\
+          sphere.c\
+          trace_ray.c\
+          vector.c
 
-all : $(NAME)
+SRCS	= $(addprefix $(SRC_PATH), $(SRC))
+OBJ		= $(SRC:.c=.o)
+OBJS	= $(addprefix $(OBJ_PATH), $(OBJ))
+INCS	= -I ./includes/push_swap.h
 
-$(NAME) : $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(MLX) -o $(NAME)
+all: $(OBJ_PATH) $(NAME) $(LIBFT)
 
-clean :
-	@rm -rf $(OBJS)
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-fclean : clean
-	@rm -rf $(NAME)
+$(OBJ_PATH):
+	mkdir $(OBJ_PATH)
 
-re : fclean all
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS) $(MLX) $(LIBFT)  -o $(NAME)
+
+$(LIBFT):
+	make -C $(LIBFT_DIR)
+
+clean:
+	rm -rf $(OBJ_PATH)
+	make -C libft clean
+
+fclean: clean
+	rm -f $(NAME) libft/libft.a
+
+re: fclean all
+
+.PHONY: all clean fclean re

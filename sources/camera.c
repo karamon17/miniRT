@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "../includes/miniRT.h"
 
 t_camera  *camera_new(t_vector *origin, t_vector *direction, float fov)
 {

@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "../includes/miniRT.h"
 
 t_vector	*vector_new(float x, float y, float z)
 {
