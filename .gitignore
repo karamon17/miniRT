@@ -3,6 +3,7 @@
 */*.a
 .vscode/
 .DS_Store
+minirt
 
 # Prerequisites
 *.d
