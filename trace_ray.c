@@ -43,14 +43,18 @@ void ray_trace(void *mlx, void *win, t_scene *scene) {
 int get_color(t_scene *scene, t_vector *ray) {
 
     int color;
+    t_sphere *current_sphere;
+    color = 0x000000;
 
-    if (sphere_intercept(scene->sphere, scene->camera, ray) == 1)
-        color = 0xff0000;
-    else if (sphere_intercept(scene->sphere, scene->camera, ray) == 2)
-        color = 0xffffff;
-    else
-        color = 0x000000;
+    current_sphere = scene->sphere;
+    while(current_sphere)
+    {
+        if (sphere_intercept(current_sphere, scene->camera, ray) == 1)
+            color = current_sphere->color;
+        current_sphere = current_sphere->next;
+    }
     return (color);
+
 }
 
 int sphere_intercept(t_sphere *sphere, t_camera *camera, t_vector *ray) {

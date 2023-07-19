@@ -10,6 +10,6 @@
 #include "camera.h"
 #include "scene.h"
 #include "view_plane.h"
-#include <mlx.h>
+#include "minilibx-mac-osx/mlx.h"
 
 #endif //MINIRT_PROJECT_MINIRT_H
