@@ -10,6 +10,10 @@
 #include "camera.h"
 #include "scene.h"
 #include "view_plane.h"
+<<<<<<< HEAD:includes/miniRT.h
 #include "mlx.h"
+=======
+#include "minilibx-mac-osx/mlx.h"
+>>>>>>> tests_with_colors:miniRT.h
 
 #endif //MINIRT_PROJECT_MINIRT_H

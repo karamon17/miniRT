@@ -1,10 +1,11 @@
 #include "../includes/miniRT.h"
 
 
+int get_color(t_scene *scene, t_vector *ray);
 
 void ray_trace(void *mlx, void *win, t_scene *scene) {
 
-	int mlx_x = 0;
+	int mlx_x;
 	int mlx_y = 0;
 
 	float x_angle;
@@ -27,10 +28,7 @@ void ray_trace(void *mlx, void *win, t_scene *scene) {
 			x_ray = x_angle * vplane->x_pixel;
 			ray = vector_new(x_ray, y_ray, -1);
 			vector_normalize(ray);
-			if(sphere_intercept(scene->sphere, scene->camera, ray)) {
-				color = 1677215;
-			}else
-				color = 0;
+			color = get_color(scene, ray);
 			mlx_pixel_put(mlx, win, mlx_x, mlx_y, color);
 			free(ray);
 			x_angle++;
@@ -39,6 +37,23 @@ void ray_trace(void *mlx, void *win, t_scene *scene) {
 		y_angle--;
 		mlx_y++;
 	}
+
+}
+
+int get_color(t_scene *scene, t_vector *ray) {
+
+    int color;
+    t_sphere *current_sphere;
+    color = 0x000000;
+
+    current_sphere = scene->sphere;
+    while(current_sphere)
+    {
+        if (sphere_intercept(current_sphere, scene->camera, ray) == 1)
+            color = current_sphere->color;
+        current_sphere = current_sphere->next;
+    }
+    return (color);
 
 }
 
@@ -59,7 +74,9 @@ int sphere_intercept(t_sphere *sphere, t_camera *camera, t_vector *ray) {
 	dist_1 = (-b - sqrt(discr)) / 2;
 	dist_2 = (-b + sqrt(discr)) / 2;
 	free(oc);
-	if(dist_1 > 0)
+    if (dist_2 == dist_1)
+        return (2);
+	else if (dist_1 > 0)
 		return (1);
 	return (0);
 }
