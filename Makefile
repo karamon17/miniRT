@@ -18,12 +18,15 @@ SRC		= camera.c\
           scene.c\
           sphere.c\
           trace_ray.c\
-          vector.c
+          vector.c\
+          errors.c\
+          parser.c
+
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:.c=.o)
 OBJS	= $(addprefix $(OBJ_PATH), $(OBJ))
-INCS	= -I ./includes/push_swap.h
+INCS	= -I ./includes/
 
 all: $(OBJ_PATH) $(NAME) $(LIBFT)
 
