@@ -51,3 +51,15 @@ float  vector_dot_product(t_vector *v1, t_vector *v2)
 	return (dot_product);
 }
 
+t_vector *multiply_vector(float t, t_vector *v)
+{
+	t_vector *vector;
+
+	vector = malloc(sizeof(t_vector));
+	if (!vector)
+		return (NULL);
+	vector->x = t * v->x;
+	vector->y = t * v->y;
+	vector->z = t * v->z;
+	return (vector);
+}

@@ -60,6 +60,13 @@ int get_color(t_scene *scene, t_vector *ray) {
         }
         current_sphere = current_sphere->next;
     }
+	t_vector *p = multiply_vector(closest_dist, ray);
+	if (closest_sphere)
+	{
+		t_vector *n = vector_subtract(p, closest_sphere->center);
+		vector_normalize(n);
+		color = color * compute_lighting(scene, p, n);
+	}	
     return (color);
 
 }
