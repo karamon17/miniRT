@@ -8,11 +8,11 @@ int main()
 	void *win;
 
 	mlx = mlx_init();
-	t_vector *center = vector_new(3, 2, -32);
-	t_sphere *sphere = sphere_new(center, 6);
+	t_vector *center = vector_new(10, 80, -70);
+	t_sphere *sphere = sphere_new(center, 30);
 	t_vector *origin = vector_new(0, 0, 0);
 	t_vector *direction = vector_new(0, 0, -1);
-	t_camera *camera = camera_new(origin, direction, 60);
+	t_camera *camera = camera_new(origin, direction, 140);
 	t_scene *scene = scene_new(camera, sphere);
 	scene->width = 800;
 	scene->height = 600;
