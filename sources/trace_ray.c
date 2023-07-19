@@ -45,12 +45,19 @@ int get_color(t_scene *scene, t_vector *ray) {
     int color;
     t_sphere *current_sphere;
     color = 0x000000;
+    t_sphere *closest_sphere = NULL;
+    float closest_dist = 0;
+    float dist = 0;
 
     current_sphere = scene->sphere;
     while(current_sphere)
     {
-        if (sphere_intercept(current_sphere, scene->camera, ray) == 1)
+        dist = sphere_intercept(current_sphere, scene->camera, ray);
+        if ((dist > 0) && (dist < closest_dist || closest_sphere == NULL)) {
             color = current_sphere->color;
+            closest_dist = dist;
+            closest_sphere = current_sphere;
+        }
         current_sphere = current_sphere->next;
     }
     return (color);
@@ -74,10 +81,8 @@ int sphere_intercept(t_sphere *sphere, t_camera *camera, t_vector *ray) {
 	dist_1 = (-b - sqrt(discr)) / 2;
 	dist_2 = (-b + sqrt(discr)) / 2;
 	free(oc);
-    if (dist_2 == dist_1)
-        return (2);
-	else if (dist_1 > 0)
-		return (1);
+	if (dist_1 > 0)
+		return (dist_1);
 	return (0);
 }
 
