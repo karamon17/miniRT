@@ -11,5 +11,6 @@
 #include "scene.h"
 #include "view_plane.h"
 #include "minilibx-mac-osx/mlx.h"
+#include "lights.h"
 
 #endif //MINIRT_PROJECT_MINIRT_H
