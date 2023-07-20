@@ -28,7 +28,7 @@ void ray_trace(void *mlx, void *win, t_scene *scene) {
 			x_ray = x_angle * vplane->x_pixel;
 			ray = vector_new(x_ray, y_ray, -1);
 			vector_normalize(ray);
-			color = get_color(scene, ray);
+			color = 1;//get_color(scene, ray);
 			mlx_pixel_put(mlx, win, mlx_x, mlx_y, color);
 			free(ray);
 			x_angle++;
@@ -40,7 +40,7 @@ void ray_trace(void *mlx, void *win, t_scene *scene) {
 
 }
 
-int get_color(t_scene *scene, t_vector *ray) {
+/*int get_color(t_scene *scene, t_vector *ray) {
 
     int color;
     t_sphere *current_sphere;
@@ -62,7 +62,7 @@ int get_color(t_scene *scene, t_vector *ray) {
 	}	
     return (color);
 
-}
+}*/
 
 int sphere_intercept(t_sphere *sphere, t_camera *camera, t_vector *ray) {
 	float b;

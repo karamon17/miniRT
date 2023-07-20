@@ -13,3 +13,11 @@ void fatal()
     perror(error_message);
     exit(EXIT_FAILURE);
 }
+
+
+
+void error(const char *string, int i) {
+	write(2, "Error ", 6);
+	write(2, string, ft_strlen(string));
+	exit(i);
+}

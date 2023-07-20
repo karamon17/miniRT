@@ -34,7 +34,7 @@ typedef struct s_data
 	int has_ambient;
 	int has_light;
 	t_figures *figures;
-	t_list *lights;
+	t_light *lights;
 } t_data;
 
 
