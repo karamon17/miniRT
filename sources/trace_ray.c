@@ -3,7 +3,7 @@
 
 int get_color(t_scene *scene, t_vector *ray);
 
-void	color_multiply(t_color *color, float intecivity);
+t_color	*color_multiply(t_color *color, float intecivity);
 
 void ray_trace(void *mlx, void *win, t_scene *scene) {
 
@@ -27,8 +27,6 @@ void ray_trace(void *mlx, void *win, t_scene *scene) {
 		mlx_x = 0;
 		while (x_angle <= scene->width / 2)
 		{
-			if(mlx_x == 400 && mlx_y == 300)
-				printf("x_angle: %f, y_angle: %f\n", x_angle, y_angle);
 			x_ray = x_angle * vplane->x_pixel;
 			ray = vector_new(x_ray, y_ray, -1);
 			vector_normalize(ray);
@@ -47,8 +45,10 @@ void ray_trace(void *mlx, void *win, t_scene *scene) {
 int get_color(t_scene *scene, t_vector *ray) {
 
     t_color *color;
+	t_color *temp;
     t_sphere *current_sphere;
 	color = color_new(0, 0, 0);
+	temp = color;
 	//color->transparency = 0;
     t_sphere *closest_sphere = NULL;
     float closest_dist = 0;
@@ -70,19 +70,23 @@ int get_color(t_scene *scene, t_vector *ray) {
 		t_vector *p = multiply_vector(closest_dist, ray);
 		t_vector *n = vector_subtract(p, closest_sphere->center);
 		vector_normalize(n);
-		color_multiply(color, compute_lighting(scene, p, n));
+		temp = color_multiply(color, compute_lighting(scene, p, n));
 	}
-    return (color_to_int(color));
+    return (color_to_int(temp));
 
 }
 
-void	color_multiply(t_color *color, float intecivity) {
-	color->red *= intecivity;
-	color->green *= intecivity;
-	color->blue *= intecivity;
-	color->red = color->red > 255 ? 255 : color->red;
-	color->green = color->green > 255 ? 255 : color->green;
-	color->blue = color->blue > 255 ? 255 : color->blue;
+t_color	*color_multiply(t_color *color, float intecivity) {
+	t_color *res;
+
+	res = malloc(sizeof(t_color));
+	res->red = color->red * intecivity;
+	res->green = color->green * intecivity;
+	res->blue = color->blue * intecivity;
+	res->red = res->red > 255 ? 255 : res->red;
+	res->green = res->green > 255 ? 255 : res->green;
+	res->blue = res->blue > 255 ? 255 : res->blue;
+	return (res);
 }
 
 int sphere_intercept(t_sphere *sphere, t_camera *camera, t_vector *ray) {
