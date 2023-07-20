@@ -6,7 +6,7 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "math.h"
-#include "sphere.h"
+#include "figures.h"
 #include "camera.h"
 #include "scene.h"
 #include "view_plane.h"
@@ -24,7 +24,16 @@ typedef struct s_data
     void	*mlx;
     void	*win;
     char    *filename;
-
+	t_scene *scene;
+	int 	width;
+	int 	height;
+	int 	all_init;
+	int result_init;
+	int camera_init;
+	int has_ambient;
+	int has_light;
+	t_figures *figures;
+	t_list *lights;
 } t_data;
 
 
