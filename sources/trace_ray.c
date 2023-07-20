@@ -96,6 +96,7 @@ t_color	*color_multiply(t_color *color, float intecivity) {
 }
 
 int sphere_intercept(t_sphere *sphere, t_vector *vector, t_vector *ray) {
+	float a;
 	float b;
 	float c;
 	float discr;
@@ -104,13 +105,14 @@ int sphere_intercept(t_sphere *sphere, t_vector *vector, t_vector *ray) {
 	t_vector *oc;
 
 	oc = vector_subtract(vector, sphere->center);
+	a = vector_dot_product(ray, ray);
 	b = 2 * vector_dot_product(oc, ray);
 	c = vector_dot_product(oc, oc) - (sphere->radius * sphere->radius);
-	discr = b * b - (4 * c);
+	discr = b * b - (4 * a * c);
 	if (discr < 0)
 		return (0);
-	dist_1 = (-b - sqrt(discr)) / 2;
-	dist_2 = (-b + sqrt(discr)) / 2;
+	dist_1 = (-b - sqrt(discr)) / 2 / a;
+	dist_2 = (-b + sqrt(discr)) / 2 / a;
 	free(oc);
 	if (dist_1 > 0)
 		return (dist_1);
