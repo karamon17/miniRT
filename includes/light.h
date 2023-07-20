@@ -11,4 +11,11 @@ typedef struct s_light
 	struct s_light	*next;
 } t_light;
 
+typedef struct s_color
+{
+	int	red;
+	int	green;
+	int	blue;
+} t_color;
+
 #endif

@@ -2,6 +2,7 @@
 #define MINIRT_PROJECT_SPHERE_H
 
 #include "miniRT.h"
+#include "light.h"
 
 typedef struct s_sphere t_sphere;
 
@@ -10,6 +11,7 @@ typedef struct s_sphere
 	t_vector	*center;
 	float		radius;
     float      color;
+	t_color		*RGB_color;
     t_sphere  *next;
 } t_sphere;
 

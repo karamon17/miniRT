@@ -41,3 +41,28 @@ float	compute_lighting(t_scene *scene, t_vector *p, t_vector *n)
 	}
     return (i);
 }
+
+int color_to_int(t_color *color)
+{
+	int r;
+	int g;
+	int b;
+
+	r = (int)color->red;
+	g = (int)color->green;
+	b = (int)color->blue;
+	return (r << 16 | g << 8 | b);
+}
+
+t_color *int_to_color(int color)
+{
+	t_color *c;
+
+	c = malloc(sizeof(t_color));
+	if (!c)
+		return (NULL);
+	c->red = (color >> 16) & 0xFF;
+	c->green = (color >> 8) & 0xFF;
+	c->blue = color & 0xFF;
+	return (c);
+}
