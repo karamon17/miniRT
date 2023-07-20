@@ -70,7 +70,7 @@ int get_color(t_scene *scene, t_vector *ray) {
 		t_vector *p = multiply_vector(closest_dist, ray);
 		t_vector *n = vector_subtract(p, closest_sphere->center);
 		vector_normalize(n);
-		temp = color_multiply(color, compute_lighting(scene, p, n));
+		temp = color_multiply(color, compute_lighting(scene, p, n, multiply_vector(-1, ray), closest_sphere->specular));
 	}
     return (color_to_int(temp));
 

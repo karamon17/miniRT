@@ -14,6 +14,6 @@
 #include "mlx.h"
 
 t_light  *light_new(t_vector *vector, char	type, float	intensity);
-float	compute_lighting(t_scene *scene, t_vector *p, t_vector *n);
+float	compute_lighting(t_scene *scene, t_vector *p, t_vector *n, t_vector *ray, float s);
 
 #endif //MINIRT_PROJECT_MINIRT_H

@@ -14,11 +14,13 @@ t_light  *light_new(t_vector *vector, char	type, float	intensity)
 	return (light);
 }
 
-float	compute_lighting(t_scene *scene, t_vector *p, t_vector *n)
+float	compute_lighting(t_scene *scene, t_vector *p, t_vector *n, t_vector *ray, float s)
 {
     float	i;
 	float n_dot_l;
+	float r_dot_v;
 	t_light *current;
+	t_vector *r;
 
 	current = scene->lights;
 	t_vector *l;
@@ -36,6 +38,13 @@ float	compute_lighting(t_scene *scene, t_vector *p, t_vector *n)
 			n_dot_l = vector_dot_product(n, l);
 			if (n_dot_l > 0)
             	i += current->intensity * n_dot_l / (vector_length(n) * vector_length(l));
+			if (s != -1)
+			{
+                r = vector_subtract(multiply_vector(2 * vector_dot_product(n, l), n), l);
+                r_dot_v = vector_dot_product(r, ray);
+                if (r_dot_v > 0)
+                    i += current->intensity  * pow(r_dot_v / (vector_length(r) * vector_length(ray)), s);
+            }
 		}
 		current = current->next;
 	}
