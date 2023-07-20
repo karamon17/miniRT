@@ -50,10 +50,10 @@ int color_to_int(t_color *color)
 	int t;
 	int res;
 
-	t = (int)color->transparency;
-	r = (int)color->red;
-	g = (int)color->green;
-	b = (int)color->blue;
+	t = round(color->transparency);
+	r = round(color->red);
+	g = round(color->green);
+	b = round(color->blue);
 	res = (t << 24 | r << 16 | g << 8 | b);
 	return (res);
 }

@@ -8,17 +8,17 @@ int main()
 	mlx = mlx_init();
 
     //spheres
-	t_vector *center = vector_new(0, 0, -15);
+	t_vector *center = vector_new(0, 0, -1500);
 	t_color *color = color_new(0, 0, 255);
-/*	t_color *color2 = color_new(255, 0, 0);
+	t_color *color2 = color_new(255, 0, 0);
 	t_color *color3 = color_new(0, 255, 0);
-	t_vector *center2 = vector_new(4, -5, -30);
-	t_vector *center3 = vector_new(-3, -3, -17);*/
-	t_sphere *yellow_sphere = sphere_new(center, 5, color);
-/*	t_sphere *green_sphere = sphere_new(center2, 5, color2);
-	t_sphere *blue_sphere = sphere_new(center3, 5, color3);
+	t_vector *center2 = vector_new(400, -500, -3000);
+	t_vector *center3 = vector_new(-300, -300, -1700);
+	t_sphere *yellow_sphere = sphere_new(center, 500, color);
+	t_sphere *green_sphere = sphere_new(center2, 500, color2);
+	t_sphere *blue_sphere = sphere_new(center3, 500, color3);
     yellow_sphere->next = green_sphere;
-    green_sphere->next = blue_sphere;*/
+    green_sphere->next = blue_sphere;
 
     //light
     t_vector *point_light = vector_new(-7, 10, 5);
