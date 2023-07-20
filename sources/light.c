@@ -48,12 +48,14 @@ int color_to_int(t_color *color)
 	int g;
 	int b;
 	int t;
+	int res;
 
-	t= (int)color->transparency;
+	t = (int)color->transparency;
 	r = (int)color->red;
 	g = (int)color->green;
 	b = (int)color->blue;
-	return (t << 24 | r << 16 | g << 8 | b);
+	res = (t << 24 | r << 16 | g << 8 | b);
+	return (res);
 }
 
 t_color *color_new(float r, float g, float b) {
@@ -62,7 +64,7 @@ t_color *color_new(float r, float g, float b) {
 	color = malloc(sizeof(t_color));
 	if (!color)
 		return (NULL);
-	color->transparency = 1;
+	color->transparency = 255;
 	color->red = r;
 	color->green = g;
 	color->blue = b;

@@ -8,7 +8,7 @@ int main()
 	mlx = mlx_init();
 
     //spheres
-	t_vector *center = vector_new(0, 0, -20);
+	t_vector *center = vector_new(0, 0, -10);
 	t_color *color = color_new(0, 0, 255);
 /*	t_color *color2 = color_new(255, 0, 0);
 	t_color *color3 = color_new(0, 255, 0);

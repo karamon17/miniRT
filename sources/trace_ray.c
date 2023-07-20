@@ -49,6 +49,7 @@ int get_color(t_scene *scene, t_vector *ray) {
     t_color *color;
     t_sphere *current_sphere;
 	color = color_new(0, 0, 0);
+	color->transparency = 1;
     t_sphere *closest_sphere = NULL;
     float closest_dist = 0;
     float dist;
