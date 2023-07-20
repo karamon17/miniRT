@@ -15,5 +15,6 @@
 
 t_light  *light_new(t_vector *vector, char	type, float	intensity);
 float	compute_lighting(t_scene *scene, t_vector *p, t_vector *n, t_vector *ray, float s);
+t_sphere *ClosestIntersection(t_scene *scene, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color);
 
 #endif //MINIRT_PROJECT_MINIRT_H

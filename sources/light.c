@@ -19,9 +19,13 @@ float	compute_lighting(t_scene *scene, t_vector *p, t_vector *n, t_vector *ray, 
     float	i;
 	float n_dot_l;
 	float r_dot_v;
+	float temp_dist;
+	t_color *color;
 	t_light *current;
 	t_vector *r;
+	t_sphere *shadow_sphere;
 
+	color = color_new(0, 0, 0);
 	current = scene->lights;
 	t_vector *l;
 	i = 0.0f;
@@ -35,9 +39,18 @@ float	compute_lighting(t_scene *scene, t_vector *p, t_vector *n, t_vector *ray, 
 				l = vector_subtract(current->vector, p);
 			else
 				l = current->vector;
+			//тени
+			shadow_sphere = ClosestIntersection(scene, p, l, &temp_dist, &color);
+            if (shadow_sphere != NULL)
+			{
+				current = current->next;
+				continue;
+			} 
+			//диффузность
 			n_dot_l = vector_dot_product(n, l);
 			if (n_dot_l > 0)
             	i += current->intensity * n_dot_l / (vector_length(n) * vector_length(l));
+			//зеркальность
 			if (s != -1)
 			{
                 r = vector_subtract(multiply_vector(2 * vector_dot_product(n, l), n), l);
