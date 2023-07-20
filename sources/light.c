@@ -22,7 +22,7 @@ float	compute_lighting(t_scene *scene, t_vector *p, t_vector *n)
 
 	current = scene->lights;
 	t_vector *l;
-	i = 0.0;
+	i = 0.0f;
 	while (current)
 	{
 		if (current->type == 'a')
@@ -47,22 +47,24 @@ int color_to_int(t_color *color)
 	int r;
 	int g;
 	int b;
+	int t;
 
+	t= (int)color->transparency;
 	r = (int)color->red;
 	g = (int)color->green;
 	b = (int)color->blue;
-	return (r << 16 | g << 8 | b);
+	return (t << 24 | r << 16 | g << 8 | b);
 }
 
-t_color *int_to_color(int color)
-{
-	t_color *c;
+t_color *color_new(float r, float g, float b) {
+	t_color *color;
 
-	c = malloc(sizeof(t_color));
-	if (!c)
+	color = malloc(sizeof(t_color));
+	if (!color)
 		return (NULL);
-	c->red = (color >> 16) & 0xFF;
-	c->green = (color >> 8) & 0xFF;
-	c->blue = color & 0xFF;
-	return (c);
+	color->transparency = 1;
+	color->red = r;
+	color->green = g;
+	color->blue = b;
+	return (color);
 }

@@ -15,6 +15,6 @@ typedef struct s_sphere
     t_sphere  *next;
 } t_sphere;
 
-t_sphere *sphere_new(t_vector *center, float radius, int color);
+t_sphere *sphere_new(t_vector *center, float radius, t_color *color);
 
 #endif //MINIRT_PROJECT_SPHERE_H

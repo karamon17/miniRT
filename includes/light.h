@@ -13,9 +13,15 @@ typedef struct s_light
 
 typedef struct s_color
 {
-	int	red;
-	int	green;
-	int	blue;
+	float   transparency;
+	float	red;
+	float 	green;
+	float 	blue;
 } t_color;
+
+int color_to_int(t_color *color);
+t_color *int_to_color(int color);
+int compute_color(int color, float intensity);
+t_color *color_new(float r, float g, float b);
 
 #endif

@@ -3,6 +3,8 @@
 
 int get_color(t_scene *scene, t_vector *ray);
 
+t_color *color_multiply(t_color *color, float intecivity);
+
 void ray_trace(void *mlx, void *win, t_scene *scene) {
 
 	int mlx_x;
@@ -25,6 +27,8 @@ void ray_trace(void *mlx, void *win, t_scene *scene) {
 		mlx_x = 0;
 		while (x_angle <= scene->width / 2)
 		{
+			if(mlx_x == 400 && mlx_y == 300)
+				printf("x_angle: %f, y_angle: %f\n", x_angle, y_angle);
 			x_ray = x_angle * vplane->x_pixel;
 			ray = vector_new(x_ray, y_ray, -1);
 			vector_normalize(ray);
@@ -42,19 +46,19 @@ void ray_trace(void *mlx, void *win, t_scene *scene) {
 
 int get_color(t_scene *scene, t_vector *ray) {
 
-    int color;
+    t_color *color;
     t_sphere *current_sphere;
-    color = 0x000000;
+	color = color_new(0, 0, 0);
     t_sphere *closest_sphere = NULL;
     float closest_dist = 0;
-    float dist = 0;
+    float dist;
 
     current_sphere = scene->sphere;
     while(current_sphere)
     {
         dist = sphere_intercept(current_sphere, scene->camera, ray);
         if ((dist > 0) && (dist < closest_dist || closest_sphere == NULL)) {
-            color = current_sphere->color;
+            color = current_sphere->RGB_color;
             closest_dist = dist;
             closest_sphere = current_sphere;
         }
@@ -65,10 +69,20 @@ int get_color(t_scene *scene, t_vector *ray) {
 	{
 		t_vector *n = vector_subtract(p, closest_sphere->center);
 		vector_normalize(n);
-		color = color * compute_lighting(scene, p, n);
-	}	
-    return (color);
+		color = color_multiply(color, compute_lighting(scene, p, n));
+	}
+    return (color_to_int(color));
 
+}
+
+t_color *color_multiply(t_color *color, float intecivity) {
+	color->red *= intecivity;
+	color->green *= intecivity;
+	color->blue *= intecivity;
+	color->red = color->red > 255 ? 255 : color->red;
+	color->green = color->green > 255 ? 255 : color->green;
+	color->blue = color->blue > 255 ? 255 : color->blue;
+	return (color);
 }
 
 int sphere_intercept(t_sphere *sphere, t_camera *camera, t_vector *ray) {
