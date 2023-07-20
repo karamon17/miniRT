@@ -1,6 +1,6 @@
 NAME = minirt
 
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 
 CC = gcc
 
@@ -21,6 +21,7 @@ SRC		= camera.c\
           vector.c\
           errors.c\
           parser.c
+		  light.c\
 
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
