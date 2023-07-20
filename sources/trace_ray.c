@@ -3,7 +3,7 @@
 
 int get_color(t_scene *scene, t_vector *ray);
 
-t_color *color_multiply(t_color *color, float intecivity);
+void	color_multiply(t_color *color, float intecivity);
 
 void ray_trace(void *mlx, void *win, t_scene *scene) {
 
@@ -49,7 +49,7 @@ int get_color(t_scene *scene, t_vector *ray) {
     t_color *color;
     t_sphere *current_sphere;
 	color = color_new(0, 0, 0);
-	color->transparency = 1;
+	//color->transparency = 0;
     t_sphere *closest_sphere = NULL;
     float closest_dist = 0;
     float dist;
@@ -65,25 +65,24 @@ int get_color(t_scene *scene, t_vector *ray) {
         }
         current_sphere = current_sphere->next;
     }
-	t_vector *p = multiply_vector(closest_dist, ray);
 	if (closest_sphere)
 	{
+		t_vector *p = multiply_vector(closest_dist, ray);
 		t_vector *n = vector_subtract(p, closest_sphere->center);
 		vector_normalize(n);
-		color = color_multiply(color, compute_lighting(scene, p, n));
+		color_multiply(color, compute_lighting(scene, p, n));
 	}
     return (color_to_int(color));
 
 }
 
-t_color *color_multiply(t_color *color, float intecivity) {
+void	color_multiply(t_color *color, float intecivity) {
 	color->red *= intecivity;
 	color->green *= intecivity;
 	color->blue *= intecivity;
 	color->red = color->red > 255 ? 255 : color->red;
 	color->green = color->green > 255 ? 255 : color->green;
 	color->blue = color->blue > 255 ? 255 : color->blue;
-	return (color);
 }
 
 int sphere_intercept(t_sphere *sphere, t_camera *camera, t_vector *ray) {

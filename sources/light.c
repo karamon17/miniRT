@@ -64,7 +64,7 @@ t_color *color_new(float r, float g, float b) {
 	color = malloc(sizeof(t_color));
 	if (!color)
 		return (NULL);
-	color->transparency = 255;
+	color->transparency = 0;
 	color->red = r;
 	color->green = g;
 	color->blue = b;
