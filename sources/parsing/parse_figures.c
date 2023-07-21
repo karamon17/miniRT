@@ -29,8 +29,9 @@ void parse_plane(char *line, t_data *data) {
 }
 
 void check_plane(t_figure *figure) {
-	if(is_normalized(figure->figure_body.plane.normal) == 0)
-		error("Wrong plane normal\n", EXIT_FAILURE);
+	(void)figure;
+	// if(is_normalized(figure->figure_body.plane.normal) == 0)
+	// 	error("Wrong plane normal\n", EXIT_FAILURE);
 }
 
 void check_sphere(t_figure *figure) {
