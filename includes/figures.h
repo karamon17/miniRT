@@ -33,7 +33,6 @@ typedef struct		s_figures
 	float		specular;
 	t_color		*RGB_color;
 	enum e_figures	type;
-
 	struct s_figures* next;
 }					t_figure;
 
