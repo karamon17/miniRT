@@ -5,6 +5,9 @@
 #include "errors.h"
 #include "parser.h"
 
+//miniLibX
+#include "minilibX_handler.h"
+
 //main
 #include "vector.h"
 #include "figures.h"

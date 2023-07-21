@@ -9,7 +9,7 @@ LIBS_DIR = includes
 # Compiled directories
 SRC = sources
 OBJ = objects
-SUBDIRS = main parsing
+SUBDIRS = main parsing minilibX_handler
 MLX = -lmlx -framework OpenGL -framework AppKit
 
 # Folder directions
@@ -36,11 +36,11 @@ $(OBJ)/%.o: $(SRC)/%.c $(LIB_DIR)
 	mkdir -p $(OBJ) $(OBJ_DIR)
 	$(GCC) $(CFLAGS) $(LIBS) -c $< -o $@
 
-clean: DELETE_OBJ_MSG
+clean:
 	make -C $(LIBFT_DIR) clean
 	$(RM) $(OBJ)
 
-fclean: clean DELETE_PROGRAM_MSG
+fclean: clean
 	make -C $(LIBFT_DIR) fclean
 	$(RM) $(NAME)
 	$(RM) $(RDLINE)
