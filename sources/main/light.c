@@ -14,28 +14,29 @@ t_light  *light_new(t_vector *vector, char	type, float	intensity)
 	return (light);
 }
 
-float	compute_lighting(t_data *scene, t_vector *p, t_vector *n, t_vector *ray, float s)
+float	compute_lighting(t_data *data, t_vector *p, t_vector *n, t_vector *ray, float s)
 {
     float	i;
 	float n_dot_l;
 	float r_dot_v;
 	t_light *current;
 	t_vector *r;
-	t_sphere *shadow_sphere;
+	//t_sphere *shadow_sphere;
 
-	current = scene->lights;
+	current = data->lights;
 	t_vector *l;
 	i = 0.0f;
 	while (current)
 	{
-		if (current->type == 'a')
+		if (current->type == 'A')
 			i += current->intensity;
 		else
 		{
-			if (current->type == 'p')
+			if (current->type == 'L')
 				l = vector_subtract(current->vector, p);
 			//тени
-            if (check_intersection(scene->sphere, p, l))
+			//TODO change check_intersection FIXED
+            if (check_intersection(data->figures, p, l))
 			{
 				current = current->next;
 				continue;

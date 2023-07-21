@@ -42,17 +42,17 @@ void ray_trace(void *mlx, void *win, t_data *data)
 
 t_figure * ClosestIntersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color)
 {
-	t_sphere *closest_sphere;
+	//t_sphere *closest_sphere;
 	t_figure *closest_figure;
 	float dist;
 
-	closest_sphere = NULL;
+	//closest_sphere = NULL;
 	closest_figure = NULL;
 	while(figure)
     {
 		//TODO change inner part to sphere_intercept
         dist = sphere_intercept(figure, vector, ray);
-        if ((dist > 0) && (dist < *closest_dist || closest_sphere == NULL))
+        if ((dist > 0) && (dist < *closest_dist || closest_figure == NULL))
 		{
             *color = figure->RGB_color;
             *closest_dist = dist;
@@ -63,13 +63,13 @@ t_figure * ClosestIntersection(t_figure *figure, t_vector *vector, t_vector *ray
 	return (closest_figure);
 }
 
-t_sphere *check_intersection(t_sphere *sphere, t_vector *vector, t_vector *ray)
+t_figure * check_intersection(t_figure *figure, t_vector *vector, t_vector *ray)
 {
-	while(sphere)
+	while(figure)
     {
-        if (sphere_intercept(sphere, vector, ray))
-			return (sphere);
-        sphere = sphere->next;
+        if (sphere_intercept(figure, vector, ray))
+			return (figure);
+		figure = figure->next;
     }
 	return (0);
 }
@@ -78,7 +78,7 @@ int get_color(t_data *data, t_vector *ray)
 {
     t_color *color;
 	t_color *temp;
-    t_sphere *closest_sphere = NULL;
+    //t_sphere *closest_sphere = NULL;
     float closest_dist = 0;
 	t_figure *closest_figure = NULL;
 

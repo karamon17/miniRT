@@ -25,9 +25,9 @@
 //to remove
 #include "to_remove.h"
 t_light  *light_new(t_vector *vector, char	type, float	intensity);
-float	compute_lighting(t_data *scene, t_vector *p, t_vector *n, t_vector *ray, float s);
+float	compute_lighting(t_data *data, t_vector *p, t_vector *n, t_vector *ray, float s);
 t_figure * ClosestIntersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color);
-t_sphere *check_intersection(t_sphere *sphere, t_vector *vector, t_vector *ray);
+t_figure * check_intersection(t_figure *figure, t_vector *vector, t_vector *ray);
 
 typedef struct s_checker
 {

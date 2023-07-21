@@ -1,6 +1,6 @@
 #include "../includes/miniRT.h"
 
-t_sphere *sphere_new(t_vector *center, float radius, t_color *color, float specular)
+/*t_sphere *sphere_new(t_vector *center, float radius, t_color *color, float specular)
 {
 	t_sphere	*sphere;
 
@@ -13,4 +13,4 @@ t_sphere *sphere_new(t_vector *center, float radius, t_color *color, float specu
 	sphere->specular = specular;
     sphere->next = NULL;
 	return (sphere);
-}
+}*/
