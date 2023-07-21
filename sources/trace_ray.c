@@ -5,7 +5,8 @@ int get_color(t_scene *scene, t_vector *ray);
 
 t_color	*color_multiply(t_color *color, float intecivity);
 
-void ray_trace(void *mlx, void *win, t_scene *scene) {
+void ray_trace(void *mlx, void *win, t_scene *scene)
+{
 
 	int mlx_x;
 	int mlx_y = 0;
@@ -39,31 +40,41 @@ void ray_trace(void *mlx, void *win, t_scene *scene) {
 		y_angle--;
 		mlx_y++;
 	}
-
 }
 
-t_sphere *ClosestIntersection(t_scene *scene, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color)
+t_sphere *ClosestIntersection(t_sphere *sphere, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color)
 {
-	t_sphere *current_sphere;
-	t_sphere *closest_sphere = NULL;
+	t_sphere *closest_sphere;
 	float dist;
 
-	current_sphere = scene->sphere;
-	while(current_sphere)
+	closest_sphere = NULL;
+	while(sphere)
     {
-        dist = sphere_intercept(current_sphere, vector, ray);
-        if ((dist > 0) && (dist < *closest_dist || closest_sphere == NULL)) {
-            *color = current_sphere->RGB_color;
+        dist = sphere_intercept(sphere, vector, ray);
+        if ((dist > 0) && (dist < *closest_dist || closest_sphere == NULL))
+		{
+            *color = sphere->RGB_color;
             *closest_dist = dist;
-            closest_sphere = current_sphere;
+            closest_sphere = sphere;
         }
-        current_sphere = current_sphere->next;
+        sphere = sphere->next;
     }
 	return (closest_sphere);
 }
 
-int get_color(t_scene *scene, t_vector *ray) {
+t_sphere *check_intersection(t_sphere *sphere, t_vector *vector, t_vector *ray)
+{
+	while(sphere)
+    {
+        if (sphere_intercept(sphere, vector, ray))
+			return (sphere);
+        sphere = sphere->next;
+    }
+	return (0);
+}
 
+int get_color(t_scene *scene, t_vector *ray)
+{
     t_color *color;
 	t_color *temp;
     t_sphere *closest_sphere = NULL;
@@ -71,7 +82,7 @@ int get_color(t_scene *scene, t_vector *ray) {
 
 	color = color_new(0, 0, 0);
 	temp = color;
-	closest_sphere = ClosestIntersection(scene, scene->camera->origin, ray, &closest_dist, &color);
+	closest_sphere = ClosestIntersection(scene->sphere, scene->camera->origin, ray, &closest_dist, &color);
 	if (closest_sphere)
 	{
 		t_vector *p = multiply_vector(closest_dist, ray);
@@ -82,7 +93,8 @@ int get_color(t_scene *scene, t_vector *ray) {
     return (color_to_int(temp));
 }
 
-t_color	*color_multiply(t_color *color, float intecivity) {
+t_color	*color_multiply(t_color *color, float intecivity)
+{
 	t_color *res;
 
 	res = malloc(sizeof(t_color));
@@ -95,13 +107,13 @@ t_color	*color_multiply(t_color *color, float intecivity) {
 	return (res);
 }
 
-int sphere_intercept(t_sphere *sphere, t_vector *vector, t_vector *ray) {
+int sphere_intercept(t_sphere *sphere, t_vector *vector, t_vector *ray)
+{
 	float a;
 	float b;
 	float c;
 	float discr;
 	float dist_1;
-	float dist_2;
 	t_vector *oc;
 
 	oc = vector_subtract(vector, sphere->center);
@@ -112,7 +124,6 @@ int sphere_intercept(t_sphere *sphere, t_vector *vector, t_vector *ray) {
 	if (discr < 0)
 		return (0);
 	dist_1 = (-b - sqrt(discr)) / 2 / a;
-	dist_2 = (-b + sqrt(discr)) / 2 / a;
 	free(oc);
 	if (dist_1 > 0)
 		return (dist_1);

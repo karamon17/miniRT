@@ -1,6 +1,6 @@
 NAME = minirt
 
-CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
+CFLAGS = -g #-Wall -Werror -Wextra -g #-fsanitize=address
 
 CC = gcc
 
