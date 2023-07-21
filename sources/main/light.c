@@ -14,7 +14,7 @@ t_light  *light_new(t_vector *vector, char	type, float	intensity)
 	return (light);
 }
 
-float	compute_lighting(t_scene *scene, t_vector *p, t_vector *n, t_vector *ray, float s)
+float	compute_lighting(t_data *scene, t_vector *p, t_vector *n, t_vector *ray, float s)
 {
     float	i;
 	float n_dot_l;

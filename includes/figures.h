@@ -7,8 +7,6 @@
 
 typedef struct s_sphere t_sphere;
 
-
-
 typedef union			u_figures
 {
 	struct s_sphere

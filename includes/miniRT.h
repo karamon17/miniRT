@@ -10,7 +10,6 @@
 #include "figures.h"
 #include "camera.h"
 #include "light.h"
-#include "scene.h"
 #include "view_plane.h"
 
 //standard libraries
@@ -26,7 +25,7 @@
 //to remove
 #include "to_remove.h"
 t_light  *light_new(t_vector *vector, char	type, float	intensity);
-float	compute_lighting(t_scene *scene, t_vector *p, t_vector *n, t_vector *ray, float s);
+float	compute_lighting(t_data *scene, t_vector *p, t_vector *n, t_vector *ray, float s);
 t_sphere *ClosestIntersection(t_sphere *sphere, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color);
 t_sphere *check_intersection(t_sphere *sphere, t_vector *vector, t_vector *ray);
 
@@ -56,6 +55,6 @@ typedef struct s_data
 
 
 t_light  *light_new(t_vector *vector, char	type, float	intensity);
-float	compute_lighting(t_scene *scene, t_vector *p, t_vector *n);
+float	compute_lighting(t_data *scene, t_vector *p, t_vector *n);
 
 #endif //MINIRT_PROJECT_MINIRT_H

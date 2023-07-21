@@ -1,26 +1,24 @@
 #include "../includes/miniRT.h"
 
 
-int get_color(t_scene *scene, t_vector *ray);
+int get_color(t_data *scene, t_vector *ray);
 
 t_color	*color_multiply(t_color *color, float intecivity);
 
-void ray_trace(void *mlx, void *win, t_scene *scene)
+void ray_trace(void *mlx, void *win, t_data *scene)
 {
-
 	int mlx_x;
 	int mlx_y = 0;
-
 	float x_angle;
 	float y_angle;
 	float x_ray;
 	float y_ray;
 	int color;
+
 	t_vector *ray;
 	t_view_plane *vplane;
 	vplane = view_plane_new(scene->height, scene->width, scene->camera->fov);
 	y_angle = scene->height / 2;
-
 	while(y_angle >= (scene->height / 2) * -1)
 	{
 		y_ray = y_angle * vplane->y_pixel;
@@ -73,7 +71,7 @@ t_sphere *check_intersection(t_sphere *sphere, t_vector *vector, t_vector *ray)
 	return (0);
 }
 
-int get_color(t_scene *scene, t_vector *ray)
+int get_color(t_data *scene, t_vector *ray)
 {
     t_color *color;
 	t_color *temp;
