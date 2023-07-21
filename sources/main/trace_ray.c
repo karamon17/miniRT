@@ -111,7 +111,7 @@ t_color	*color_multiply(t_color *color, float intecivity)
 	return (res);
 }
 
-int sphere_intercept(t_figure *sphere, t_vector *vector, t_vector *ray)
+float sphere_intercept(t_figure *sphere, t_vector *vector, t_vector *ray)
 {
 	float a;
 	float b;
