@@ -13,8 +13,9 @@ typedef union			u_figures
 	{
 		t_vector	*center;
 		float		radius;
+		float       color;
+		float		specular;
 		t_color		*RGB_color;
-		t_sphere  *next;
 	} sphere;
 
 } u_figures;
