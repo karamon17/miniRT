@@ -1,13 +1,5 @@
 #include "../includes/miniRT.h"
 
-
-#include "../../includes/miniRT.h"
-
-
-t_data *init_data(char *input);
-
-
-
 int main(int argc, char **argv)
 {
 	void *mlx;
@@ -23,7 +15,9 @@ int main(int argc, char **argv)
 	data->height = 600;
 	win = mlx_new_window(mlx, data->width, data->height, "miniRT");
 	ray_trace(mlx, win, data);
-	mlx_loop(mlx);
+	data->win = win;
+	data->mlx = mlx;
+	mlx_hooks_handler(data);
 	return (0);
 }
 

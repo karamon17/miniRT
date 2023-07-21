@@ -1,19 +1,5 @@
 #include "../includes/miniRT.h"
 
-t_light  *light_new(t_vector *vector, char	type, float	intensity)
-{
-	t_light	*light;
-
-	light = malloc(sizeof(t_light));
-	if (!light)
-		return (NULL);
-	light->vector = vector;
-	light->type = type;
-	light->intensity = intensity;
-	light->next = NULL;
-	return (light);
-}
-
 float	compute_lighting(t_data *data, t_vector *p, t_vector *n, t_vector *ray, float s)
 {
     float	i;
@@ -21,7 +7,6 @@ float	compute_lighting(t_data *data, t_vector *p, t_vector *n, t_vector *ray, fl
 	float r_dot_v;
 	t_light *current;
 	t_vector *r;
-	//t_sphere *shadow_sphere;
 
 	current = data->lights;
 	t_vector *l;

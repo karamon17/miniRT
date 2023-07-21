@@ -42,15 +42,12 @@ void ray_trace(void *mlx, void *win, t_data *data)
 
 t_figure * ClosestIntersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color)
 {
-	//t_sphere *closest_sphere;
 	t_figure *closest_figure;
 	float dist;
 
-	//closest_sphere = NULL;
 	closest_figure = NULL;
 	while(figure)
     {
-		//TODO change inner part to sphere_intercept
         dist = sphere_intercept(figure, vector, ray);
         if ((dist > 0) && (dist < *closest_dist || closest_figure == NULL))
 		{
@@ -84,14 +81,12 @@ int get_color(t_data *data, t_vector *ray)
 
 	color = color_new(0, 0, 0);
 	temp = color;
-	//TODO change inner part to ClosestIntersection FIXED
 	closest_figure = ClosestIntersection(data->figures, data->camera->origin, ray, &closest_dist, &color);
 	if (closest_figure)
 	{
 		t_vector *p = multiply_vector(closest_dist, ray);
 		t_vector *n = vector_subtract(p, closest_figure->figure_body.sphere.center);
 		vector_normalize(n);
-		//TODO change inner part to compute_lighting
 		temp = color_multiply(color, compute_lighting(data, p, n, multiply_vector(-1, ray), closest_figure->specular));
 	}
     return (color_to_int(temp));

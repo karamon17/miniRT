@@ -9,7 +9,7 @@ LIBS_DIR = includes
 # Compiled directories
 SRC = sources
 OBJ = objects
-SUBDIRS = main parsing
+SUBDIRS = main parsing minilibX_handler
 MLX = -lmlx -framework OpenGL -framework AppKit
 
 # Folder directions
