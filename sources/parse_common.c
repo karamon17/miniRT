@@ -12,6 +12,8 @@ t_color *parse_color(char *string) {
 	if(array_lenth(splited_string) != 3)
 		error("Error in color declaration\n", EXIT_FAILURE);
 	color = malloc(sizeof(t_color));
+	if(!ft_strisdigit(splited_string[0]) || !ft_strisdigit(splited_string[1]) || !ft_strisdigit(splited_string[2]))
+		error("color is not a number\n", EXIT_FAILURE);
 	color->red = ft_atof(splited_string[0]);
 	color->green = ft_atof(splited_string[1]);
 	color->blue = ft_atof(splited_string[2]);
@@ -36,8 +38,24 @@ void check_color(t_color *color) {
 
 float parse_intesity(char *string) {
 	float intensity;
+	if(!ft_strisdigit(string))
+		error("intesity is not a number\n", EXIT_FAILURE);
 	intensity = ft_atof(string);
 	if(intensity < 0 || intensity > 1)
 		error("intesity out of range\n", EXIT_FAILURE);
 	return (intensity);
+}
+
+t_vector *parse_vector(char *string) {
+	char **elements = ft_split(string, ',');
+	if (array_lenth(elements) != 3)
+		error("Wrong arguments in vector\n", EXIT_FAILURE);
+	if(!ft_strisdigit(elements[0]) || !ft_strisdigit(elements[1]) || !ft_strisdigit(elements[2]))
+		error("Wrong arguments in vector\n", EXIT_FAILURE);
+	t_vector *vector = malloc(sizeof(t_vector));
+	vector->x = ft_atof(elements[0]);
+	vector->y = ft_atof(elements[1]);
+	vector->z = ft_atof(elements[2]);
+	free_array(elements);
+	return (vector);
 }

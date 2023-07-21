@@ -5,7 +5,6 @@
 #include "unistd.h"
 #include "stdlib.h"
 #include "stdio.h"
-#include "math.h"
 #include "figures.h"
 #include "camera.h"
 #include "light.h"
@@ -19,6 +18,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <float.h>
+#include <math.h>
+
 
 typedef struct s_data
 {
@@ -33,7 +35,7 @@ typedef struct s_data
 	int camera_init;
 	int has_ambient;
 	int has_light;
-	t_figures *figures;
+	t_figure *figures;
 	t_light *lights;
 } t_data;
 

@@ -9,4 +9,7 @@
 void		wrong_argc(char *program_name);
 void fatal();
 
+void check_camera(t_camera *camera);
+void error(const char *string, int i);
+
 #endif //MINIRT_ERRORS_H
