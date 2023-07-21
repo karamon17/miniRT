@@ -1,6 +1,5 @@
 #include "../../includes/miniRT.h"
 
-
 void parse_elements(char *file_content, t_data *data) {
 
 	char **lines = ft_split(file_content, '\n');
@@ -31,9 +30,9 @@ void parse_element(char *element_line, t_data *data) {
 		parse_spot_light(element_line, data);
 	else if (element_line[0] == 's' && element_line[1] == 'p' && element_line[2] == ' ')
 		parse_sphere(element_line, data);
-/*	else if (element_line[0] == 'p' && element_line[1] == 'l' && element_line[2] == ' ')
+	else if (element_line[0] == 'p' && element_line[1] == 'l' && element_line[2] == ' ')
 		parse_plane(element_line, data);
-	else if (element_line[0] == 's' && element_line[1] == 'q' && element_line[2] == ' ')
+/*	else if (element_line[0] == 's' && element_line[1] == 'q' && element_line[2] == ' ')
 		parse_square(element_line, data);
 	else if (element_line[0] == 'c' && element_line[1] == 'y' && element_line[2] == ' ')
 		parse_cylinder(element_line, data);
@@ -43,6 +42,8 @@ void parse_element(char *element_line, t_data *data) {
 		error("in element line\n", EXIT_FAILURE);
 	free(element_line);
 }
+
+
 
 
 

@@ -11,4 +11,7 @@ void print_figures_content(t_figure *pFigures);
 
 void print_sphere_content(t_figure *pFigures);
 
+void print_plane_content(t_figure *pFigures);
+
+
 #endif //MINIRT_TO_REMOVE_H

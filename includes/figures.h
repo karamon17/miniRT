@@ -15,6 +15,11 @@ typedef union			u_figures
 		float		radius;
 		float       color;
 	} sphere;
+	struct s_plane
+	{
+		t_vector	*center;
+		t_vector	*normal;
+	} plane;
 
 } u_figures;
 

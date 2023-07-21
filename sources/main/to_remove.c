@@ -9,9 +9,9 @@ void print_figures_content(t_figure *pFigures) {
 	while(tmp) {
 		if (tmp->type == SPHERE)
 			print_sphere_content(tmp);
-		/*else if(pFigures->type == 'p')
-			printf("Plane:\n");
-		else if(pFigures->type == 'c')
+		if(tmp->type == PLANE)
+			print_plane_content(tmp);
+		/*else if(pFigures->type == 'c')
 			printf("Cylinder:\n");
 		else if(pFigures->type == 't')
 			printf("Triangle:\n");
@@ -21,6 +21,14 @@ void print_figures_content(t_figure *pFigures) {
 			printf("Unknown figure\n");*/
 		tmp = tmp->next;
 	}
+}
+
+void print_plane_content(t_figure *pFigures) {
+	printf("Plane:\n");
+	printf("Position: %f %f %f\n", pFigures->figure_body.plane.center->x, pFigures->figure_body.plane.center->y, pFigures->figure_body.plane.center->z);
+	printf("Normal: %f %f %f\n", pFigures->figure_body.plane.normal->x, pFigures->figure_body.plane.normal->y, pFigures->figure_body.plane.normal->z);
+	printf("Color: %f %f %f %f\n", pFigures->RGB_color->red, pFigures->RGB_color->green, pFigures->RGB_color->blue, pFigures->RGB_color->transparency);
+
 }
 
 void print_sphere_content(t_figure *pFigures) {
