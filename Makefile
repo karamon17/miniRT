@@ -1,67 +1,48 @@
-NAME = minirt
+NAME     = minirt
+GCC      = gcc
+CFLAGS   = -Wall -Wextra -Werror -g
+RM       = rm -rf
+OUTPUT   = ./$(NAME)
+LIBS     = -I./includes/
+LIBS_DIR = includes
 
-CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
-
-CC = gcc
-
-SRC_PATH = sources/
-OBJ_PATH = objects/
-OBJ_PATH_SOURCE = objects/parsing/
-LIBFT = ./libft/libft.a
-LIBFT_DIR = ./libft
-
-OBJS = $(SRC:.c=.o)
-
+# Compiled directories
+SRC = sources
+OBJ = objects
+SUBDIRS = main parsing
 MLX = -lmlx -framework OpenGL -framework AppKit
 
-SRC		= parsing/errors.c\
-          parsing/init_data.c\
-          parsing/parse_camera.c\
-          parsing/parse_common.c\
-          parsing/parse_figures.c\
-          parsing/parse_file.c\
-          parsing/parse_light.c\
-          parsing/parse_utils.c\
-          parsing/parser.c\
- 		  camera.c\
-          light.c\
-          main.c\
-          scene.c\
-          sphere.c\
-          trace_ray.c\
-          vector.c\
-          to_remove.c
+# Folder directions
+SRC_DIR = $(foreach dir, $(SUBDIRS), $(addprefix $(SRC)/, $(dir)))
+OBJ_DIR = $(foreach dir, $(SUBDIRS), $(addprefix $(OBJ)/, $(dir)))
+
+# File directions
+SRCS = $(foreach dir, $(SRC_DIR), $(wildcard $(dir)/*.c))
+OBJS = $(subst $(SRC), $(OBJ), $(SRCS:.c=.o))
+LIB_DIR = $(foreach dir, $(LIBS_DIR), $(wildcard $(dir)/*.h))
+
+# Libft
+LIBFT     = ft
+LIBFT_DIR = ./lib$(LIBFT)/
 
 
-SRCS	= $(addprefix $(SRC_PATH), $(SRC))
-OBJ		= $(SRC:.c=.o)
-OBJS	= $(addprefix $(OBJ_PATH), $(OBJ))
-INCS	= -I ./includes/
+all: $(NAME)
 
-all: $(OBJ_PATH) $(OBJ_PATH_SOURCE) $(NAME) $(LIBFT)
+$(NAME): $(LIB_DIR) Makefile $(OBJS)
+	make -C $(LIBFT_DIR) all
+	$(GCC) -o $(NAME) $(OBJS) $(MLX) -g $(CFLAGS) $(LIBS) -L$(LIBFT_DIR) -l$(LIBFT)   -lncurses
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ)/%.o: $(SRC)/%.c $(LIB_DIR)
+	mkdir -p $(OBJ) $(OBJ_DIR)
+	$(GCC) $(CFLAGS) $(LIBS) -c $< -o $@
 
-$(OBJ_PATH_SOURCE):
-	mkdir $(OBJ_PATH_SOURCE)
+clean: DELETE_OBJ_MSG
+	make -C $(LIBFT_DIR) clean
+	$(RM) $(OBJ)
 
-$(OBJ_PATH):
-	mkdir $(OBJ_PATH)
-
-$(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(MLX) $(LIBFT)  -o $(NAME)
-
-$(LIBFT):
-	make -C $(LIBFT_DIR)
-
-clean:
-	rm -rf $(OBJ_PATH)
-	make -C libft clean
-
-fclean: clean
-	rm -f $(NAME) libft/libft.a
+fclean: clean DELETE_PROGRAM_MSG
+	make -C $(LIBFT_DIR) fclean
+	$(RM) $(NAME)
+	$(RM) $(RDLINE)
 
 re: fclean all
-
-.PHONY: all clean fclean re
