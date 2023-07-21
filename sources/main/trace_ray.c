@@ -40,7 +40,7 @@ void ray_trace(void *mlx, void *win, t_data *data)
 	}
 }
 
-t_figure * ClosestIntersection(t_figure *sphere, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color)
+t_figure * ClosestIntersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color)
 {
 	t_sphere *closest_sphere;
 	t_figure *closest_figure;
@@ -48,18 +48,19 @@ t_figure * ClosestIntersection(t_figure *sphere, t_vector *vector, t_vector *ray
 
 	closest_sphere = NULL;
 	closest_figure = NULL;
-	while(sphere)
+	while(figure)
     {
-        dist = sphere_intercept(sphere, vector, ray);
+		//TODO change inner part to sphere_intercept
+        dist = sphere_intercept(figure, vector, ray);
         if ((dist > 0) && (dist < *closest_dist || closest_sphere == NULL))
 		{
-            *color = sphere->RGB_color;
+            *color = figure->RGB_color;
             *closest_dist = dist;
-            closest_sphere = sphere;
+            closest_figure = figure;
         }
-        sphere = sphere->next;
+		figure = figure->next;
     }
-	return (closest_sphere);
+	return (closest_figure);
 }
 
 t_sphere *check_intersection(t_sphere *sphere, t_vector *vector, t_vector *ray)
@@ -81,16 +82,14 @@ int get_color(t_data *data, t_vector *ray)
     float closest_dist = 0;
 	t_figure *closest_figure = NULL;
 
-	closest_figure = data->figures;
-
 	color = color_new(0, 0, 0);
 	temp = color;
-	//TODO change inner part to ClosestIntersection
+	//TODO change inner part to ClosestIntersection FIXED
 	closest_figure = ClosestIntersection(data->figures, data->camera->origin, ray, &closest_dist, &color);
-	if (closest_sphere)
+	if (closest_figure)
 	{
 		t_vector *p = multiply_vector(closest_dist, ray);
-		t_vector *n = vector_subtract(p, closest_sphere->center);
+		t_vector *n = vector_subtract(p, closest_figure->figure_body.sphere.center);
 		vector_normalize(n);
 		//TODO change inner part to compute_lighting
 		temp = color_multiply(color, compute_lighting(data, p, n, multiply_vector(-1, ray), closest_figure->specular));
@@ -112,7 +111,7 @@ t_color	*color_multiply(t_color *color, float intecivity)
 	return (res);
 }
 
-int sphere_intercept(t_sphere *sphere, t_vector *vector, t_vector *ray)
+int sphere_intercept(t_figure *sphere, t_vector *vector, t_vector *ray)
 {
 	float a;
 	float b;
@@ -121,10 +120,10 @@ int sphere_intercept(t_sphere *sphere, t_vector *vector, t_vector *ray)
 	float dist_1;
 	t_vector *oc;
 
-	oc = vector_subtract(vector, sphere->center);
+	oc = vector_subtract(vector, sphere->figure_body.sphere.center);
 	a = vector_dot_product(ray, ray);
 	b = 2 * vector_dot_product(oc, ray);
-	c = vector_dot_product(oc, oc) - (sphere->radius * sphere->radius);
+	c = vector_dot_product(oc, oc) - (sphere->figure_body.sphere.radius * sphere->figure_body.sphere.radius);
 	discr = b * b - (4 * a * c);
 	if (discr < 0)
 		return (0);
