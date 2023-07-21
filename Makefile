@@ -6,6 +6,7 @@ CC = gcc
 
 SRC_PATH = sources/
 OBJ_PATH = objects/
+OBJ_PATH_SOURCE = objects/parsing/
 LIBFT = ./libft/libft.a
 LIBFT_DIR = ./libft
 
@@ -13,15 +14,15 @@ OBJS = $(SRC:.c=.o)
 
 MLX = -lmlx -framework OpenGL -framework AppKit
 
-SRC		= errors.c\
-          init_data.c\
-          parse_camera.c\
-          parse_common.c\
-          parse_figures.c\
-          parse_file.c\
-          parse_light.c\
-          parse_utils.c\
-          parser.c\
+SRC		= parsing/errors.c\
+          parsing/init_data.c\
+          parsing/parse_camera.c\
+          parsing/parse_common.c\
+          parsing/parse_figures.c\
+          parsing/parse_file.c\
+          parsing/parse_light.c\
+          parsing/parse_utils.c\
+          parsing/parser.c\
  		  camera.c\
           light.c\
           main.c\
@@ -36,10 +37,13 @@ OBJ		= $(SRC:.c=.o)
 OBJS	= $(addprefix $(OBJ_PATH), $(OBJ))
 INCS	= -I ./includes/
 
-all: $(OBJ_PATH) $(NAME) $(LIBFT)
+all: $(OBJ_PATH) $(OBJ_PATH_SOURCE) $(NAME) $(LIBFT)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_PATH_SOURCE):
+	mkdir $(OBJ_PATH_SOURCE)
 
 $(OBJ_PATH):
 	mkdir $(OBJ_PATH)

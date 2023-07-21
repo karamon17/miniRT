@@ -21,6 +21,14 @@
 #include <float.h>
 #include <math.h>
 
+typedef struct s_checker
+{
+	int camera_init;
+	int has_ambient;
+	int has_light;
+	int has_object;
+
+} t_checker;
 
 typedef struct s_data
 {
@@ -30,14 +38,12 @@ typedef struct s_data
 	t_scene *scene;
 	int 	width;
 	int 	height;
-	int 	all_init;
-	int result_init;
-	int camera_init;
-	int has_ambient;
-	int has_light;
 	t_figure *figures;
 	t_light *lights;
+	t_checker checker;
 } t_data;
+
+
 
 
 t_light  *light_new(t_vector *vector, char	type, float	intensity);

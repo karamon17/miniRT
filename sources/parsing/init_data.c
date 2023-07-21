@@ -1,5 +1,7 @@
 #include "../../includes/miniRT.h"
 
+void init_checker(t_data *data);
+
 t_data *init_data(char *input) {
 
 	t_data *rt_data;
@@ -9,12 +11,16 @@ t_data *init_data(char *input) {
 	rt_data->scene = malloc(sizeof(t_scene));
 	rt_data->lights = NULL;
 	rt_data->figures = NULL;
-	rt_data->result_init = 0;
-	rt_data->all_init = 0;
-	rt_data->camera_init = 0;
-	rt_data->has_light = 0;
-	rt_data->has_ambient = 0;
+	init_checker(rt_data);
 	return (rt_data);
+}
+
+void init_checker(t_data *data) {
+	data->checker.camera_init = 0;
+	data->checker.has_ambient = 0;
+	data->checker.has_light = 0;
+	data->checker.has_object = 0;
+
 }
 
 t_light *new_amient_light(t_data *data) {
@@ -22,7 +28,7 @@ t_light *new_amient_light(t_data *data) {
 
 	light = malloc(sizeof(t_light));
 	light->type = 'A';
-	if(data->has_light == 0)
+	if(data->checker.has_light == 0)
 		data->lights = light;
 	else
 		data->lights->next = light;
@@ -35,12 +41,12 @@ t_light *new_spot_light(t_data *data) {
 
 	light = malloc(sizeof(t_light));
 	light->type = 'L';
-	if (data->has_light == 0)
+	if (data->checker.has_light == 0)
 		data->lights = light;
 	else
 		data->lights->next = light;
 	light->next = NULL;
-	data->has_light++;
+	data->checker.has_light++;
 	return (light);
 }
 
@@ -49,7 +55,7 @@ t_camera *new_camera(t_data *data) {
 
 	camera = malloc(sizeof(t_camera));
 	camera->next = NULL;
-	data->camera_init++;
+	data->checker.camera_init++;
 	return (camera);
 }
 
