@@ -23,7 +23,7 @@ void init_checker(t_data *data) {
 
 }
 
-t_light *new_amient_light(t_data *data) {
+t_light *new_ambient_light(t_data *data) {
 	t_light *light;
 
 	light = malloc(sizeof(t_light));

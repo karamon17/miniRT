@@ -11,3 +11,21 @@ void error(const char *string, int i) {
 	write(2, string, ft_strlen(string));
 	exit(i);
 }
+
+void check_correct_file_extension(char *filename) {
+	int i;
+	int dot_count;
+
+	i = 0;
+	dot_count = 0;
+	while (filename[i])
+	{
+		if (filename[i] == '.')
+			dot_count++;
+		i++;
+	}
+	if (dot_count != 1)
+		error("Wrong file extension\n", EXIT_FAILURE);
+	if (ft_strncmp(filename + i - 3, ".rt", 3) != 0)
+		error("Wrong file extension\n", EXIT_FAILURE);
+}

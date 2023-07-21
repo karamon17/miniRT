@@ -1,15 +1,19 @@
 #include "../../includes/miniRT.h"
 
+void check_correct_file_extension(char *filename);
+
 void parse_rt_file(t_data *data) {
 	int fd;
 	char *file_content;
-
+	check_correct_file_extension(data->filename);
 	if ((fd = open(data->filename, 0)) == -1)
-		error("opening file\n", EXIT_FAILURE);
+		error("file does not exist\n", EXIT_FAILURE);
 	file_content = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	file_content = read_file(file_content, fd);
 	parse_elements(file_content, data);
 }
+
+
 
 char		*read_file(char *str, int fd)
 {

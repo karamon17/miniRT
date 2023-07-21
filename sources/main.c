@@ -14,21 +14,16 @@ void print_sphere_content(t_figure *pFigures);
 
 int main(int argc, char **argv)
 {
-    //void *mlx;
-    //void *win;
     t_data *data;
 
     if (argc < 2 || argc > 3)
 		wrong_argc(argv[0]);
 	data = init_data(argv[1]);
-    parse_rt_file(data);
-    //mlx = mlx_init();
-    /*win = mlx_new_window(mlx, 1920, 1080, "miniRT");
-    mlx_loop(mlx);
-    */
-	print_camera_content(data->scene->camera);
+	parse_rt_file(data);
+
+	/*print_camera_content(data->scene->camera);
 	print_light_content(data->lights);
-	print_figures_content(data->figures);
+	print_figures_content(data->figures);*/
 	return (0);
 }
 

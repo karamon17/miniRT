@@ -1,5 +1,7 @@
 #include "../../includes/miniRT.h"
 
+void check_elements(t_data *data);
+
 void parse_elements(char *file_content, t_data *data) {
 
 	char **lines = ft_split(file_content, '\n');
@@ -12,8 +14,18 @@ void parse_elements(char *file_content, t_data *data) {
 		parse_element(lines[i], data);
 		i++;
 	}
-	/*if (data->result_init == 0 || data->all_init == 0 || data->scene->camera == NULL)
-		error("Not enough elements to render a scene\n", EXIT_FAILURE);*/
+	check_elements(data);
+}
+
+void check_elements(t_data *data) {
+	if (data->checker.camera_init == 0)
+		error("No camera in scene\n", EXIT_FAILURE);
+	if (data->checker.has_ambient == 0)
+		error("No ambient light in scene\n", EXIT_FAILURE);
+	if (data->checker.has_light == 0)
+		error("No light in scene\n", EXIT_FAILURE);
+	if (data->checker.has_object == 0)
+		error("No object in scene\n", EXIT_FAILURE);
 }
 
 void parse_element(char *element_line, t_data *data) {

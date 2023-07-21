@@ -22,6 +22,6 @@ typedef struct s_light
 	struct s_light	*next;
 } t_light;
 
-t_light *new_amient_light(t_data *data);
+t_light *new_ambient_light(t_data *data);
 
 #endif
