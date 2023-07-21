@@ -60,4 +60,5 @@ dkms.conf
 
 minilibx-mac-osx/
 ./minirt/
+minirt
 ```

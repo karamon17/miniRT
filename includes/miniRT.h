@@ -1,21 +1,61 @@
 #ifndef MINIRT_PROJECT_MINIRT_H
 #define MINIRT_PROJECT_MINIRT_H
 
+//parse
+#include "errors.h"
+#include "parser.h"
+
+//main
 #include "vector.h"
-#include "unistd.h"
-#include "stdlib.h"
-#include "stdio.h"
-#include "math.h"
-#include "sphere.h"
+#include "figures.h"
 #include "camera.h"
 #include "light.h"
 #include "scene.h"
 #include "view_plane.h"
-#include "mlx.h"
 
+//standard libraries
+#include <sys/fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <float.h>
+#include <math.h>
+#include "mlx.h"
+#include "../libft/libft.h"
+
+//to remove
+#include "to_remove.h"
 t_light  *light_new(t_vector *vector, char	type, float	intensity);
 float	compute_lighting(t_scene *scene, t_vector *p, t_vector *n, t_vector *ray, float s);
 t_sphere *ClosestIntersection(t_sphere *sphere, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color);
 t_sphere *check_intersection(t_sphere *sphere, t_vector *vector, t_vector *ray);
+
+typedef struct s_checker
+{
+	int camera_init;
+	int has_ambient;
+	int has_spot;
+	int has_object;
+
+} t_checker;
+
+typedef struct s_data
+{
+    void	*mlx;
+    void	*win;
+    char    *filename;
+	int 	width;
+	int 	height;
+	t_camera *camera;
+	t_figure *figures;
+	t_light *lights;
+	t_checker checker;
+} t_data;
+
+
+
+
+t_light  *light_new(t_vector *vector, char	type, float	intensity);
+float	compute_lighting(t_scene *scene, t_vector *p, t_vector *n);
 
 #endif //MINIRT_PROJECT_MINIRT_H
