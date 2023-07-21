@@ -1,5 +1,5 @@
 #include <stdbool.h>
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 int is_outrange_of_float(double number);
 

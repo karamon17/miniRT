@@ -1,4 +1,4 @@
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 t_data *init_data(char *input) {
 

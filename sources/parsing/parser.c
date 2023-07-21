@@ -1,4 +1,4 @@
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 void parse_elements(char *file_content, t_data *data) {
 

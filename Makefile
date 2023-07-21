@@ -13,15 +13,22 @@ OBJS = $(SRC:.c=.o)
 
 MLX = -lmlx -framework OpenGL -framework AppKit
 
-SRC		= camera.c\
+SRC		= errors.c\
+          init_data.c\
+          parse_camera.c\
+          parse_common.c\
+          parse_figures.c\
+          parse_file.c\
+          parse_light.c\
+          parse_utils.c\
+          parser.c\
+ 		  camera.c\
+          light.c\
           main.c\
           scene.c\
           sphere.c\
           trace_ray.c\
-          vector.c\
-          errors.c\
-          parser.c
-		  light.c\
+          vector.c
 
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))

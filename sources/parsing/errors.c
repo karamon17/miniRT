@@ -1,4 +1,4 @@
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 void		wrong_argc(char *program_name)
 {

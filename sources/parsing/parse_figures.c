@@ -1,4 +1,4 @@
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 void parse_sphere(char *line, t_data *data) {
 	t_figure *sphere_figure;

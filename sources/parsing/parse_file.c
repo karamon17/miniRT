@@ -1,4 +1,4 @@
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 void parse_rt_file(t_data *data) {
 	int fd;

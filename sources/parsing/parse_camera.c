@@ -1,4 +1,4 @@
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 void parse_camera(char *line, t_data *data) {
 	char **elements = ft_split(line, ' ');
