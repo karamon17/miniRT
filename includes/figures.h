@@ -14,7 +14,6 @@ typedef union			u_figures
 		t_vector	*center;
 		float		radius;
 		float       color;
-		float		specular;
 		t_color		*RGB_color;
 	} sphere;
 
@@ -32,6 +31,7 @@ enum e_figures
 typedef struct		s_figures
 {
 	union u_figures figure_body;
+	float		specular;
 	enum e_figures	type;
 
 	struct s_figures* next;

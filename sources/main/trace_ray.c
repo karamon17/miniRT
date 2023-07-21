@@ -1,11 +1,11 @@
 #include "../includes/miniRT.h"
 
 
-int get_color(t_data *scene, t_vector *ray);
+int get_color(t_data *data, t_vector *ray);
 
 t_color	*color_multiply(t_color *color, float intecivity);
 
-void ray_trace(void *mlx, void *win, t_data *scene)
+void ray_trace(void *mlx, void *win, t_data *data)
 {
 	int mlx_x;
 	int mlx_y = 0;
@@ -17,19 +17,19 @@ void ray_trace(void *mlx, void *win, t_data *scene)
 
 	t_vector *ray;
 	t_view_plane *vplane;
-	vplane = view_plane_new(scene->height, scene->width, scene->camera->fov);
-	y_angle = scene->height / 2;
-	while(y_angle >= (scene->height / 2) * -1)
+	vplane = view_plane_new(data->height, data->width, data->camera->fov);
+	y_angle = data->height / 2.f;
+	while(y_angle >= (data->height / 2.f) * -1)
 	{
 		y_ray = y_angle * vplane->y_pixel;
-		x_angle = (scene->width / 2) * -1;
+		x_angle = (data->width / 2.f) * -1;
 		mlx_x = 0;
-		while (x_angle <= scene->width / 2)
+		while (x_angle <= data->width / 2)
 		{
 			x_ray = x_angle * vplane->x_pixel;
 			ray = vector_new(x_ray, y_ray, -1);
 			vector_normalize(ray);
-			color = get_color(scene, ray);
+			color = get_color(data, ray);
 			mlx_pixel_put(mlx, win, mlx_x, mlx_y, color);
 			free(ray);
 			x_angle++;
@@ -40,12 +40,14 @@ void ray_trace(void *mlx, void *win, t_data *scene)
 	}
 }
 
-t_sphere *ClosestIntersection(t_sphere *sphere, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color)
+t_figure * ClosestIntersection(t_figure *sphere, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color)
 {
 	t_sphere *closest_sphere;
+	t_figure *closest_figure;
 	float dist;
 
 	closest_sphere = NULL;
+	closest_figure = NULL;
 	while(sphere)
     {
         dist = sphere_intercept(sphere, vector, ray);
@@ -71,22 +73,27 @@ t_sphere *check_intersection(t_sphere *sphere, t_vector *vector, t_vector *ray)
 	return (0);
 }
 
-int get_color(t_data *scene, t_vector *ray)
+int get_color(t_data *data, t_vector *ray)
 {
     t_color *color;
 	t_color *temp;
     t_sphere *closest_sphere = NULL;
     float closest_dist = 0;
+	t_figure *closest_figure = NULL;
+
+	closest_figure = data->figures;
 
 	color = color_new(0, 0, 0);
 	temp = color;
-	closest_sphere = ClosestIntersection(scene->sphere, scene->camera->origin, ray, &closest_dist, &color);
+	//TODO change inner part to ClosestIntersection
+	closest_figure = ClosestIntersection(data->figures, data->camera->origin, ray, &closest_dist, &color);
 	if (closest_sphere)
 	{
 		t_vector *p = multiply_vector(closest_dist, ray);
 		t_vector *n = vector_subtract(p, closest_sphere->center);
 		vector_normalize(n);
-		temp = color_multiply(color, compute_lighting(scene, p, n, multiply_vector(-1, ray), closest_sphere->specular));
+		//TODO change inner part to compute_lighting
+		temp = color_multiply(color, compute_lighting(data, p, n, multiply_vector(-1, ray), closest_figure->specular));
 	}
     return (color_to_int(temp));
 }
