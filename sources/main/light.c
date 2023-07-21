@@ -1,4 +1,4 @@
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 t_light  *light_new(t_vector *vector, char	type, float	intensity)
 {

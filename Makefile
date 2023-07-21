@@ -29,7 +29,8 @@ SRC		= parsing/errors.c\
           scene.c\
           sphere.c\
           trace_ray.c\
-          vector.c
+          vector.c\
+          to_remove.c
 
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))

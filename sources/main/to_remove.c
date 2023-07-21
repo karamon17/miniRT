@@ -1,4 +1,4 @@
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 void print_figures_content(t_figure *pFigures) {
 	if(pFigures == NULL)

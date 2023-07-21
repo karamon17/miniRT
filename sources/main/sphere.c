@@ -1,4 +1,4 @@
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 t_sphere *sphere_new(t_vector *center, float radius)
 {

@@ -1,4 +1,4 @@
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 
 int get_color(t_scene *scene, t_vector *ray);
