@@ -2,6 +2,7 @@
 #define MINIRT_PROJECT_LIGHT_H
 
 #include "miniRT.h"
+#include "vector.h"
 
 
 typedef struct s_data t_data;
@@ -11,6 +12,7 @@ typedef struct t_color
 	float 	red;
 	float 	green;
 	float 	blue;
+	float   transparency;
 } t_color;
 
 typedef struct s_light

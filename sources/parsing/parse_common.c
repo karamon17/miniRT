@@ -1,6 +1,5 @@
 #include "../../includes/miniRT.h"
 
-void check_color(t_color *color);
 
 t_color *parse_color(char *string) {
 	t_color *color;
@@ -14,6 +13,7 @@ t_color *parse_color(char *string) {
 	color = malloc(sizeof(t_color));
 	if(!ft_strisdigit(splited_string[0]) || !ft_strisdigit(splited_string[1]) || !ft_strisdigit(splited_string[2]))
 		error("color is not a number\n", EXIT_FAILURE);
+	color->transparency = 0;
 	color->red = ft_atof(splited_string[0]);
 	color->green = ft_atof(splited_string[1]);
 	color->blue = ft_atof(splited_string[2]);

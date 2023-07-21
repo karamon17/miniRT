@@ -1,6 +1,5 @@
 #include "../../includes/miniRT.h"
 
-void check_elements(t_data *data);
 
 void parse_elements(char *file_content, t_data *data) {
 
@@ -15,18 +14,10 @@ void parse_elements(char *file_content, t_data *data) {
 		i++;
 	}
 	check_elements(data);
+	free_array(lines);
+	free(file_content);
 }
 
-void check_elements(t_data *data) {
-	if (data->checker.camera_init == 0)
-		error("No camera in scene\n", EXIT_FAILURE);
-	if (data->checker.has_ambient == 0)
-		error("No ambient light in scene\n", EXIT_FAILURE);
-	if (data->checker.has_light == 0)
-		error("No light in scene\n", EXIT_FAILURE);
-	if (data->checker.has_object == 0)
-		error("No object in scene\n", EXIT_FAILURE);
-}
 
 void parse_element(char *element_line, t_data *data) {
 	if (element_line[0] == '#')
@@ -50,7 +41,7 @@ void parse_element(char *element_line, t_data *data) {
 		parse_triangle(element_line, data);*/
 	else
 		error("in element line\n", EXIT_FAILURE);
-
+	free(element_line);
 }
 
 

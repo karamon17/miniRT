@@ -9,7 +9,8 @@ void parse_camera(char *line, t_data *data) {
 	camera->direction = parse_vector(elements[2]);
 	camera->fov = (float)ft_atoi(elements[3]);
 	check_camera(camera);
-	data->scene->camera = camera;
+	data->camera = camera;
+	free_array(elements);
 }
 
 void check_camera(t_camera *camera) {

@@ -3,6 +3,7 @@
 
 #include "miniRT.h"
 #include "light.h"
+#include "vector.h"
 
 typedef struct s_sphere t_sphere;
 

@@ -1,31 +1,36 @@
 #ifndef MINIRT_PROJECT_MINIRT_H
 #define MINIRT_PROJECT_MINIRT_H
 
+//parse
+#include "errors.h"
+#include "parser.h"
+
+//main
 #include "vector.h"
-#include "unistd.h"
-#include "stdlib.h"
-#include "stdio.h"
 #include "figures.h"
 #include "camera.h"
 #include "light.h"
 #include "scene.h"
 #include "view_plane.h"
-#include "mlx.h"
-#include "errors.h"
-#include "parser.h"
-#include "../libft/libft.h"
+
+//standard libraries
 #include <sys/fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <float.h>
 #include <math.h>
+#include "mlx.h"
+#include "../libft/libft.h"
+
+//to remove
+#include "to_remove.h"
 
 typedef struct s_checker
 {
 	int camera_init;
 	int has_ambient;
-	int has_light;
+	int has_spot;
 	int has_object;
 
 } t_checker;
@@ -35,9 +40,9 @@ typedef struct s_data
     void	*mlx;
     void	*win;
     char    *filename;
-	t_scene *scene;
 	int 	width;
 	int 	height;
+	t_camera *camera;
 	t_figure *figures;
 	t_light *lights;
 	t_checker checker;

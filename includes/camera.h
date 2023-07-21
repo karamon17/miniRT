@@ -2,6 +2,7 @@
 #define MINIRT_PROJECT_CAMERA_H
 
 #include "miniRT.h"
+#include "vector.h"
 
 typedef struct s_camera
 {

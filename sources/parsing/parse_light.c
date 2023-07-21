@@ -18,7 +18,7 @@ void parse_ambient_light(char *line, t_data *data)
 void parse_spot_light(char *line, t_data *data) {
 	t_light *light;
 
-	if(data->checker.has_light >= 1)
+	if(data->checker.has_spot >= 1)
 		error("Spot light (l) can only be declared once in the scene\n", EXIT_FAILURE);
 	char **elements = ft_split(line, ' ');
 	if (array_lenth(elements) != 4)
@@ -27,4 +27,5 @@ void parse_spot_light(char *line, t_data *data) {
 	light->vector = parse_vector(elements[1]);
 	light->intensity = parse_intesity(elements[2]);
 	light->RGB_color = parse_color(elements[3]);
+	free_array(elements);
 }

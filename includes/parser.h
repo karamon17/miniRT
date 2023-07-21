@@ -26,8 +26,8 @@ void parse_sphere(char *line, t_data *data);
 
 //init
 t_light *new_spot_light(t_data *data);
-void add_figure(t_data *data, t_figure *figure, int type);
-
+t_figure * add_figure(t_data *data, int type);
+void init_checker(t_data *data);
 
 //utils
 void free_array(char **array);

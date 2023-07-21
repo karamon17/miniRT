@@ -1,14 +1,11 @@
 #include "../../includes/miniRT.h"
 
-void init_checker(t_data *data);
-
 t_data *init_data(char *input) {
 
 	t_data *rt_data;
 
 	rt_data = malloc(sizeof(t_data));
 	rt_data->filename = input;
-	rt_data->scene = malloc(sizeof(t_scene));
 	rt_data->lights = NULL;
 	rt_data->figures = NULL;
 	init_checker(rt_data);
@@ -18,7 +15,7 @@ t_data *init_data(char *input) {
 void init_checker(t_data *data) {
 	data->checker.camera_init = 0;
 	data->checker.has_ambient = 0;
-	data->checker.has_light = 0;
+	data->checker.has_spot = 0;
 	data->checker.has_object = 0;
 
 }
@@ -28,7 +25,7 @@ t_light *new_ambient_light(t_data *data) {
 
 	light = malloc(sizeof(t_light));
 	light->type = 'A';
-	if(data->checker.has_light == 0)
+	if (data->lights == NULL)
 		data->lights = light;
 	else
 		data->lights->next = light;
@@ -41,12 +38,12 @@ t_light *new_spot_light(t_data *data) {
 
 	light = malloc(sizeof(t_light));
 	light->type = 'L';
-	if (data->checker.has_light == 0)
+	if (data->lights == NULL)
 		data->lights = light;
 	else
 		data->lights->next = light;
 	light->next = NULL;
-	data->checker.has_light++;
+	data->checker.has_spot++;
 	return (light);
 }
 

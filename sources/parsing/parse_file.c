@@ -1,6 +1,5 @@
 #include "../../includes/miniRT.h"
 
-void check_correct_file_extension(char *filename);
 
 void parse_rt_file(t_data *data) {
 	int fd;
