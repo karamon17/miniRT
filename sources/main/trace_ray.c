@@ -52,6 +52,8 @@ t_figure *ClosestIntersection(t_figure *figure, t_vector *vector, t_vector *ray,
 			dist = sphere_intercept(figure, vector, ray);
 		else if (figure->type == PLANE)
 			dist = plane_intercept(figure, vector, ray);
+		else if (figure->type == CYLINDER)
+			dist = cylinder_intercept(figure, vector, ray);
         if ((dist > 0) && (dist < *closest_dist || closest_figure == NULL))
 		{
             *color = figure->RGB_color;
@@ -70,6 +72,8 @@ t_figure *check_intersection(t_figure *figure, t_vector *vector, t_vector *ray)
         if (figure->type == SPHERE && sphere_intercept(figure, vector, ray))
 			return (figure);
 		if (figure->type == PLANE && plane_intercept(figure, vector, ray))
+			return (figure);
+		if (figure->type == CYLINDER && cylinder_intercept(figure, vector, ray))
 			return (figure);
 		figure = figure->next;
     }
@@ -144,6 +148,54 @@ float plane_intercept(t_figure *plane, t_vector *vector, t_vector *ray)
 	if (a < 0)
 		return (0);
 	return (a);
+}
+
+float	cylinder_intercept(t_figure *cylinder, t_vector *vector, t_vector *ray)
+{
+	t_vector *oc;
+	float a;
+	float b;
+	float c;
+	float discr;
+	float dist_1;
+	float dist_2;
+	float y1;
+	float y2;
+	float projection;
+
+	oc = vector_subtract(vector, cylinder->figure_body.cylinder.center);
+	projection = vector_dot_product(ray, oc);
+	a = vector_dot_product(ray, ray);
+	b = 2 * vector_dot_product(oc, ray);
+	c = vector_dot_product(oc, oc) - (cylinder->figure_body.cylinder.radius * cylinder->figure_body.cylinder.radius);
+	discr = b * b - 4 * a * c;
+	if (discr < 0)
+		return (0);
+	dist_1 = (-b + sqrt(discr)) / 2 / a;
+	dist_2 = (-b - sqrt(discr)) / 2 / a;
+	y1 = vector->z + dist_1 * ray->z;
+	y2 = vector->z + dist_2 * ray->z;
+	if (y1 >= cylinder->figure_body.cylinder.center->z && y1 <= cylinder->figure_body.cylinder.center->z + cylinder->figure_body.cylinder.height)
+		return (dist_1);
+	else if (y2 >= cylinder->figure_body.cylinder.center->z && y2 <= cylinder->figure_body.cylinder.center->z + cylinder->figure_body.cylinder.height)
+		return (dist_2);
+	float t_bottom = (cylinder->figure_body.cylinder.center->z - vector->z) / ray->z;
+    float t_top = (cylinder->figure_body.cylinder.center->z + cylinder->figure_body.cylinder.height - vector->z) / ray->z;
+
+    // Проверяем, лежит ли точка пересечения с нижним основанием внутри окружности
+    float x_bottom = vector->x + t_bottom * ray->x - cylinder->figure_body.cylinder.center->x;
+    float y_bottom = vector->y + t_bottom * ray->y - cylinder->figure_body.cylinder.center->y;
+    if (x_bottom * x_bottom + y_bottom * y_bottom <= cylinder->figure_body.cylinder.radius * cylinder->figure_body.cylinder.radius) {
+        return t_bottom;
+    }
+
+    // Проверяем, лежит ли точка пересечения с верхним основанием внутри окружности
+    float x_top = vector->x + t_top * ray->x - cylinder->figure_body.cylinder.center->x;
+    float y_top = vector->y + t_top * ray->y - cylinder->figure_body.cylinder.center->y;
+    if (x_top * x_top + y_top * y_top <= cylinder->figure_body.cylinder.radius * cylinder->figure_body.cylinder.radius) {
+        return t_top;
+    }
+	return (0);
 }
 
 t_view_plane *view_plane_new(float height, float width, float fov)

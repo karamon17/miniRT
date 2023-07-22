@@ -20,6 +20,13 @@ typedef union			u_figures
 		t_vector	*center;
 		t_vector	*normal;
 	} plane;
+	struct s_cylinder
+	{
+		t_vector	*center;
+		t_vector	*normal;
+		float		radius;
+		float		height;
+	} cylinder;
 
 } u_figures;
 
