@@ -1,8 +1,10 @@
 # My
 */*.o
+*/*/*.o
 */*.a
 .vscode/
 .DS_Store
+minirt
 
 # Prerequisites
 *.d
@@ -56,3 +58,8 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+minilibx-mac-osx/
+./minirt/
+minirt
+```
