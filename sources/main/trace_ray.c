@@ -153,49 +153,54 @@ float plane_intercept(t_figure *plane, t_vector *vector, t_vector *ray)
 float	cylinder_intercept(t_figure *cylinder, t_vector *vector, t_vector *ray)
 {
 	t_vector *oc;
-	float a;
-	float b;
-	float c;
-	float discr;
-	float dist_1;
-	float dist_2;
-	float y1;
-	float y2;
-	float projection;
+	t_vector *center = cylinder->figure_body.cylinder.center;
+	t_vector *normal = cylinder->figure_body.cylinder.normal;
+	float	radius = cylinder->figure_body.cylinder.radius;
+	float height = cylinder->figure_body.cylinder.height;
 
-	oc = vector_subtract(vector, cylinder->figure_body.cylinder.center);
-	projection = vector_dot_product(ray, oc);
-	a = vector_dot_product(ray, ray);
-	b = 2 * vector_dot_product(oc, ray);
-	c = vector_dot_product(oc, oc) - (cylinder->figure_body.cylinder.radius * cylinder->figure_body.cylinder.radius);
-	discr = b * b - 4 * a * c;
-	if (discr < 0)
-		return (0);
-	dist_1 = (-b + sqrt(discr)) / 2 / a;
-	dist_2 = (-b - sqrt(discr)) / 2 / a;
-	y1 = vector->z + dist_1 * ray->z;
-	y2 = vector->z + dist_2 * ray->z;
-	if (y1 >= cylinder->figure_body.cylinder.center->z && y1 <= cylinder->figure_body.cylinder.center->z + cylinder->figure_body.cylinder.height)
-		return (dist_1);
-	else if (y2 >= cylinder->figure_body.cylinder.center->z && y2 <= cylinder->figure_body.cylinder.center->z + cylinder->figure_body.cylinder.height)
-		return (dist_2);
-	float t_bottom = (cylinder->figure_body.cylinder.center->z - vector->z) / ray->z;
-    float t_top = (cylinder->figure_body.cylinder.center->z + cylinder->figure_body.cylinder.height - vector->z) / ray->z;
+	oc = vector_subtract(vector, center);
 
-    // Проверяем, лежит ли точка пересечения с нижним основанием внутри окружности
-    float x_bottom = vector->x + t_bottom * ray->x - cylinder->figure_body.cylinder.center->x;
-    float y_bottom = vector->y + t_bottom * ray->y - cylinder->figure_body.cylinder.center->y;
-    if (x_bottom * x_bottom + y_bottom * y_bottom <= cylinder->figure_body.cylinder.radius * cylinder->figure_body.cylinder.radius) {
+	float proj_x = ray->x - ray->z * normal->x;
+    float proj_y = ray->y - ray->z * normal->y;
+
+    float a = ray->x * ray->x + ray->y * ray->y - ray->z * ray->z;
+    float b = 2 * (ray->x * oc->x + ray->y * oc->y - ray->z * oc->z);
+    float c = oc->x * oc->x + oc->y * oc->y - oc->z * oc->z - radius * radius;
+
+    float discriminant = b * b - 4 * a * c;
+
+    float t1, t2, t_bottom, t_top;
+
+    // Проверяем пересечение с боковой поверхностью цилиндра
+    if (discriminant >= 0)
+	{
+        t1 = (-b + sqrtf(discriminant)) / (2 * a);
+        t2 = (-b - sqrtf(discriminant)) / (2 * a);
+        // Проверяем, лежат ли точки пересечения на высоте цилиндра
+        float z1 = vector->z + t1 * ray->z;
+        float z2 = vector->z + t2 * ray->z;
+        if (z1 >= center->z && z1 <= center->z + height) {
+            return t1;
+        } else if (z2 >= center->z && z2 <= center->z + height) {
+            return t2;
+        }
+    }
+    // Проверяем пересечение с плоскостью основания цилиндра
+    t_bottom = ((center->z - vector->z) / ray->z) / (normal->z - proj_x * normal->x - proj_y * normal->y);
+    t_top = ((center->z + height - vector->z) / ray->z) / (normal->z - proj_x * normal->x - proj_y * normal->y);
+
+    // Проверяем, лежат ли точки пересечения с плоскостью основания внутри круга с радиусом cylinder->radius
+    float x_bottom = vector->x + t_bottom * ray->x - (center->x + t_bottom * proj_x);
+    float y_bottom = vector->y + t_bottom * ray->y - (center->y + t_bottom * proj_y);
+    if (x_bottom * x_bottom + y_bottom * y_bottom <= radius * radius) {
         return t_bottom;
     }
-
-    // Проверяем, лежит ли точка пересечения с верхним основанием внутри окружности
-    float x_top = vector->x + t_top * ray->x - cylinder->figure_body.cylinder.center->x;
-    float y_top = vector->y + t_top * ray->y - cylinder->figure_body.cylinder.center->y;
-    if (x_top * x_top + y_top * y_top <= cylinder->figure_body.cylinder.radius * cylinder->figure_body.cylinder.radius) {
+    float x_top = vector->x + t_top * ray->x - (center->x + t_top * proj_x);
+    float y_top = vector->y + t_top * ray->y - (center->y + t_top * proj_y);
+    if (x_top * x_top + y_top * y_top <= radius * radius) {
         return t_top;
     }
-	return (0);
+    return 0;
 }
 
 t_view_plane *view_plane_new(float height, float width, float fov)
