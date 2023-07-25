@@ -1,5 +1,6 @@
 # My
 */*.o
+*/*/*.o
 */*.a
 .vscode/
 .DS_Store

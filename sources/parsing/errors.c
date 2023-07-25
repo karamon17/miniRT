@@ -9,7 +9,7 @@ void		wrong_argc(char *program_name)
 void error(const char *string, int i) {
 	write(2, "Error ", 6);
 	write(2, string, ft_strlen(string));
-	system("leaks minirt");
+	//system("leaks minirt");
 	exit(i);
 }
 

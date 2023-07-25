@@ -46,7 +46,7 @@ void ray_trace(void *mlx, t_data *data)
     mlx_put_image_to_window(data->mlx_data->mlx, data->mlx_data->win, data->mlx_data->img, 0, 0);
 }
 
-t_figure * ClosestIntersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color)
+t_figure *ClosestIntersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color)
 {
 	t_figure *closest_figure;
 	float dist;
@@ -54,7 +54,10 @@ t_figure * ClosestIntersection(t_figure *figure, t_vector *vector, t_vector *ray
 	closest_figure = NULL;
 	while(figure)
     {
-        dist = sphere_intercept(figure, vector, ray);
+        if (figure->type == SPHERE)
+			dist = sphere_intercept(figure, vector, ray);
+		else if (figure->type == PLANE)
+			dist = plane_intercept(figure, vector, ray);
         if ((dist > 0) && (dist < *closest_dist || closest_figure == NULL))
 		{
             *color = figure->RGB_color;
@@ -66,11 +69,13 @@ t_figure * ClosestIntersection(t_figure *figure, t_vector *vector, t_vector *ray
 	return (closest_figure);
 }
 
-t_figure * check_intersection(t_figure *figure, t_vector *vector, t_vector *ray)
+t_figure *check_intersection(t_figure *figure, t_vector *vector, t_vector *ray)
 {
 	while(figure)
     {
-        if (sphere_intercept(figure, vector, ray))
+        if (figure->type == SPHERE && sphere_intercept(figure, vector, ray))
+			return (figure);
+		if (figure->type == PLANE && plane_intercept(figure, vector, ray))
 			return (figure);
 		figure = figure->next;
     }
@@ -81,7 +86,6 @@ int get_color(t_data *data, t_vector *ray)
 {
     t_color *color;
 	t_color *temp;
-    //t_sphere *closest_sphere = NULL;
     float closest_dist = 0;
 	t_figure *closest_figure = NULL;
 
@@ -112,7 +116,7 @@ t_color	*color_multiply(t_color *color, float intecivity)
 	return (res);
 }
 
-int sphere_intercept(t_figure *sphere, t_vector *vector, t_vector *ray)
+float sphere_intercept(t_figure *sphere, t_vector *vector, t_vector *ray)
 {
 	float a;
 	float b;
@@ -133,6 +137,19 @@ int sphere_intercept(t_figure *sphere, t_vector *vector, t_vector *ray)
 	if (dist_1 > 0)
 		return (dist_1);
 	return (0);
+}
+
+float plane_intercept(t_figure *plane, t_vector *vector, t_vector *ray)
+{
+	float a;
+
+	a = vector_dot_product(plane->figure_body.plane.normal, ray);
+	if (a == 0)
+		return (0);
+	a = vector_dot_product(vector_subtract(plane->figure_body.plane.center, vector), plane->figure_body.plane.normal) / a;
+	if (a < 0)
+		return (0);
+	return (a);
 }
 
 t_view_plane *view_plane_new(float height, float width, float fov)
