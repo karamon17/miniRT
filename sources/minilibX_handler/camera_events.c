@@ -26,12 +26,12 @@ void press_camera_rotation_keys(int keycode, t_data *data) {
 
 void press_camera_movement_keys(int keycode, t_data *data) {
 	if (keycode == KEY_UP_ARROW)
-		move_cam_forward(data);
+		move_cam_up(data);
 	else if (keycode == KEY_DOWN_ARROW)
-        move_cam_backward(data);
+        move_cam_down(data);
 	else if (keycode == KEY_LEFT_ARROW)
-		printf("camera left\n");
-	else if (keycode == KEY_RIGHT_ARROW)
-		printf("camera right\n");
+		move_cam_left(data);
+    else if (keycode == KEY_RIGHT_ARROW)
+        move_cam_right(data);
 
 }

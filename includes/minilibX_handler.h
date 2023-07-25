@@ -41,4 +41,9 @@ int is_camera_rotation_key(int keycode);
 
 void move_cam_forward(t_data *data);
 void move_cam_backward(t_data *data);
+void move_cam_up(t_data *data);
+void move_cam_down(t_data *data);
+void move_cam_left(t_data *data);
+void move_cam_right(t_data *data);
+
 #endif //MINIRT_MINILIBX_HANDLER_H
