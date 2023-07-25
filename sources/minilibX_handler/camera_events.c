@@ -1,5 +1,6 @@
 #include "../../includes/miniRT.h"
 
+
 void press_camera_rotation_keys(int keycode, t_data *data) {
 	(void)data;
 	if (keycode == KEY_0)
@@ -26,12 +27,18 @@ void press_camera_rotation_keys(int keycode, t_data *data) {
 
 void press_camera_movement_keys(int keycode, t_data *data) {
 	if (keycode == KEY_UP_ARROW)
-		move_cam_up(data);
+		move_cam(data,data->movement->up);
 	else if (keycode == KEY_DOWN_ARROW)
-        move_cam_down(data);
+        move_cam(data, data->movement->down);
 	else if (keycode == KEY_LEFT_ARROW)
-		move_cam_left(data);
+		move_cam(data, data->movement->left);
     else if (keycode == KEY_RIGHT_ARROW)
-        move_cam_right(data);
+        move_cam(data, data->movement->right);
+    else if ( keycode == KEY_PLUS)
+        move_cam(data, data->movement->forward);
+    else if (keycode == KEY_MINUS)
+        move_cam(data, data->movement->backward);
 
 }
+
+

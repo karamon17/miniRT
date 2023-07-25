@@ -25,7 +25,8 @@
 #define KEY_7            89
 #define KEY_8            91
 #define KEY_9            92
-
+#define KEY_MINUS        78
+#define KEY_PLUS         69
 
 void	mlx_hooks_handler(t_data *data);
 int	ft_exit(int keycode, void *f);
@@ -38,12 +39,6 @@ int is_camera_movement_key(int keycode);
 void press_camera_movement_keys(int keycode, t_data *data);
 int is_camera_rotation_key(int keycode);
 
-
-void move_cam_forward(t_data *data);
-void move_cam_backward(t_data *data);
-void move_cam_up(t_data *data);
-void move_cam_down(t_data *data);
-void move_cam_left(t_data *data);
-void move_cam_right(t_data *data);
+void move_cam(t_data *data, t_vector *direction);
 
 #endif //MINIRT_MINILIBX_HANDLER_H

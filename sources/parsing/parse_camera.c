@@ -5,8 +5,8 @@ void parse_camera(char *line, t_data *data) {
 	if (elements[4] != NULL)
 		error("Wrong amount of arguments in camera\n", EXIT_FAILURE);
 	t_camera *camera = new_camera(data);
-	camera->origin = parse_vector(elements[1]);
-	camera->direction = parse_vector(elements[2]);
+	camera->origin = parse_vector(elements[2]);
+	camera->direction = parse_vector(elements[1]);
 	camera->fov = (float)ft_atoi(elements[3]);
 	check_camera(camera);
 	data->camera = camera;

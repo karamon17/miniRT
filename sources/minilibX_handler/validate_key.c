@@ -6,7 +6,7 @@ int is_camera_rotation_key(int keycode) {
 			|| keycode == KEY_9);
 }
 int is_camera_movement_key(int keycode) {
-	return (keycode == KEY_UP_ARROW || keycode == KEY_DOWN_ARROW || keycode == KEY_LEFT_ARROW || keycode == KEY_RIGHT_ARROW);
+	return (keycode == KEY_UP_ARROW || keycode == KEY_DOWN_ARROW || keycode == KEY_LEFT_ARROW || keycode == KEY_RIGHT_ARROW || keycode == KEY_PLUS || keycode == KEY_MINUS);
 }
 
 int is_object_key(int keycode) {

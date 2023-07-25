@@ -19,14 +19,14 @@ void init_move_data(t_data *data) {
 	t_movement *move;
 	int mod;
 
-	mod = 10;
+	mod = 1;
 	move = malloc(sizeof(t_movement));
 	move->up = vector_new(0, 1*mod, 0);
 	move->down = vector_new(0, -1*mod, 0);
 	move->left = vector_new(-1*mod, 0, 0);
 	move->right = vector_new(1*mod, 0, 0);
-	move->forward = vector_new(0, 0, 1*mod);
-	move->backward = vector_new(0, 0, -1*mod);
+	move->forward = vector_new(0, 0, -1*mod);
+	move->backward = vector_new(0, 0, 1*mod);
 
 	data->movement = move;
 
