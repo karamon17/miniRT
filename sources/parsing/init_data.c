@@ -2,6 +2,8 @@
 
 void init_mlx_data(t_data *data);
 
+void init_move_data(t_data *data);
+
 t_data *init_data(char *input) {
 
 	t_data *rt_data;
@@ -12,7 +14,24 @@ t_data *init_data(char *input) {
 	rt_data->figures = NULL;
 	init_checker(rt_data);
 	init_mlx_data(rt_data);
+	init_move_data(rt_data);
 	return (rt_data);
+}
+
+void init_move_data(t_data *data) {
+
+	t_movement *move;
+
+	move = malloc(sizeof(t_movement));
+	move->up = vector_new(0, 1, 0);
+	move->down = vector_new(0, -1, 0);
+	move->left = vector_new(-1, 0, 0);
+	move->right = vector_new(1, 0, 0);
+	move->forward = vector_new(0, 0, 1);
+	move->backward = vector_new(0, 0, -1);
+			
+	data->movement = move;
+
 }
 
 void init_mlx_data(t_data *data) {
@@ -22,7 +41,6 @@ void init_mlx_data(t_data *data) {
 	mlx_data->mlx = mlx_init();
 	mlx_data->win = mlx_new_window(mlx_data->mlx, 800, 600, "miniRT");
 	mlx_data->img = mlx_new_image(mlx_data->mlx, 800, 600);
-	mlx_data->filename = data->filename;
 	mlx_data->width = 800;
 	mlx_data->height = 600;
 	mlx_data->bpp = 32;

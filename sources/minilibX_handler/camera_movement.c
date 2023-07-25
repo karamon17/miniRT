@@ -5,7 +5,7 @@ void move_cam_forward(t_data *data)
     t_vector *new_origin;
     t_vector *up;
 
-    up = vector_new(0, 10, 0);
+    up = vector_new(0, 1, 0);
     new_origin = add_vector(data->camera->origin, up);
     free(data->camera->origin);
     free(up);

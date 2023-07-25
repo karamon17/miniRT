@@ -53,6 +53,19 @@ typedef struct s_mlx_data
     int endian;
 } t_mlx_data;
 
+typedef struct s_movement
+{
+    t_vector *up;
+    t_vector *down;
+    t_vector *left;
+    t_vector *right;
+    t_vector *forward;
+    t_vector *backward;
+    t_vector *rotate_left;
+    t_vector *rotate_right;
+
+} t_movement;
+
 typedef struct s_data
 {
     char    *filename;
@@ -61,6 +74,7 @@ typedef struct s_data
 	t_light *lights;
 	t_checker checker;
     t_mlx_data *mlx_data;
+    t_movement *movement;
 } t_data;
 
 #endif //MINIRT_PROJECT_MINIRT_H
