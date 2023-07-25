@@ -26,6 +26,7 @@ void press_camera_rotation_keys(int keycode, t_data *data) {
 }
 
 void press_camera_movement_keys(int keycode, t_data *data) {
+
 	if (keycode == KEY_UP_ARROW)
 		move_cam(data,data->movement->up);
 	else if (keycode == KEY_DOWN_ARROW)
@@ -38,7 +39,6 @@ void press_camera_movement_keys(int keycode, t_data *data) {
         move_cam(data, data->movement->forward);
     else if (keycode == KEY_MINUS)
         move_cam(data, data->movement->backward);
-
 }
 
 

@@ -8,6 +8,7 @@ t_data *init_data(char *input) {
 	rt_data->filename = input;
 	rt_data->lights = NULL;
 	rt_data->figures = NULL;
+    rt_data->closest_figure = NULL;
 	init_checker(rt_data);
 	init_mlx_data(rt_data);
 	init_move_data(rt_data);

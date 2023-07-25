@@ -75,6 +75,7 @@ typedef struct s_data
 	t_checker checker;
     t_mlx_data *mlx_data;
     t_movement *movement;
+    t_figure *closest_figure;
 } t_data;
 
 #endif //MINIRT_PROJECT_MINIRT_H

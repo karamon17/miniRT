@@ -10,10 +10,7 @@ int main(int argc, char **argv)
     if (argc < 2 || argc > 3)
 		wrong_argc(argv[0]);
 	data = init_data(argv[1]);
-
 	parse_rt_file(data);
-	data->mlx_data->height = 600;
-	data->mlx_data->width = 800;
     data->mlx_data->mlx = mlx;
 	win = mlx_new_window(mlx, (int)data->mlx_data->width, (int)data->mlx_data->height, "miniRT");
     data->mlx_data->win = win;

@@ -27,6 +27,7 @@
 #define KEY_9            92
 #define KEY_MINUS        78
 #define KEY_PLUS         69
+#define LEFT_CLICK       1
 
 void	mlx_hooks_handler(t_data *data);
 int	ft_exit(int keycode, void *f);
