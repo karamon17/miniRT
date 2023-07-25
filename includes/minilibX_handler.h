@@ -29,7 +29,7 @@
 
 void	mlx_hooks_handler(t_data *data);
 int	ft_exit(int keycode, void *f);
-int	press_keys(int keycode, void *data);
+int	press_keys(int keycode, t_data *data);
 int	mouse_whilling(int button, int x, int y, t_data *data);
 int	press_object_movement_keys(int keycode, t_data *data);
 void press_camera_rotation_keys(int keycode, t_data *data);
@@ -39,4 +39,6 @@ void press_camera_movement_keys(int keycode, t_data *data);
 int is_camera_rotation_key(int keycode);
 
 
+void move_cam_forward(t_data *data);
+void move_cam_backward(t_data *data);
 #endif //MINIRT_MINILIBX_HANDLER_H

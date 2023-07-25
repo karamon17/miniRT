@@ -41,22 +41,26 @@ typedef struct s_checker
 
 } t_checker;
 
-typedef struct s_data
+typedef struct s_mlx_data
 {
     void	*mlx;
     void	*win;
+    void	*img;
+    float 	width;
+    float 	height;
+    int bpp;
+    int size_line;
+    int endian;
+} t_mlx_data;
+
+typedef struct s_data
+{
     char    *filename;
-	int 	width;
-	int 	height;
 	t_camera *camera;
 	t_figure *figures;
 	t_light *lights;
 	t_checker checker;
+    t_mlx_data *mlx_data;
 } t_data;
-
-
-
-
-t_light  *light_new(t_vector *vector, char	type, float	intensity);
 
 #endif //MINIRT_PROJECT_MINIRT_H

@@ -63,3 +63,10 @@ t_vector *multiply_vector(float t, t_vector *v)
 	vector->z = t * v->z;
 	return (vector);
 }
+
+t_vector *add_vector(t_vector *vector1, t_vector *vector2) {
+    t_vector *new_vector;
+
+    new_vector = vector_new(vector1->x + vector2->x, vector1->y + vector2->y, vector1->z + vector2->z);
+    return (new_vector);
+}

@@ -1,6 +1,6 @@
 #include "../includes/miniRT.h"
 
-int	press_keys(int keycode, void *data)
+int	press_keys(int keycode, t_data *data)
 {
 	if(is_object_key(keycode))
 		press_object_movement_keys(keycode, data);
@@ -15,8 +15,8 @@ int	press_keys(int keycode, void *data)
 
 void	mlx_hooks_handler(t_data *data)
 {
-	mlx_hook(data->win, 4, 1, mouse_whilling, data);
-	mlx_hook(data->win, 2, 1, press_keys, (void *) 0);
-	mlx_hook(data->win, 17, 1L << 2, ft_exit, (void *)0);
-	mlx_loop(data->mlx);
+	mlx_hook(data->mlx_data->win, 4, 1, mouse_whilling, data);
+	mlx_hook(data->mlx_data->win, 2, 1, press_keys, data);
+	mlx_hook(data->mlx_data->win, 17, 1L << 2, ft_exit, (void *)0);
+	mlx_loop(data->mlx_data->mlx);
 }
