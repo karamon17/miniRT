@@ -1,0 +1,119 @@
+#include <math.h>
+
+typedef struct {
+    float x, y, z;
+} Vector3;
+
+typedef struct {
+    float m[3][3];
+} Matrix3x3;
+
+// Function to create a 3x3 rotation matrix for yaw (rotation around the y-axis)
+Matrix3x3 yaw_rotation(float angle) {
+    Matrix3x3 rotation;
+    float cos_angle = cos(angle);
+    float sin_angle = sin(angle);
+    
+    rotation.m[0][0] = cos_angle;
+    rotation.m[0][1] = 0.0f;
+    rotation.m[0][2] = -sin_angle;
+    
+    rotation.m[1][0] = 0.0f;
+    rotation.m[1][1] = 1.0f;
+    rotation.m[1][2] = 0.0f;
+    
+    rotation.m[2][0] = sin_angle;
+    rotation.m[2][1] = 0.0f;
+    rotation.m[2][2] = cos_angle;
+    
+    return rotation;
+}
+
+// Function to create a 3x3 rotation matrix for pitch (rotation around the x-axis)
+Matrix3x3 pitch_rotation(float angle) {
+    Matrix3x3 rotation;
+    float cos_angle = cos(angle);
+    float sin_angle = sin(angle);
+    
+    rotation.m[0][0] = 1.0f;
+    rotation.m[0][1] = 0.0f;
+    rotation.m[0][2] = 0.0f;
+    
+    rotation.m[1][0] = 0.0f;
+    rotation.m[1][1] = cos_angle;
+    rotation.m[1][2] = sin_angle;
+    
+    rotation.m[2][0] = 0.0f;
+    rotation.m[2][1] = -sin_angle;
+    rotation.m[2][2] = cos_angle;
+    
+    return rotation;
+}
+
+// Function to create a 3x3 rotation matrix for roll (rotation around the z-axis)
+Matrix3x3 roll_rotation(float angle) {
+    Matrix3x3 rotation;
+    float cos_angle = cos(angle);
+    float sin_angle = sin(angle);
+    
+    rotation.m[0][0] = cos_angle;
+    rotation.m[0][1] = sin_angle;
+    rotation.m[0][2] = 0.0f;
+    
+    rotation.m[1][0] = -sin_angle;
+    rotation.m[1][1] = cos_angle;
+    rotation.m[1][2] = 0.0f;
+    
+    rotation.m[2][0] = 0.0f;
+    rotation.m[2][1] = 0.0f;
+    rotation.m[2][2] = 1.0f;
+    
+    return rotation;
+}
+
+// Function to multiply two 3x3 matrices
+Matrix3x3 multiply_matrix(Matrix3x3 m1, Matrix3x3 m2) {
+    Matrix3x3 result;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            result.m[i][j] = m1.m[i][0] * m2.m[0][j] + m1.m[i][1] * m2.m[1][j] + m1.m[i][2] * m2.m[2][j];
+        }
+    }
+    return result;
+}
+
+// Function to rotate an object using Euler angles
+void rotate_object(Vector3 *vertices, int num_vertices, float yaw, float pitch, float roll) {
+    Matrix3x3 yaw_matrix = yaw_rotation(yaw);
+    Matrix3x3 pitch_matrix = pitch_rotation(pitch);
+    Matrix3x3 roll_matrix = roll_rotation(roll);
+    
+    Matrix3x3 combined_rotation = multiply_matrix(yaw_matrix, multiply_matrix(pitch_matrix, roll_matrix));
+    
+    for (int i = 0; i < num_vertices; i++) {
+        float x = vertices[i].x;
+        float y = vertices[i].y;
+        float z = vertices[i].z;
+        
+        vertices[i].x = combined_rotation.m[0][0] * x + combined_rotation.m[0][1] * y + combined_rotation.m[0][2] * z;
+        vertices[i].y = combined_rotation.m[1][0] * x + combined_rotation.m[1][1] * y + combined_rotation.m[1][2] * z;
+        vertices[i].z = combined_rotation.m[2][0] * x + combined_rotation.m[2][1] * y + combined_rotation.m[2][2] * z;
+    }
+}
+
+int main() {
+    Vector3 vertices[] = {
+        {0.0f, 0.0f, 0.0f},
+        {1.0f, 0.0f, 0.0f},
+        {0.0f, 1.0f, 0.0f}
+    };
+    int num_vertices = sizeof(vertices) / sizeof(vertices[0]);
+    
+    float yaw = 0.0f;     // Rotation around the y-axis
+    float pitch = 0.0f;   // Rotation around the x-axis
+    float roll = 0.0f;    // Rotation around the z-axis
+    
+    // Rotate the object with the specified Euler angles
+    rotate_object(vertices, num_vertices, yaw, pitch, roll);
+    
+    // The vertices are now updated with

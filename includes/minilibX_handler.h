@@ -32,14 +32,19 @@
 void	mlx_hooks_handler(t_data *data);
 int	ft_exit(int keycode, void *f);
 int	press_keys(int keycode, t_data *data);
-int	mouse_whilling(int button, int x, int y, t_data *data);
+int	mouse_handle(int button, int x, int y, t_data *data);
 int	press_object_movement_keys(int keycode, t_data *data);
 void press_camera_rotation_keys(int keycode, t_data *data);
 int is_object_key(int keycode);
 int is_camera_movement_key(int keycode);
 void press_camera_movement_keys(int keycode, t_data *data);
 int is_camera_rotation_key(int keycode);
+void rotate_cam(t_data *data);
 
 void move_cam(t_data *data, t_vector *direction);
-
+void get_object(t_data *data, int x, int y);
+t_figure *get_closest_intersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist);
+void move_object(t_data *data, t_vector *direction);
+void move_sphere(t_figure *sphere, t_vector *direction);
+t_quaternion multiply_quaternion(t_quaternion q1, t_quaternion q2);
 #endif //MINIRT_MINILIBX_HANDLER_H

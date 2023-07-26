@@ -1,5 +1,7 @@
 #include "../../includes/miniRT.h"
 
+t_quaternion *quaternion_new(float i, float i1, float i2, float i3);
+
 t_data *init_data(char *input) {
 
 	t_data *rt_data;
@@ -20,7 +22,7 @@ void init_move_data(t_data *data) {
 	t_movement *move;
 	int mod;
 
-	mod = 1;
+	mod = 50;
 	move = malloc(sizeof(t_movement));
 	move->up = vector_new(0, 1*mod, 0);
 	move->down = vector_new(0, -1*mod, 0);
@@ -28,9 +30,22 @@ void init_move_data(t_data *data) {
 	move->right = vector_new(1*mod, 0, 0);
 	move->forward = vector_new(0, 0, -1*mod);
 	move->backward = vector_new(0, 0, 1*mod);
+	move->rotate_left = quaternion_new(0, 0.1305f, 0, 0);
+	move->rotate_right = quaternion_new(0.9914f, -0.1305f, 0, 0);
 
 	data->movement = move;
 
+}
+
+t_quaternion *quaternion_new(float i, float i1, float i2, float i3) {
+	t_quaternion *quaternion;
+
+	quaternion = malloc(sizeof(t_quaternion));
+	quaternion->x = i;
+	quaternion->y = i1;
+	quaternion->z = i2;
+	quaternion->w = i3;
+	return (quaternion);
 }
 
 void init_mlx_data(t_data *data) {
