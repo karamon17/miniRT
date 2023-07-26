@@ -59,3 +59,9 @@ void print_camera_content(t_camera *pCamera) {
 	printf("FOV: %f\n", pCamera->fov);
 }
 
+void print_coordinats(t_data *pData) {
+	printf("Camera origin: %f %f %f\n", pData->camera->origin->x, pData->camera->origin->y, pData->camera->origin->z);
+	printf("Camera direction: %f %f %f\n", pData->camera->direction->x, pData->camera->direction->y, pData->camera->direction->z);
+	//printf("Sphere: %f %f %f\n", pData->figures->figure_body.sphere.center->x, pData->figures->figure_body.sphere.center->y, pData->figures->figure_body.sphere.center->z);
+	//printf("light: %f %f %f\n", pData->lights->vector->x, pData->lights->vector->y, pData->lights->vector->z);
+}

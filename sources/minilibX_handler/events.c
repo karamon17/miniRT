@@ -1,7 +1,5 @@
 #include "../includes/miniRT.h"
 
-void print_coordinats(t_data *pData);
-
 int	press_keys(int keycode, t_data *data)
 {
 	if(is_object_key(keycode))
@@ -12,17 +10,11 @@ int	press_keys(int keycode, t_data *data)
 		press_camera_rotation_keys(keycode, data);
 	else if (keycode == KEY_ESC)
 		exit(0);
-    print_coordinats(data);
 	ray_trace(data->mlx_data->mlx, data);
+	//print_coordinats(data);
 	return (0);
 }
 
-void print_coordinats(t_data *pData) {
-    printf("Camera origin: %f %f %f\n", pData->camera->origin->x, pData->camera->origin->y, pData->camera->origin->z);
-    printf("Camera direction: %f %f %f\n", pData->camera->direction->x, pData->camera->direction->y, pData->camera->direction->z);
-    //printf("Sphere: %f %f %f\n", pData->figures->figure_body.sphere.center->x, pData->figures->figure_body.sphere.center->y, pData->figures->figure_body.sphere.center->z);
-    //printf("light: %f %f %f\n", pData->lights->vector->x, pData->lights->vector->y, pData->lights->vector->z);
-}
 
 void	mlx_hooks_handler(t_data *data)
 {
