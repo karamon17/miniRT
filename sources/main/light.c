@@ -8,10 +8,15 @@ float	compute_lighting(t_data *data, t_vector *p, t_vector *n, t_vector *ray, fl
 	t_light *current;
 	t_vector *r;
 
+    (void ) n;
+    (void ) ray;
+    (void ) s;
+
 	current = data->lights;
 	t_vector *l;
 	i = 0.0f;
-	while (current) {
+	while (current)
+    {
         if (current->type == 'A')
             i += current->intensity;
         else {
@@ -24,19 +29,20 @@ float	compute_lighting(t_data *data, t_vector *p, t_vector *n, t_vector *ray, fl
                 continue;
             }
             //диффузность
-            n_dot_l = vector_dot_product(n, l);
-            if (n_dot_l > 0)
-                i += current->intensity * n_dot_l / (vector_length(n) * vector_length(l));
-            //зеркальность
-            if (s != -1) {
-                r = vector_subtract(multiply_vector(2 * vector_dot_product(n, l), n), l);
-                r_dot_v = vector_dot_product(r, ray);
-                if (r_dot_v > 0)
-                    i += current->intensity * pow(r_dot_v / (vector_length(r) * vector_length(ray)), s);
-            }
+            /*n_dot_l = vector_dot_product(n, l);
+               if (n_dot_l > 0)
+                   i += current->intensity * n_dot_l / (vector_length(n) * vector_length(l));
+               //зеркальность
+               if (s != -1) {
+                   r = vector_subtract(multiply_vector(2 * vector_dot_product(n, l), n), l);
+                   r_dot_v = vector_dot_product(r, ray);
+                   if (r_dot_v > 0)
+                       i += current->intensity * pow(r_dot_v / (vector_length(r) * vector_length(ray)), s);
+               }*/
         }
         current = current->next;
     }
+    (void ) l;
     return (i);
 }
 

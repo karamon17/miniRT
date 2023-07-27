@@ -4,7 +4,6 @@
 #include "miniRT.h"
 #include "vector.h"
 
-
 typedef struct s_data t_data;
 
 typedef struct t_color
@@ -27,8 +26,6 @@ typedef struct s_light
 t_light *new_ambient_light(t_data *data);
 
 int color_to_int(t_color *color);
-t_color *int_to_color(int color);
-int compute_color(int color, float intensity);
 t_color *color_new(float r, float g, float b);
 
 #endif

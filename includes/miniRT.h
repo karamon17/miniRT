@@ -32,7 +32,7 @@
 
 t_light  *light_new(t_vector *vector, char	type, float	intensity);
 float	compute_lighting(t_data *data, t_vector *p, t_vector *n, t_vector *ray, float s);
-t_figure * ClosestIntersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color);
+t_figure * closest_intersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color);
 double			cylinder_intersection(t_vector *o, t_vector *d, t_figure *cylinder);
 double		distance(t_vector *p1, t_vector *p2);
 t_vector	*vector_add(t_vector *v1, t_vector *v2);
@@ -40,6 +40,18 @@ t_vector		normalize2(t_vector p);
 t_figure *check_intersection(t_figure *figure, t_vector *vector, t_vector *ray);
 int get_color(t_data *data, t_vector *ray);
 t_color	*color_multiply(t_color *color, float intecivity);
+
+typedef struct s_win_params
+{
+    int mlx_x;
+    int mlx_y;
+    float x_angle;
+    float y_angle;
+    float x_ray;
+    float y_ray;
+
+} t_win_params;
+
 typedef struct s_checker
 {
 	int camera_init;
@@ -55,6 +67,7 @@ typedef struct s_mlx_data
     void	*mlx;
     void	*win;
     void	*img;
+    int    *img_data;
     float 	width;
     float 	height;
     int bpp;

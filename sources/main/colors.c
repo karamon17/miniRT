@@ -23,13 +23,14 @@ int get_color(t_data *data, t_vector *ray)
 
     color = color_new(0, 0, 0);
     temp = color;
-    closest_figure = ClosestIntersection(data->figures, data->camera->origin, ray, &closest_dist, &color);
+    closest_figure = closest_intersection(data->figures, data->camera->origin, ray, &closest_dist, &color);
     if (closest_figure && closest_dist != INFINITY)
     {
-        t_vector *p = multiply_vector(closest_dist, ray);
-        t_vector *n = vector_subtract(p, closest_figure->center);
-        vector_normalize(n);
-        temp = color_multiply(color, compute_lighting(data, p, n, multiply_vector(data->camera->direction->z, ray), closest_figure->specular));
+        t_vector *hit_point = multiply_vector(closest_dist, ray);
+        t_vector *point_normal = vector_subtract(hit_point, closest_figure->center);
+        vector_normalize(point_normal);
+        temp = color_multiply(color, compute_lighting(data, hit_point, point_normal, ray, closest_figure->specular));
+
     }
     return (color_to_int(temp));
 }

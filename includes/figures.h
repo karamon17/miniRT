@@ -7,7 +7,6 @@
 
 typedef struct s_sphere t_sphere;
 
-
 typedef struct s_quaternion
 {
 	float w;
@@ -54,7 +53,5 @@ typedef struct		s_figures
 	struct s_figures* next;
 	t_vector	*normal;
 }					t_figure;
-
-t_sphere *sphere_new(t_vector *center, float radius);
 
 #endif //MINIRT_PROJECT_SPHERE_H

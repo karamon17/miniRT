@@ -11,6 +11,7 @@ int	press_keys(int keycode, t_data *data)
 		press_camera_movement_keys(keycode, data);
 	else if(is_camera_rotation_key(keycode))
 		press_camera_rotation_keys(keycode, data);
+    print_camera_content(data->camera);
 	ray_trace(data->mlx_data->mlx, data);
 	return (0);
 }

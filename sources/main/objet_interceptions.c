@@ -52,7 +52,7 @@ float sphere_intercept(t_figure *sphere, t_vector *vector, t_vector *ray)
     return (0);
 }
 
-t_figure *ClosestIntersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color)
+t_figure *closest_intersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color)
 {
     t_figure *closest_figure;
     float dist;
