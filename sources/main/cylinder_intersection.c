@@ -61,7 +61,7 @@ static t_vector calc_cy_normal(double x2[2], t_vector *o, t_vector *d, t_figure 
 			multiply_vector(dist, normal)), vector_subtract(center, o))));
 }
 
-static double	cy_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
+static double	cy_intersection(t_vector *o, t_vector *d, t_vector *cy_normal, t_figure *cylinder)
 {
 	double	x2[2];
 	t_vector *center = cylinder->figure_body.cylinder.center;
@@ -78,7 +78,7 @@ static double	cy_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
 					&& x2[0] > EPSILON) || (cylinder->figure_body.cylinder.dist2 >= 0
 					&& cylinder->figure_body.cylinder.dist2 <= height && x2[0] > EPSILON)))
 		return (INFINITY);
-	*normal = calc_cy_normal(x2, o, d, cylinder);
+	*cy_normal = calc_cy_normal(x2, o, d, cylinder);
 	return (x2[0]);
 }
 
@@ -124,15 +124,18 @@ double			cylinder_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
 {
 	double	cylinder_inter;
 	double	caps_inter;
+	t_vector cy_normal;
 
-	cylinder_inter = cy_intersection(o, d, cylinder);
+	cylinder_inter = cy_intersection(o, d, &cy_normal, cylinder);
 	caps_inter = caps_intersection(o, d, cylinder);
 	if (cylinder_inter < INFINITY || caps_inter < INFINITY)
 	{
 		if (cylinder_inter < caps_inter)
 		{
+			cylinder->normal = &cy_normal;
 			return (cylinder_inter);
 		}
+		cylinder->normal = cylinder->figure_body.cylinder.normal;
 		return (caps_inter);
 	}
 	return (INFINITY);

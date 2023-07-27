@@ -48,6 +48,7 @@ typedef struct		s_figures
 	t_color		*RGB_color;
 	enum e_figures	type;
 	struct s_figures* next;
+	t_vector	*normal;
 }					t_figure;
 
 t_sphere *sphere_new(t_vector *center, float radius);
