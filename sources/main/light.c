@@ -19,7 +19,7 @@ float	compute_lighting(t_data *data, t_vector *p, t_vector *n, t_vector *ray, fl
                 l = vector_subtract(current->vector, p);
             //тени
             //TODO change check_intersection FIXED
-            if (check_intersection(data->figures, p, l)) {
+            if (!check_intersection(data->figures, p, l)) {
                 current = current->next;
                 continue;
             }
