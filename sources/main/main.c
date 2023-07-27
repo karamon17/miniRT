@@ -11,13 +11,11 @@ int main(int argc, char **argv)
 		wrong_argc(argv[0]);
 	data = init_data(argv[1]);
 	parse_rt_file(data);
-	data->width = 800;
-	data->height = 600;
-	win = mlx_new_window(mlx, data->width, data->height, "miniRT");
-	ray_trace(mlx, win, data);
-	data->win = win;
-	data->mlx = mlx;
-	mlx_hooks_handler(data);
+    data->mlx_data->mlx = mlx;
+	win = mlx_new_window(mlx, (int)data->mlx_data->width, (int)data->mlx_data->height, "miniRT");
+    data->mlx_data->win = win;
+    ray_trace(mlx, data);
+    mlx_hooks_handler(data);
 	return (0);
 }
 

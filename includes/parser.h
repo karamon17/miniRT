@@ -30,6 +30,8 @@ void init_checker(t_data *data);
 t_data *init_data(char *input);
 void check_plane(t_figure *figure);
 void check_cylinder(t_figure *figure);
+void init_mlx_data(t_data *data);
+void init_move_data(t_data *data);
 
 //utils
 void free_array(char **array);

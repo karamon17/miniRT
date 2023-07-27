@@ -53,7 +53,7 @@ void add_to_list(t_figure *figures_list, t_figure *figure) {
 t_figure * add_figure(t_data *data, int type) {
 	t_figure *figure = malloc(sizeof(t_figure));
 	figure->type = type;
-	figure->specular = -1;
+	figure->specular = -1.f;
 	figure->next = NULL;
 	if(data->figures == NULL)
 		data->figures = figure;

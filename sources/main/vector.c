@@ -96,3 +96,10 @@ double		distance(t_vector *p1, t_vector *p2)
 	d = sqrt(pow(p2->x - p1->x, 2) + pow(p2->y - p1->y, 2) + pow(p2->z - p1->z, 2));
 	return (d);
 }
+
+t_vector *add_vector(t_vector *vector1, t_vector *vector2) {
+    t_vector *new_vector;
+
+    new_vector = vector_new(vector1->x + vector2->x, vector1->y + vector2->y, vector1->z + vector2->z);
+    return (new_vector);
+}
