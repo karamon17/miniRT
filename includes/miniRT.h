@@ -38,7 +38,8 @@ double		distance(t_vector *p1, t_vector *p2);
 t_vector	*vector_add(t_vector *v1, t_vector *v2);
 t_vector		normalize2(t_vector p);
 t_figure *check_intersection(t_figure *figure, t_vector *vector, t_vector *ray);
-
+int get_color(t_data *data, t_vector *ray);
+t_color	*color_multiply(t_color *color, float intecivity);
 typedef struct s_checker
 {
 	int camera_init;
