@@ -7,7 +7,7 @@ static int		solve_cylinder(double x[2], t_vector *o, t_vector *d, t_figure *cyli
 	double	a;
 	double	b;
 	double	c;
-	t_vector *center = cylinder->figure_body.cylinder.center;
+	t_vector *center = cylinder->center;
 	t_vector *normal = cylinder->figure_body.cylinder.normal;
 	float	radius = cylinder->figure_body.cylinder.radius;
 
@@ -34,7 +34,7 @@ static t_vector calc_cy_normal(double x2[2], t_vector *o, t_vector *d, t_figure 
 {
 	double	dist;
 	double	x;
-	t_vector *center = cylinder->figure_body.cylinder.center;
+	t_vector *center = cylinder->center;
 	t_vector *normal = cylinder->figure_body.cylinder.normal;
 	float height = cylinder->figure_body.cylinder.height;
 
@@ -64,7 +64,7 @@ static t_vector calc_cy_normal(double x2[2], t_vector *o, t_vector *d, t_figure 
 static double	cy_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
 {
 	double	x2[2];
-	t_vector *center = cylinder->figure_body.cylinder.center;
+	t_vector *center = cylinder->center;
 	t_vector *normal = cylinder->figure_body.cylinder.normal;
 	float height = cylinder->figure_body.cylinder.height;
 
@@ -89,17 +89,17 @@ static double	caps_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
 	t_vector *ip1;
 	t_vector *ip2;
 	t_vector *c2;
-	t_vector *center = cylinder->figure_body.cylinder.center;
+	t_vector *center = cylinder->center;
 	t_vector *normal = cylinder->figure_body.cylinder.normal;
 	float	radius = cylinder->figure_body.cylinder.radius;
 	float height = cylinder->figure_body.cylinder.height;
 
 	c2 = vector_add(center, multiply_vector(height, normal));
 	t_figure new_plane;
-	new_plane.figure_body.plane.center = center;
+	new_plane.center = center;
 	new_plane.figure_body.plane.normal = normal;
 	t_figure new_plane2;
-	new_plane2.figure_body.plane.center = c2;
+	new_plane2.center = c2;
 	new_plane2.figure_body.plane.normal = normal;
 	id1 = plane_intercept(&new_plane, o, d);
 	id2 = plane_intercept(&new_plane2, o, d);

@@ -23,7 +23,7 @@ float plane_intercept(t_figure *plane, t_vector *vector, t_vector *ray)
     a = vector_dot_product(plane->figure_body.plane.normal, ray);
     if (a == 0)
         return (0);
-    a = vector_dot_product(vector_subtract(plane->figure_body.plane.center, vector), plane->figure_body.plane.normal) / a;
+    a = vector_dot_product(vector_subtract(plane->center, vector), plane->figure_body.plane.normal) / a;
     if (a < 0)
         return (0);
     return (a);
@@ -38,7 +38,7 @@ float sphere_intercept(t_figure *sphere, t_vector *vector, t_vector *ray)
     float dist_1;
     t_vector *oc;
 
-    oc = vector_subtract(vector, sphere->figure_body.sphere.center);
+    oc = vector_subtract(vector, sphere->center);
     a = vector_dot_product(ray, ray);
     b = 2 * vector_dot_product(oc, ray);
     c = vector_dot_product(oc, oc) - (sphere->figure_body.sphere.radius * sphere->figure_body.sphere.radius);

@@ -27,7 +27,7 @@ int get_color(t_data *data, t_vector *ray)
     if (closest_figure)
     {
         t_vector *p = multiply_vector(closest_dist, ray);
-        t_vector *n = vector_subtract(p, closest_figure->figure_body.sphere.center);
+        t_vector *n = vector_subtract(p, closest_figure->center);
         vector_normalize(n);
         temp = color_multiply(color, compute_lighting(data, p, n, multiply_vector(data->camera->direction->z, ray), closest_figure->specular));
     }
