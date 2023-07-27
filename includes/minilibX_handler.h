@@ -29,29 +29,36 @@
 #define KEY_PLUS         69
 #define LEFT_CLICK       1
 
+#define KEY_SPACE        49
+
 void	mlx_hooks_handler(t_data *data);
 int	ft_exit(int keycode, void *f);
 int	press_keys(int keycode, t_data *data);
 int	mouse_handle(int button, int x, int y, t_data *data);
 int	press_object_movement_keys(int keycode, t_data *data);
 void press_camera_rotation_keys(int keycode, t_data *data);
-int is_object_key(int keycode);
+int is_object_movement_key(int keycode);
 int is_camera_movement_key(int keycode);
 void press_camera_movement_keys(int keycode, t_data *data);
 int is_camera_rotation_key(int keycode);
-void rotate_cam(t_data *data, t_quaternion *rotate_direction);
-void move_cam(t_data *data, t_vector *direction);
 void get_object(t_data *data, int x, int y);
 t_figure *get_closest_intersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist);
 void move_object(t_data *data, t_vector *direction);
-void move_sphere(t_figure *sphere, t_vector *direction);
 t_quaternion multiply_quaternion(t_quaternion q1, t_quaternion q2);
 t_quaternion *quaternion_new(float i, float i1, float i2, float i3);
 void quaternion_normalize(t_quaternion quaternion);
-void move_plane(t_figure *figure, t_vector *direction);
 int is_object_rotation_key(int keycode);
 void press_object_rotation_keys(int keycode, t_data *data);
 void rotate_object(t_data *data, t_quaternion *direction);
 t_quaternion conjugate(t_quaternion q);
+void switch_object_light(int keycode, t_data *data);
+void work_with_object(int keycode, t_data *data);
+void move_light(t_data *data, t_vector *direction);
+void move_figure(t_data *data, t_vector *direction);
+void move_vector(t_vector *light, t_vector *direction);
+void rotate_quaternion(t_vector *light, t_quaternion *direction);
+void rotate_figure(t_data *data, t_quaternion *direction);
+void rotate_light(t_data *data, t_quaternion *direction);
+
 
 #endif //MINIRT_MINILIBX_HANDLER_H

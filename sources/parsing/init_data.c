@@ -69,7 +69,7 @@ void init_checker(t_data *data) {
 	data->checker.has_ambient = 0;
 	data->checker.has_spot = 0;
 	data->checker.has_object = 0;
-
+    data->checker.object_light_toggle = 1;
 }
 
 t_light *new_ambient_light(t_data *data) {

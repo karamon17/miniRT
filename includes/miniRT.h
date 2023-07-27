@@ -38,6 +38,7 @@ typedef struct s_checker
 	int has_ambient;
 	int has_spot;
 	int has_object;
+    int object_light_toggle;
 
 } t_checker;
 

@@ -4,20 +4,22 @@ int	press_keys(int keycode, t_data *data)
 {
 	if (keycode == KEY_ESC)
 		exit(0);
-	if(data->closest_figure == NULL)
-		return (0);
-	if(is_object_key(keycode))
-		press_object_movement_keys(keycode, data);
-	else if(is_object_rotation_key(keycode))
-		press_object_rotation_keys(keycode, data);
+    switch_object_light(keycode, data);
+    if(is_object_movement_key(keycode) || is_object_rotation_key(keycode))
+        work_with_object(keycode, data);
 	else if(is_camera_movement_key(keycode))
 		press_camera_movement_keys(keycode, data);
 	else if(is_camera_rotation_key(keycode))
 		press_camera_rotation_keys(keycode, data);
-	/*else if(is_light_key(keycode))
-		press_light_movement_keys(keycode, data);*/
 	ray_trace(data->mlx_data->mlx, data);
 	return (0);
+}
+
+void work_with_object(int keycode, t_data *data) {
+    if(is_object_movement_key(keycode))
+        press_object_movement_keys(keycode, data);
+    else if(is_object_rotation_key(keycode))
+        press_object_rotation_keys(keycode, data);
 }
 
 int	press_object_movement_keys(int keycode, t_data *data)
