@@ -24,7 +24,7 @@ int get_color(t_data *data, t_vector *ray)
     color = color_new(0, 0, 0);
     temp = color;
     closest_figure = ClosestIntersection(data->figures, data->camera->origin, ray, &closest_dist, &color);
-    if (closest_figure)
+    if (closest_figure && closest_dist != INFINITY)
     {
         t_vector *p = multiply_vector(closest_dist, ray);
         t_vector *n = vector_subtract(p, closest_figure->center);

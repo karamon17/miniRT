@@ -22,10 +22,10 @@ float plane_intercept(t_figure *plane, t_vector *vector, t_vector *ray)
 
     a = vector_dot_product(plane->figure_body.plane.normal, ray);
     if (a == 0)
-        return (0);
+        return (INFINITY);
     a = vector_dot_product(vector_subtract(plane->center, vector), plane->figure_body.plane.normal) / a;
     if (a < 0)
-        return (0);
+        return (INFINITY);
     return (a);
 }
 
