@@ -1,6 +1,5 @@
 #include "../includes/miniRT.h"
 
-
 int get_color(t_data *data, t_vector *ray);
 
 t_color	*color_multiply(t_color *color, float intecivity);
@@ -53,7 +52,7 @@ t_figure *ClosestIntersection(t_figure *figure, t_vector *vector, t_vector *ray,
 		else if (figure->type == PLANE)
 			dist = plane_intercept(figure, vector, ray);
 		else if (figure->type == CYLINDER)
-			dist = cylinder_intercept(figure, vector, ray);
+			dist = cylinder_intersection(vector, ray, figure);
         if ((dist > 0) && (dist < *closest_dist || closest_figure == NULL))
 		{
             *color = figure->RGB_color;
@@ -73,7 +72,7 @@ t_figure *check_intersection(t_figure *figure, t_vector *vector, t_vector *ray)
 			return (figure);
 		if (figure->type == PLANE && plane_intercept(figure, vector, ray))
 			return (figure);
-		if (figure->type == CYLINDER && cylinder_intercept(figure, vector, ray))
+		if (figure->type == CYLINDER && cylinder_intersection(vector, ray, figure))
 			return (figure);
 		figure = figure->next;
     }
@@ -143,65 +142,66 @@ float plane_intercept(t_figure *plane, t_vector *vector, t_vector *ray)
 
 	a = vector_dot_product(plane->figure_body.plane.normal, ray);
 	if (a == 0)
-		return (0);
+		return (INFINITY);
 	a = vector_dot_product(vector_subtract(plane->figure_body.plane.center, vector), plane->figure_body.plane.normal) / a;
 	if (a < 0)
-		return (0);
+		return (INFINITY);
 	return (a);
 }
 
-float	cylinder_intercept(t_figure *cylinder, t_vector *vector, t_vector *ray)
-{
-	t_vector *oc;
-	t_vector *center = cylinder->figure_body.cylinder.center;
-	t_vector *normal = cylinder->figure_body.cylinder.normal;
-	float	radius = cylinder->figure_body.cylinder.radius;
-	float height = cylinder->figure_body.cylinder.height;
+// float	cylinder_intercept(t_figure *cylinder, t_vector *vector, t_vector *ray)
+// {
+// 	t_vector *oc;
+// 	t_vector *center = cylinder->figure_body.cylinder.center;
+// 	t_vector *normal = cylinder->figure_body.cylinder.normal;
+// 	float	radius_sq = cylinder->figure_body.cylinder.radius;
+// 	radius_sq *= radius_sq;
+// 	float height = cylinder->figure_body.cylinder.height;
 
-	oc = vector_subtract(vector, center);
+// 	oc = vector_subtract(vector, center);
 
-	float proj_x = ray->x - ray->z * normal->x;
-    float proj_y = ray->y - ray->z * normal->y;
+// 	float proj_x = ray->x - ray->z * normal->x;
+//     float proj_y = ray->y - ray->z * normal->y;
 
-    float a = ray->x * ray->x + ray->y * ray->y - ray->z * ray->z;
-    float b = 2 * (ray->x * oc->x + ray->y * oc->y - ray->z * oc->z);
-    float c = oc->x * oc->x + oc->y * oc->y - oc->z * oc->z - radius * radius;
+//     float a = ray->x * ray->x + ray->y * ray->y - ray->z * ray->z;
+//     float b = 2 * (ray->x * oc->x + ray->y * oc->y - ray->z * oc->z);
+//     float c = oc->x * oc->x + oc->y * oc->y - oc->z * oc->z - radius_sq;
 
-    float discriminant = b * b - 4 * a * c;
+//     float discriminant = b * b - 4 * a * c;
 
-    float t1, t2, t_bottom, t_top;
+//     float t1, t2, t_bottom, t_top;
 
-    // Проверяем пересечение с боковой поверхностью цилиндра
-    if (discriminant >= 0)
-	{
-        t1 = (-b + sqrtf(discriminant)) / (2 * a);
-        t2 = (-b - sqrtf(discriminant)) / (2 * a);
-        // Проверяем, лежат ли точки пересечения на высоте цилиндра
-        float z1 = vector->z + t1 * ray->z;
-        float z2 = vector->z + t2 * ray->z;
-        if (z1 >= center->z && z1 <= center->z + height) {
-            return t1;
-        } else if (z2 >= center->z && z2 <= center->z + height) {
-            return t2;
-        }
-    }
-    // Проверяем пересечение с плоскостью основания цилиндра
-    t_bottom = ((center->z - vector->z) / ray->z) / (normal->z - proj_x * normal->x - proj_y * normal->y);
-    t_top = ((center->z + height - vector->z) / ray->z) / (normal->z - proj_x * normal->x - proj_y * normal->y);
+//     // Проверяем пересечение с боковой поверхностью цилиндра
+//     if (discriminant >= 0)
+// 	{
+//         t1 = (-b + sqrtf(discriminant)) / (2 * a);
+//         t2 = (-b - sqrtf(discriminant)) / (2 * a);
+//         // Проверяем, лежат ли точки пересечения на высоте цилиндра
+//         float z1 = vector->z + t1 * ray->z;
+//         float z2 = vector->z + t2 * ray->z;
+//         if (z1 >= center->z && z1 <= center->z + height) {
+//             return t1;
+//         } else if (z2 >= center->z && z2 <= center->z + height) {
+//             return t2;
+//         }
+//     }
+//     // Проверяем пересечение с плоскостью основания цилиндра
+//     t_bottom = ((center->z - vector->z) / ray->z) / (normal->z - proj_x * normal->x - proj_y * normal->y);
+//     t_top = ((center->z + height - vector->z) / ray->z) / (normal->z - proj_x * normal->x - proj_y * normal->y);
 
-    // Проверяем, лежат ли точки пересечения с плоскостью основания внутри круга с радиусом cylinder->radius
-    float x_bottom = vector->x + t_bottom * ray->x - (center->x + t_bottom * proj_x);
-    float y_bottom = vector->y + t_bottom * ray->y - (center->y + t_bottom * proj_y);
-    if (x_bottom * x_bottom + y_bottom * y_bottom <= radius * radius) {
-        return t_bottom;
-    }
-    float x_top = vector->x + t_top * ray->x - (center->x + t_top * proj_x);
-    float y_top = vector->y + t_top * ray->y - (center->y + t_top * proj_y);
-    if (x_top * x_top + y_top * y_top <= radius * radius) {
-        return t_top;
-    }
-    return 0;
-}
+//     // Проверяем, лежат ли точки пересечения с плоскостью основания внутри круга с радиусом cylinder->radius
+//     float x_bottom = vector->x + t_bottom * ray->x - (center->x + t_bottom * proj_x);
+//     float y_bottom = vector->y + t_bottom * ray->y - (center->y + t_bottom * proj_y);
+//     if (x_bottom * x_bottom + y_bottom * y_bottom <= radius_sq) {
+//         return t_bottom;
+//     }
+//     float x_top = vector->x + t_top * ray->x - (center->x + t_top * proj_x);
+//     float y_top = vector->y + t_top * ray->y - (center->y + t_top * proj_y);
+//     if (x_top * x_top + y_top * y_top <= radius_sq) {
+//         return t_top;
+//     }
+//     return 0;
+// }
 
 t_view_plane *view_plane_new(float height, float width, float fov)
 {
