@@ -40,6 +40,8 @@ t_vector		normalize2(t_vector p);
 t_figure *check_intersection(t_figure *figure, t_vector *vector, t_vector *ray);
 int get_color(t_data *data, t_vector *ray);
 t_color	*color_multiply(t_color *color, float intecivity);
+void init_camera(t_data *data);
+
 
 typedef struct s_win_params
 {

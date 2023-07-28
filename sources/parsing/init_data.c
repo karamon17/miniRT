@@ -15,6 +15,19 @@ t_data *init_data(char *input) {
 	return (rt_data);
 }
 
+void init_camera(t_data *data) {
+
+	if(data->camera->direction->z == -1 || data->camera->direction->z == 1)
+		data->camera->up_vector = vector_new(0, 1, 0);
+	else if(data->camera->direction->x == -1 || data->camera->direction->x == 1)
+		data->camera->up_vector = vector_new(0, 0, 1);
+	else if(data->camera->direction->y == -1 || data->camera->direction->y == 1)
+		data->camera->up_vector = vector_new(0, 0, 1);
+	else
+		data->camera->up_vector = vector_new(0, 1, 0);
+	data->camera->right_vector = vector_cross_prodact(data->camera->up_vector, data->camera->direction);
+}
+
 void init_move_data(t_data *data) {
 
 	t_movement *move;

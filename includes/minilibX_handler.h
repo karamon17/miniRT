@@ -55,8 +55,8 @@ void switch_object_light(int keycode, t_data *data);
 void work_with_object(int keycode, t_data *data);
 void move_light(t_data *data, t_vector *direction);
 void move_figure(t_data *data, t_vector *direction);
-void move_vector(t_vector *light, t_vector *direction);
-void rotate_quaternion(t_vector *light, t_quaternion *direction);
+void move_vector(t_vector *vector, t_vector *direction);
+void rotate_quaternion(t_vector *vector, t_quaternion *direction);
 void rotate_figure(t_data *data, t_quaternion *direction);
 void rotate_light(t_data *data, t_quaternion *direction);
 
