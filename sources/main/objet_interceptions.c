@@ -19,11 +19,14 @@ t_figure *check_intersection(t_figure *figure, t_vector *vector, t_vector *ray)
 float plane_intercept(t_figure *plane, t_vector *vector, t_vector *ray)
 {
     float a;
+	t_vector *temp;
 
     a = vector_dot_product(plane->figure_body.plane.normal, ray);
     if (a == 0)
         return (INFINITY);
-    a = vector_dot_product(vector_subtract(plane->center, vector), plane->figure_body.plane.normal) / a;
+	temp = vector_subtract(plane->center, vector);
+    a = vector_dot_product(temp, plane->figure_body.plane.normal) / a;
+	free(temp);
     if (a < EPSILON)
         return (INFINITY);
     return (a);
@@ -42,11 +45,11 @@ float sphere_intercept(t_figure *sphere, t_vector *vector, t_vector *ray)
     a = vector_dot_product(ray, ray);
     b = 2 * vector_dot_product(oc, ray);
     c = vector_dot_product(oc, oc) - (sphere->figure_body.sphere.radius * sphere->figure_body.sphere.radius);
+    free(oc);
     discr = b * b - (4 * a * c);
     if (discr < 0)
         return (0);
     dist_1 = (-b - sqrt(discr)) / 2 / a;
-    free(oc);
     if (dist_1 > 0)
         return (dist_1);
     return (0);

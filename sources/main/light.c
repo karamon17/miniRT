@@ -56,6 +56,7 @@ int color_to_int(t_color *color)
 	g = round(color->green);
 	b = round(color->blue);
 	res = (t << 24 | r << 16 | g << 8 | b);
+	free(color);
 	return (res);
 }
 

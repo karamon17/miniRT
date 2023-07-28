@@ -39,6 +39,19 @@ t_vector	*vector_add(t_vector *v1, t_vector *v2)
 	return (vector);
 }
 
+t_vector	*vector_dup(t_vector *v1)
+{
+	t_vector	*vector;
+
+	vector = malloc(sizeof(t_vector));
+	if (!vector)
+		return (NULL);
+	vector->x = v1->x;
+	vector->y = v1->y;
+	vector->z = v1->z;
+	return (vector);
+}
+
 float vector_length(t_vector *v)
 {
 	float   length;
@@ -56,7 +69,7 @@ void vector_normalize(t_vector *v)
 	v->z = v->z / length;
 }
 
-t_vector		normalize2(t_vector p)
+t_vector	normalize2(t_vector p)
 {
 	t_vector	nv;
 	float	mod;
@@ -93,7 +106,7 @@ float		distance(t_vector *p1, t_vector *p2)
 {
 	float d;
 
-	d = sqrt(pow(p2->x - p1->x, 2) + pow(p2->y - p1->y, 2) + pow(p2->z - p1->z, 2));
+	d = sqrt((p2->x - p1->x) * (p2->x - p1->x) + (p2->y - p1->y) * (p2->y - p1->y) + (p2->z - p1->z) * (p2->z - p1->z));
 	return (d);
 }
 
