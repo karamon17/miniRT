@@ -40,8 +40,8 @@ void work_with_camera(int keycode, t_data *data) {
 	else if(is_camera_rotation_key(keycode))
 		press_camera_rotation_keys(keycode, data);
 	camera = data->camera;
-	//camera->right_vector = vector_cross_prodact(camera->direction, camera->up_vector);
-	//camera->up_vector = vector_cross_prodact(camera->right_vector, camera->direction);
+	camera->right_vector = vector_cross_prodact(camera->direction, camera->up_vector);
+	camera->up_vector = vector_cross_prodact(camera->right_vector, camera->direction);
 	view = view_matrix(camera->origin, camera);
 	update_figures_positions(data, view);
 }
