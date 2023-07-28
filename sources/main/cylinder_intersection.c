@@ -136,7 +136,6 @@ static float	caps_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
 	t_vector 	*ip1;
 	t_vector 	*ip2;
 	t_vector	*c2;
-	t_vector 	*center;
 	float		radius;
 	float 		height;
 	t_vector 	*normal;
@@ -145,16 +144,15 @@ static float	caps_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
 	t_figure 	new_plane;
 	t_figure 	new_plane2;
 
-	center = vector_dup(cylinder->center);
 	normal = cylinder->figure_body.cylinder.normal;
 	radius = cylinder->figure_body.cylinder.radius;
 	height = cylinder->figure_body.cylinder.height;
 	ip1 = NULL;
 	ip2 = NULL;
 	temp_h = multiply_vector(height, normal);
-	c2 = vector_add(center, temp_h);
+	c2 = vector_add(cylinder->center, temp_h);
 	free(temp_h);
-	new_plane.center = center;
+	new_plane.center = cylinder->center;
 	new_plane.figure_body.plane.normal = normal;
 	new_plane2.center = c2;
 	new_plane2.figure_body.plane.normal = normal;
@@ -168,21 +166,19 @@ static float	caps_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
 		temp_id = multiply_vector(id2, d);
 		ip2 = vector_add(o, temp_id);
 		free(temp_id);
-		if ((id1 < INFINITY && distance(ip1, center) <= radius)
+		if ((id1 < INFINITY && distance(ip1, cylinder->center) <= radius)
 				&& (id2 < INFINITY && distance(ip2, c2) <= radius))
 		{
 			free(ip1);
 			free(ip2);
-			free(center);
 			free(c2);
 			return (id1 < id2 ? id1 : id2);
 		}
 		else if (id1 < INFINITY
-						&& distance(ip1, center) <= radius)
+						&& distance(ip1, cylinder->center) <= radius)
 		{
 			free(ip1);
 			free(ip2);
-			free(center);
 			free(c2);
 			return (id1);
 		}
@@ -190,15 +186,16 @@ static float	caps_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
 		{
 			free(ip1);
 			free(ip2);
-			free(center);
 			free(c2);
 			return (id2);
 		}
+		free(ip1);
+		free(ip2);
+		free(c2);
 		return (INFINITY);
 	}
 	free(ip1);
 	free(ip2);
-	free(center);
 	free(c2);
 	return (INFINITY);
 }

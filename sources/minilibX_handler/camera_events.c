@@ -14,37 +14,34 @@ void press_camera_rotation_keys(int keycode, t_data *data) {
 void press_camera_movement_keys(int keycode, t_data *data) {
 
 	if (keycode == KEY_UP_ARROW)
-		move_vector(data->camera->origin, multiply_vector( 1 ,data->camera->up_vector));
+		move_vector(*(data->camera->origin), multiply_vector2( 1 ,*(data->camera->up_vector)));
 	else if (keycode == KEY_DOWN_ARROW)
-        move_vector(data->camera->origin, multiply_vector(-1,data->camera->up_vector));
+        move_vector(*(data->camera->origin), multiply_vector2(-1, *(data->camera->up_vector)));
 	else if (keycode == KEY_LEFT_ARROW)
-		move_vector(data->camera->origin, multiply_vector( 1 ,data->camera->right_vector));
+		move_vector(*(data->camera->origin), multiply_vector2( 1, *(data->camera->right_vector)));
     else if (keycode == KEY_RIGHT_ARROW)
-        move_vector(data->camera->origin, multiply_vector( -1 ,data->camera->right_vector));
+        move_vector(*(data->camera->origin), multiply_vector2( -1, *(data->camera->right_vector)));
     else if ( keycode == KEY_PLUS)
-        move_vector(data->camera->origin, multiply_vector(1,data->camera->direction));
+        move_vector(*(data->camera->origin), multiply_vector2(1, *(data->camera->direction)));
     else if (keycode == KEY_MINUS)
-        move_vector(data->camera->origin, multiply_vector(-1,data->camera->direction));
+        move_vector(*(data->camera->origin), multiply_vector2(-1, *(data->camera->direction)));
    }
 
 
 void work_with_camera(int keycode, t_data *data) {
-	t_camera *camera;
-	t_matrix_4 view;
+	// t_camera *camera;
+	// t_matrix_4 view;
 
-	camera = data->camera;
-	camera->right_vector = vector_cross_prodact(camera->direction, camera->up_vector);
-	camera->up_vector = vector_cross_prodact(camera->right_vector, camera->direction);
-	view = view_matrix(camera->origin, camera->direction, camera->up_vector);
-	update_figures_positions(data, view);
+	//camera = data->camera;
+	//update_figures_positions(data, view);
 	if(is_camera_movement_key(keycode))
 		press_camera_movement_keys(keycode, data);
 	else if(is_camera_rotation_key(keycode))
 		press_camera_rotation_keys(keycode, data);
-	camera->right_vector = vector_cross_prodact(camera->direction, camera->up_vector);
-	camera->up_vector = vector_cross_prodact(camera->right_vector, camera->direction);
-	view = view_matrix(camera->origin, camera->direction, camera->up_vector);
-	update_figures_positions(data, view);
+	// camera->right_vector = vector_cross_prodact(camera->direction, camera->up_vector);
+	// camera->up_vector = vector_cross_prodact(camera->right_vector, camera->direction);
+	// view = view_matrix(camera->origin, camera->direction, camera->up_vector);
+	// update_figures_positions(data, view);
 }
 
 void update_figures_positions(t_data *data, t_matrix_4 matrix4) {
@@ -57,9 +54,13 @@ void update_figures_positions(t_data *data, t_matrix_4 matrix4) {
 	}
 }
 
-t_matrix_4 view_matrix(t_vector *camera_position, t_vector *camera_direction, t_vector *up_vector) {
-
-	t_vector view_dir = get_vector_normalize(vector_subtract(camera_direction, camera_position));
+t_matrix_4 view_matrix(t_vector *camera_position, t_vector *camera_direction, t_vector *up_vector)
+{
+	t_vector *temp;
+	
+	temp = vector_subtract(camera_direction, camera_position);
+	t_vector view_dir = get_vector_normalize(temp);
+	free(temp);
 	t_vector right_dir = get_vector_normalize(vector_cross_prodact(up_vector, &view_dir));
 	t_vector *up_dir = vector_cross_prodact(&view_dir, &right_dir);
 

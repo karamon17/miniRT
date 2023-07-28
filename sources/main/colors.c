@@ -57,10 +57,11 @@ int get_color(t_data *data, t_vector *ray)
 		}	
 		vector_normalize(n);
 		temp_m = multiply_vector(data->camera->direction->z, ray);
+		free(temp);
         temp = color_multiply(color, compute_lighting(data, p, n, temp_m, closest_figure->specular));
-		//free(color); пока не понимаю почему если это фришить, то аборт происходит
 		free(temp_m);
 		free(n);
     }
+	
     return (color_to_int(temp));
 }

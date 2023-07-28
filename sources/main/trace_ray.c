@@ -1,14 +1,13 @@
 #include "../includes/miniRT.h"
 
-void ray_trace(void *mlx, t_data *data)
+void ray_trace(t_mlx_data *mlx_data, t_data *data)
 {
     t_win_params w_params;
     t_vector *ray;
     t_view_plane *vplane;
     int color;
 
-    t_mlx_data *mlx_data = data->mlx_data;
-    mlx_data->img = mlx_new_image(mlx, (int)mlx_data->width, (int)mlx_data->height+1);
+    mlx_data->img = mlx_new_image(mlx_data->mlx, (int)mlx_data->width, (int)mlx_data->height+1);
     mlx_data->img_data = (int *)mlx_get_data_addr(mlx_data->img, &mlx_data->bpp, &mlx_data->size_line, &mlx_data->endian);
     w_params.mlx_y = 0;
     vplane = view_plane_new(mlx_data->height, mlx_data->width, data->camera->fov);
@@ -21,9 +20,13 @@ void ray_trace(void *mlx, t_data *data)
         while (w_params.x_angle <= mlx_data->width / 2)
         {
             w_params.x_ray = w_params.x_angle * vplane->x_pixel;
-            ray = vector_new(w_params.x_ray, w_params.y_ray , -1);
+            ray = vector_new(w_params.x_ray, w_params.y_ray, data->camera->direction->z);
+			ray->x += data->camera->direction->x;
+			ray->y += data->camera->direction->y;
             vector_normalize(ray);
             color = get_color(data, ray);
+		system("leaks minirt");
+		pause();
             mlx_data->img_data[w_params.mlx_x + w_params.mlx_y * (int)mlx_data->width] = color;
             free(ray);
             w_params.x_angle++;

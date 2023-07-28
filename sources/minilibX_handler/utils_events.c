@@ -40,4 +40,5 @@ void get_object(t_data *data, int x, int y) {
 	t_vector *ray = vector_new(x_ray , y_ray, -1);
 	closest_figure = get_closest_intersection(data->figures, data->camera->origin, ray, &closest_dist);
 	data->closest_figure = closest_figure;
+	free(ray);
 }
