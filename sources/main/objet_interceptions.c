@@ -7,9 +7,9 @@ t_figure *check_intersection(t_figure *figure, t_vector *vector, t_vector *ray)
     {
         if (figure->type == SPHERE && sphere_intercept(figure, vector, ray))
             return (figure);
-        if (figure->type == PLANE && plane_intercept(figure, vector, ray))
+        if (figure->type == PLANE && plane_intercept(figure, vector, ray) && plane_intercept(figure, vector, ray) != INFINITY)
             return (figure);
-        if (figure->type == CYLINDER && cylinder_intersection(vector, ray, figure))
+        if (figure->type == CYLINDER && cylinder_intersection(vector, ray, figure) && cylinder_intersection(vector, ray, figure) != INFINITY)
             return (figure);
         figure = figure->next;
     }
@@ -24,7 +24,7 @@ float plane_intercept(t_figure *plane, t_vector *vector, t_vector *ray)
     if (a == 0)
         return (INFINITY);
     a = vector_dot_product(vector_subtract(plane->center, vector), plane->figure_body.plane.normal) / a;
-    if (a < 0)
+    if (a < EPSILON)
         return (INFINITY);
     return (a);
 }

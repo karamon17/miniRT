@@ -1,12 +1,12 @@
 #include "../includes/miniRT.h"
 
-static int		solve_cylinder(double x[2], t_vector *o, t_vector *d, t_figure *cylinder)
+static int		solve_cylinder(float x[2], t_vector *o, t_vector *d, t_figure *cylinder)
 {
 	t_vector *v;
 	t_vector *u;
-	double	a;
-	double	b;
-	double	c;
+	float	a;
+	float	b;
+	float	c;
 	t_vector *center = cylinder->center;
 	t_vector *normal = cylinder->figure_body.cylinder.normal;
 	float	radius = cylinder->figure_body.cylinder.radius;
@@ -30,10 +30,10 @@ static int		solve_cylinder(double x[2], t_vector *o, t_vector *d, t_figure *cyli
 	return (1);
 }
 
-static t_vector calc_cy_normal(double x2[2], t_vector *o, t_vector *d, t_figure *cylinder)
+static t_vector calc_cy_normal(float x2[2], t_vector *o, t_vector *d, t_figure *cylinder)
 {
-	double	dist;
-	double	x;
+	float	dist;
+	float	x;
 	t_vector *center = cylinder->center;
 	t_vector *normal = cylinder->figure_body.cylinder.normal;
 	float height = cylinder->figure_body.cylinder.height;
@@ -61,9 +61,9 @@ static t_vector calc_cy_normal(double x2[2], t_vector *o, t_vector *d, t_figure 
 			multiply_vector(dist, normal)), vector_subtract(center, o))));
 }
 
-static double	cy_intersection(t_vector *o, t_vector *d, t_vector *cy_normal, t_figure *cylinder)
+static float	cy_intersection(t_vector *o, t_vector *d, t_vector *cy_normal, t_figure *cylinder)
 {
-	double	x2[2];
+	float	x2[2];
 	t_vector *center = cylinder->center;
 	t_vector *normal = cylinder->figure_body.cylinder.normal;
 	float height = cylinder->figure_body.cylinder.height;
@@ -82,10 +82,10 @@ static double	cy_intersection(t_vector *o, t_vector *d, t_vector *cy_normal, t_f
 	return (x2[0]);
 }
 
-static double	caps_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
+static float	caps_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
 {
-	double	id1;
-	double	id2;
+	float	id1;
+	float	id2;
 	t_vector *ip1;
 	t_vector *ip2;
 	t_vector *c2;
@@ -120,10 +120,10 @@ static double	caps_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
 	return (INFINITY);
 }
 
-double			cylinder_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
+float			cylinder_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
 {
-	double	cylinder_inter;
-	double	caps_inter;
+	float	cylinder_inter;
+	float	caps_inter;
 	t_vector cy_normal;
 
 	cylinder_inter = cy_intersection(o, d, &cy_normal, cylinder);

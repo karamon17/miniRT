@@ -59,7 +59,7 @@ void vector_normalize(t_vector *v)
 t_vector		normalize2(t_vector p)
 {
 	t_vector	nv;
-	double	mod;
+	float	mod;
 
 	mod = sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
 	nv.x = p.x / mod;
@@ -89,9 +89,9 @@ t_vector *multiply_vector(float t, t_vector *v)
 	return (vector);
 }
 
-double		distance(t_vector *p1, t_vector *p2)
+float		distance(t_vector *p1, t_vector *p2)
 {
-	double d;
+	float d;
 
 	d = sqrt(pow(p2->x - p1->x, 2) + pow(p2->y - p1->y, 2) + pow(p2->z - p1->z, 2));
 	return (d);

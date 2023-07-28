@@ -28,7 +28,7 @@
 //to remove
 #include "to_remove.h"
 
-# define EPSILON 0.00001
+# define EPSILON 0.001
 
 t_light  *light_new(t_vector *vector, char	type, float	intensity);
 float	compute_lighting(t_data *data, t_vector *p, t_vector *n, t_vector *ray, float s);

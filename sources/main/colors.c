@@ -26,11 +26,16 @@ int get_color(t_data *data, t_vector *ray)
     closest_figure = closest_intersection(data->figures, data->camera->origin, ray, &closest_dist, &color);
     if (closest_figure && closest_dist != INFINITY)
     {
-        t_vector *hit_point = multiply_vector(closest_dist, ray);
-        t_vector *point_normal = vector_subtract(hit_point, closest_figure->center);
-        vector_normalize(point_normal);
-        temp = color_multiply(color, compute_lighting(data, hit_point, point_normal, ray, closest_figure->specular));
-
+        t_vector *p = multiply_vector(closest_dist, ray);
+        t_vector *n = vector_subtract(p, closest_figure->center);
+		if (closest_figure->type == CYLINDER)
+			n = vector_subtract(p, vector_add(multiply_vector(closest_figure->figure_body.cylinder.height / 2, closest_figure->figure_body.cylinder.normal), closest_figure->center));
+        if (closest_figure->type == PLANE && closest_figure->figure_body.plane.normal->z > 0)
+			n = closest_figure->figure_body.plane.normal;
+		else if (closest_figure->type == PLANE && closest_figure->figure_body.plane.normal->z <= 0)
+			n = multiply_vector(-1, closest_figure->figure_body.plane.normal);
+		vector_normalize(n);
+        temp = color_multiply(color, compute_lighting(data, p, n, multiply_vector(data->camera->direction->z, ray), closest_figure->specular));
     }
     return (color_to_int(temp));
 }
