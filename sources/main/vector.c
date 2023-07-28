@@ -103,3 +103,13 @@ t_vector *add_vector(t_vector *vector1, t_vector *vector2) {
     new_vector = vector_new(vector1->x + vector2->x, vector1->y + vector2->y, vector1->z + vector2->z);
     return (new_vector);
 }
+
+t_vector *vector_cross_prodact(t_vector *vector1, t_vector *vector2) {
+	t_vector *result;
+
+	result = vector_new(0,0,0);
+	result->x = vector1->y * vector2->z - vector1->z * vector2->y;
+	result->y = vector1->z * vector2->x - vector1->x * vector2->z;
+	result->z = vector1->x * vector2->y - vector1->y * vector2->x;
+	return (result);
+}

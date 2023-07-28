@@ -59,6 +59,11 @@ void move_vector(t_vector *vector, t_vector *direction);
 void rotate_quaternion(t_vector *vector, t_quaternion *direction);
 void rotate_figure(t_data *data, t_quaternion *direction);
 void rotate_light(t_data *data, t_quaternion *direction);
+void work_with_camera(int keycode, t_data *data);
+t_matrix_4 view_matrix(t_vector *camera_position, t_vector *camera_direction, t_vector *up_vector);
+void multiply_matrix_vector(t_matrix_4 view, t_vector *object);
+t_vector get_vector_normalize(t_vector *vector);
+void update_figures_positions(t_data *data, t_matrix_4 matrix4);
 
 
 #endif //MINIRT_MINILIBX_HANDLER_H

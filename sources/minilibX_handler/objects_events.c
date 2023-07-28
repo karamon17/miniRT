@@ -1,33 +1,5 @@
 #include "../../includes/miniRT.h"
 
-void work_with_camera(int keycode, t_data *data);
-
-int	press_keys(int keycode, t_data *data)
-{
-	if (keycode == KEY_ESC)
-		exit(0);
-    switch_object_light(keycode, data);
-    if(is_object_movement_key(keycode) || is_object_rotation_key(keycode))
-        work_with_object(keycode, data);
-	else if(is_camera_movement_key(keycode) || is_camera_rotation_key(keycode))
-		work_with_camera(keycode, data);
-    print_camera_content(data->camera);
-	ray_trace(data->mlx_data->mlx, data);
-	return (0);
-}
-
-void work_with_camera(int keycode, t_data *data) {
-	t_camera *camera;
-
-	if(is_camera_movement_key(keycode))
-		press_camera_movement_keys(keycode, data);
-	else if(is_camera_rotation_key(keycode))
-		press_camera_rotation_keys(keycode, data);
-	camera = data->camera;
-	camera->right_vector = vector_cross_prodact(camera->direction, camera->up_vector);
-	camera->up_vector = vector_cross_prodact(camera->right_vector, camera->direction);
-}
-
 void work_with_object(int keycode, t_data *data) {
     if(is_object_movement_key(keycode))
         press_object_movement_keys(keycode, data);
