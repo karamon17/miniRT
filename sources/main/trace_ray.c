@@ -21,7 +21,9 @@ void ray_trace(void *mlx, t_data *data)
         while (w_params.x_angle <= mlx_data->width / 2)
         {
             w_params.x_ray = w_params.x_angle * vplane->x_pixel;
-            ray = vector_new(w_params.x_ray, w_params.y_ray , -1);
+            ray = vector_new(w_params.x_ray, w_params.y_ray , data->camera->direction->z);
+			ray->x += data->camera->direction->x;
+			ray->y += data->camera->direction->y;
             vector_normalize(ray);
             color = get_color(data, ray);
             mlx_data->img_data[w_params.mlx_x + w_params.mlx_y * (int)mlx_data->width] = color;

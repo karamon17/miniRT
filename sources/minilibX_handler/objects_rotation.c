@@ -12,4 +12,6 @@ void rotate_figure(t_data *data, t_quaternion *direction) {
         return;
     else if(data->closest_figure->type == PLANE)
         rotate_quaternion(data->closest_figure->figure_body.plane.normal, direction);
+	else if(data->closest_figure->type == CYLINDER)
+		rotate_quaternion(data->closest_figure->figure_body.cylinder.normal, direction);
 }

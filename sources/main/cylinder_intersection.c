@@ -120,7 +120,7 @@ static float	caps_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
 	return (INFINITY);
 }
 
-float			cylinder_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
+float	cylinder_intersection(t_vector *o, t_vector *d, t_figure *cylinder)
 {
 	float	cylinder_inter;
 	float	caps_inter;

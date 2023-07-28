@@ -18,8 +18,9 @@ t_figure *get_closest_intersection(t_figure *figure, t_vector *vector, t_vector 
 			dist = sphere_intercept(figure, vector, ray);
 		else if (figure->type == PLANE)
 			dist = plane_intercept(figure, vector, ray);
-		if ((dist > 0) && (dist < *closest_dist || closest_figure == NULL))
-		{
+		else if (figure->type == CYLINDER)
+			dist = cylinder_intersection(vector, ray, figure);
+		if ((dist > 0) && (dist < *closest_dist || closest_figure == NULL)) {
 			*closest_dist = dist;
 			closest_figure = figure;
 		}
@@ -28,7 +29,7 @@ t_figure *get_closest_intersection(t_figure *figure, t_vector *vector, t_vector 
 	return (closest_figure);
 }
 
-void get_object(t_data *data, int x, int y) {
+void get_object(t_data *data, int x, int y){
 	float closest_dist = 0;
 	t_figure *closest_figure;
 

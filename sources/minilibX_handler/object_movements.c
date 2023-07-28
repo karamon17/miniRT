@@ -9,11 +9,6 @@ void move_object(t_data *data, t_vector *direction) {
 
 void move_figure(t_data *data, t_vector *direction) {
     if(data->closest_figure == NULL)
-        return ;
-    if(data->closest_figure->type == SPHERE)
-        move_vector(data->closest_figure->center, direction);
-    else if(data->closest_figure->type == PLANE)
-        move_vector(data->closest_figure->center, direction);
-/*	else if(data->closest_figure->type == CYLINDER)
-		move_cylinder(data->closest_figure->object, direction);*/
+		return ;
+	move_vector(data->closest_figure->center, direction);
 }
