@@ -28,7 +28,13 @@ int get_color(t_data *data, t_vector *ray)
     {
         t_vector *p = multiply_vector(closest_dist, ray);
         t_vector *n = vector_subtract(p, closest_figure->center);
-        vector_normalize(n);
+		if (closest_figure->type == CYLINDER)
+			n = vector_subtract(p, vector_add(multiply_vector(closest_figure->figure_body.cylinder.height / 2, closest_figure->figure_body.cylinder.normal), closest_figure->center));
+        if (closest_figure->type == PLANE && closest_figure->figure_body.plane.normal->z > 0)
+			n = closest_figure->figure_body.plane.normal;
+		else if (closest_figure->type == PLANE && closest_figure->figure_body.plane.normal->z <= 0)
+			n = multiply_vector(-1, closest_figure->figure_body.plane.normal);
+		vector_normalize(n);
         temp = color_multiply(color, compute_lighting(data, p, n, multiply_vector(data->camera->direction->z, ray), closest_figure->specular));
     }
     return (color_to_int(temp));
