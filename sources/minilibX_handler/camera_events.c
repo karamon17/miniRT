@@ -31,19 +31,22 @@ void press_camera_movement_keys(int keycode, t_data *data) {
 
 
 void work_with_camera(int keycode, t_data *data) {
-	t_camera *camera;
-	t_matrix_4 view;
+/*	t_camera *camera;
+	t_matrix_4 view;*/
 
 
 	if(is_camera_movement_key(keycode))
 		press_camera_movement_keys(keycode, data);
 	else if(is_camera_rotation_key(keycode))
 		press_camera_rotation_keys(keycode, data);
-	camera = data->camera;
+/*	camera = data->camera;
 	camera->right_vector = vector_cross_prodact(camera->direction, camera->up_vector);
 	camera->up_vector = vector_cross_prodact(camera->right_vector, camera->direction);
-	view = view_matrix(camera->origin, camera);
-	update_figures_positions(data, view);
+	vector_normalize(camera->direction);
+	vector_normalize(camera->up_vector);
+	vector_normalize(camera->right_vector);
+	view = view_matrix(camera);
+	update_figures_positions(data, view);*/
 }
 
 void update_figures_positions(t_data *data, t_matrix_4 matrix4) {
@@ -56,8 +59,9 @@ void update_figures_positions(t_data *data, t_matrix_4 matrix4) {
 	}
 }
 
-t_matrix_4 view_matrix(t_vector *camera_position, t_camera *camera) {
+t_matrix_4 view_matrix(t_camera *camera) {
 
+	t_vector *camera_position = camera->origin;
 	t_vector view_dir = *camera->direction;
 	t_vector right_dir = *camera->right_vector;
 	t_vector up_dir = *camera->up_vector;
@@ -65,17 +69,17 @@ t_matrix_4 view_matrix(t_vector *camera_position, t_camera *camera) {
 	t_matrix_4 result;
 	result.matrix[0][0] = right_dir.x;
 	result.matrix[0][1] = up_dir.x;
-	result.matrix[0][2] = -view_dir.x;
+	result.matrix[0][2] = view_dir.x;
 	result.matrix[0][3] = -vector_dot_product(&right_dir, camera_position);
 
 	result.matrix[1][0] = right_dir.y;
 	result.matrix[1][1] = up_dir.y;
-	result.matrix[1][2] = -view_dir.y;
+	result.matrix[1][2] = view_dir.y;
 	result.matrix[1][3] = -vector_dot_product(&up_dir, camera_position);
 
 	result.matrix[2][0] = right_dir.z;
 	result.matrix[2][1] = up_dir.z;
-	result.matrix[2][2] = -view_dir.z;
+	result.matrix[2][2] = view_dir.z;
 	result.matrix[2][3] = -vector_dot_product(&view_dir, camera_position);
 
 	result.matrix[3][0] = 0;

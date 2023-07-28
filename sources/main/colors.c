@@ -35,7 +35,7 @@ int get_color(t_data *data, t_vector *ray)
 		else if (closest_figure->type == PLANE && closest_figure->figure_body.plane.normal->z <= 0)
 			n = multiply_vector(-1, closest_figure->figure_body.plane.normal);
 		vector_normalize(n);
-        temp = color_multiply(color, compute_lighting(data, p, n, multiply_vector(data->camera->direction->z, ray), closest_figure->specular));
+        temp = color_multiply(color, compute_lighting(data, p, n, multiply_vector(/*data->camera->direction->z*/ -1, ray), closest_figure->specular));
     }
     return (color_to_int(temp));
 }
