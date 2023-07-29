@@ -32,7 +32,7 @@
 
 t_light  *light_new(t_vector *vector, char	type, float	intensity);
 float	compute_lighting(t_data *data, t_vector *p, t_vector *n, t_vector *ray, float s);
-t_figure * closest_intersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color);
+t_figure * closest_intersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist);
 float			cylinder_intersection(t_vector *o, t_vector *d, t_figure *cylinder);
 float		distance(t_vector *p1, t_vector *p2);
 t_vector	*vector_add(t_vector *v1, t_vector *v2);

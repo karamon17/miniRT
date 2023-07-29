@@ -55,32 +55,3 @@ float	compute_lighting(t_data *data, t_vector *p, t_vector *n, t_vector *ray, fl
     return (i);
 }
 
-int color_to_int(t_color *color)
-{
-	int r;
-	int g;
-	int b;
-	int t;
-	int res;
-
-	t = round(color->transparency);
-	r = round(color->red);
-	g = round(color->green);
-	b = round(color->blue);
-	res = (t << 24 | r << 16 | g << 8 | b);
-	free(color);
-	return (res);
-}
-
-t_color *color_new(float r, float g, float b) {
-	t_color *color;
-
-	color = malloc(sizeof(t_color));
-	if (!color)
-		return (NULL);
-	color->transparency = 0;
-	color->red = r;
-	color->green = g;
-	color->blue = b;
-	return (color);
-}

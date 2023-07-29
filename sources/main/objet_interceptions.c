@@ -55,7 +55,7 @@ float sphere_intercept(t_figure *sphere, t_vector *vector, t_vector *ray)
     return (0);
 }
 
-t_figure *closest_intersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color)
+t_figure *closest_intersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist)
 {
     t_figure *closest_figure;
     float dist;
@@ -71,7 +71,6 @@ t_figure *closest_intersection(t_figure *figure, t_vector *vector, t_vector *ray
             dist = cylinder_intersection(vector, ray, figure);
         if ((dist > 0) && (dist < *closest_dist || closest_figure == NULL))
         {
-            *color = figure->RGB_color;
             *closest_dist = dist;
             closest_figure = figure;
         }

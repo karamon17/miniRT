@@ -14,10 +14,39 @@ t_color	*color_multiply(t_color *color, float intecivity)
     return (res);
 }
 
+int color_to_int(t_color *color)
+{
+	int r;
+	int g;
+	int b;
+	int t;
+	int res;
+
+	t = round(color->transparency);
+	r = round(color->red);
+	g = round(color->green);
+	b = round(color->blue);
+	res = (t << 24 | r << 16 | g << 8 | b);
+	free(color);
+	return (res);
+}
+
+t_color *color_new(float r, float g, float b) {
+	t_color *color;
+
+	color = malloc(sizeof(t_color));
+	if (!color)
+		return (NULL);
+	color->transparency = 0;
+	color->red = r;
+	color->green = g;
+	color->blue = b;
+	return (color);
+}
+
 int get_color(t_data *data, t_vector *ray)
 {
     t_color 	*color;
-    t_color 	*temp;
     float 		closest_dist;
     t_figure 	*closest_figure;
 	t_vector 	*n;
@@ -29,11 +58,10 @@ int get_color(t_data *data, t_vector *ray)
 	closest_dist = 0;
 	closest_figure = NULL;
     color = color_new(0, 0, 0);
-    temp = color;
-    closest_figure = closest_intersection(data->figures, data->camera->origin, ray, &closest_dist, &color);
+    closest_figure = closest_intersection(data->figures, data->camera->origin, ray, &closest_dist);
     if (closest_figure && closest_dist != INFINITY)
     {
-        p = multiply_vector(closest_dist, ray);
+		p = multiply_vector(closest_dist, ray);
         n = vector_subtract(p, closest_figure->center);
 		temp_n = n;
 		if (closest_figure->type == CYLINDER)
@@ -57,11 +85,11 @@ int get_color(t_data *data, t_vector *ray)
 		}	
 		vector_normalize(n);
 		temp_m = multiply_vector(data->camera->direction->z, ray);
-		free(temp);
-        temp = color_multiply(color, compute_lighting(data, p, n, temp_m, closest_figure->specular));
+		free(color);
+		color = color_multiply(closest_figure->RGB_color, compute_lighting(data, p, n, temp_m, closest_figure->specular));
 		free(temp_m);
 		free(n);
+		free(p);
     }
-	
-    return (color_to_int(temp));
+    return (color_to_int(color));
 }
