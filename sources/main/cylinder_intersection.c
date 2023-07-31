@@ -125,6 +125,8 @@ static float	caps_intersection(t_vector *o, t_vector *d, t_figure *cyl)
 {
 	float		id1;
 	float		id2;
+	float		a;
+	float		b;
 	t_vectors 	t;
 	t_figure 	new_plane;
 	t_figure 	new_plane2;
@@ -134,11 +136,10 @@ static float	caps_intersection(t_vector *o, t_vector *d, t_figure *cyl)
 	t.v2 = NULL;
 	t.v5 = multiply_vector(cyl->body.cyl.height, t.v4);
 	t.v3 = vector_add(cyl->center, t.v5);
-	free(t.v5);
 	ft_newplane(&new_plane, &new_plane2, t.v4, cyl);
 	id1 = plane_intercept(&new_plane, o, d);
 	id2 = plane_intercept(&new_plane2, o, d);
-	free(new_plane2.center);
+	help_free(t.v5, new_plane2.center, NULL, NULL);
 	if (id1 < INFINITY || id2 < INFINITY)
 	{
 		t.v6 = multiply_vector(id1, d);
@@ -146,26 +147,18 @@ static float	caps_intersection(t_vector *o, t_vector *d, t_figure *cyl)
 		t.v7 = multiply_vector(id2, d);
 		t.v2 = vector_add(o, t.v7);
 		help_free(t.v6, t.v7, NULL, NULL);
-		if ((id1 < INFINITY && distance(t.v1, cyl->center) <= cyl->body.cyl.rad)
-				&& (id2 < INFINITY && distance(t.v2, t.v3) <= cyl->body.cyl.rad))
-		{
-			help_free(t.v1, t.v2, t.v3, NULL);
-			return (id1 < id2 ? id1 : id2);
-		}
-		else if (id1 < INFINITY	&& distance(t.v1, cyl->center) <= cyl->body.cyl.rad)
-		{
-			help_free(t.v1, t.v2, t.v3, NULL);
-			return (id1);
-		}
-		else if (id2 < INFINITY && distance(t.v2, t.v3) <= cyl->body.cyl.rad)
-		{
-			help_free(t.v1, t.v2, t.v3, NULL);
-			return (id2);
-		}
+		a = distance(t.v1, cyl->center);
+		b = distance(t.v2, t.v3);
 		help_free(t.v1, t.v2, t.v3, NULL);
+		if ((id1 < INFINITY && a <= cyl->body.cyl.rad)
+				&& (id2 < INFINITY && b <= cyl->body.cyl.rad))
+			return (id1 < id2 ? id1 : id2);
+		else if (id1 < INFINITY	&& a <= cyl->body.cyl.rad)
+			return (id1);
+		else if (id2 < INFINITY && b <= cyl->body.cyl.rad)
+			return (id2);	
 		return (INFINITY);
 	}
-	help_free(t.v1, t.v2, t.v3, NULL);
 	return (INFINITY);
 }
 
