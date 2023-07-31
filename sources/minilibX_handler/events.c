@@ -9,8 +9,8 @@ int	press_keys(int keycode, t_data *data)
 		work_with_object(keycode, data);
 	else if(is_camera_movement_key(keycode) || is_camera_rotation_key(keycode))
 		work_with_camera(keycode, data);
-	print_camera_content(data->camera);
-	print_figures_content(data->figures);
+	//print_camera_content(data->camera);
+	//print_figures_content(data->figures);
 	ray_trace(data->mlx_data->mlx, data);
 	return (0);
 }
