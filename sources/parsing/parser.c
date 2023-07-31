@@ -18,7 +18,8 @@ void parse_elements(char *file_content, t_data *data) {
 }
 
 
-void parse_element(char *element_line, t_data *data) {
+void parse_element(char *element_line, t_data *data)
+{
 	if (element_line[0] == '#')
 		return;
 	element_line = remove_overstricked_space(element_line);
@@ -36,7 +37,7 @@ void parse_element(char *element_line, t_data *data) {
 		parse_cylinder(element_line, data);	
 	// else
 	// 	error("in element line\n", EXIT_FAILURE);
-	free(element_line);
+	//free(element_line);
 }
 
 
