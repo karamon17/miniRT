@@ -13,6 +13,8 @@ void press_camera_rotation_keys(int keycode, t_data *data) {
 
 void press_camera_movement_keys(int keycode, t_data *data) {
 
+	float speed = 10.f;
+
 	if (keycode == KEY_UP_ARROW)
 		move_vector(data->camera->origin, data->camera->up_vector, 0);
 	else if (keycode == KEY_DOWN_ARROW)
@@ -71,18 +73,18 @@ t_matrix_4 view_matrix(t_vector *camera_position, t_vector *camera_direction, t_
 	up_dir = vector_cross_prodact(&view_dir, &right_dir);
 
 	result.matrix[0][0] = right_dir.x;
-	result.matrix[0][1] = up_dir->x;
-	result.matrix[0][2] = -view_dir.x;
+	result.matrix[0][1] = up_dir.x;
+	result.matrix[0][2] = view_dir.x;
 	result.matrix[0][3] = -vector_dot_product(&right_dir, camera_position);
 
 	result.matrix[1][0] = right_dir.y;
-	result.matrix[1][1] = up_dir->y;
-	result.matrix[1][2] = -view_dir.y;
-	result.matrix[1][3] = -vector_dot_product(up_dir, camera_position);
+	result.matrix[1][1] = up_dir.y;
+	result.matrix[1][2] = view_dir.y;
+	result.matrix[1][3] = -vector_dot_product(&up_dir, camera_position);
 
 	result.matrix[2][0] = right_dir.z;
-	result.matrix[2][1] = up_dir->z;
-	result.matrix[2][2] = -view_dir.z;
+	result.matrix[2][1] = up_dir.z;
+	result.matrix[2][2] = view_dir.z;
 	result.matrix[2][3] = -vector_dot_product(&view_dir, camera_position);
 
 	result.matrix[3][0] = 0;
