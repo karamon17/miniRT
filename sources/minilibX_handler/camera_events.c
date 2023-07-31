@@ -73,17 +73,17 @@ void update_figures_positions(t_data *data, t_matrix_4 matrix4) {
 // 	result.matrix[0][0] = right_dir.x;
 // 	result.matrix[0][1] = up_dir.x;
 // 	result.matrix[0][2] = view_dir.x;
-// 	result.matrix[0][3] = -vector_dot_product(&right_dir, camera_position);
+// 	result.matrix[0][3] = -dot(&right_dir, camera_position);
 
 // 	result.matrix[1][0] = right_dir.y;
 // 	result.matrix[1][1] = up_dir.y;
 // 	result.matrix[1][2] = view_dir.y;
-// 	result.matrix[1][3] = -vector_dot_product(&up_dir, camera_position);
+// 	result.matrix[1][3] = -dot(&up_dir, camera_position);
 
 // 	result.matrix[2][0] = right_dir.z;
 // 	result.matrix[2][1] = up_dir.z;
 // 	result.matrix[2][2] = view_dir.z;
-// 	result.matrix[2][3] = -vector_dot_product(&view_dir, camera_position);
+// 	result.matrix[2][3] = -dot(&view_dir, camera_position);
 
 // 	result.matrix[3][0] = 0;
 // 	result.matrix[3][1] = 0;

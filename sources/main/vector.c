@@ -81,7 +81,7 @@ t_vector	normalize2(t_vector p)
 	return (nv);
 }
 
-float  vector_dot_product(t_vector *v1, t_vector *v2)
+float  dot(t_vector *v1, t_vector *v2)
 {
 	float   dot_product;
 
@@ -89,7 +89,7 @@ float  vector_dot_product(t_vector *v1, t_vector *v2)
 	return (dot_product);
 }
 
-t_vector *multiply_vector(float t, t_vector *v)
+t_vector *mult_vect(float t, t_vector *v)
 {
 	t_vector *vector;
 

@@ -1,57 +1,45 @@
 #include "../includes/miniRT.h"
 
-float	compute_lighting(t_data *data, t_vector *p, t_vector *n, t_vector *ray, float s)
+float	compute_lighting(t_data *data, t_vectors *input, float s)
 {
-    float	i;
-	float n_dot_l;
-	float r_dot_v;
-	t_light *current;
-	t_vector *r;
-	t_vector *temp_r;
-	t_vector *l;
+	t_abc		abc;
+	t_light 	*cur;
+	t_vectors 	t;
 
-	l = NULL;
-	r = NULL;
-	current = data->lights;
-	i = 0.0f;
-	while (current)
+	cur = data->lights;
+	abc.a = 0.0f;
+	while (cur)
     {
-        if (current->type == 'A')
-            i += current->intensity;
+		t.v1 = NULL;
+		t.v2 = NULL;
+        if (cur->type == 'A')
+            abc.a += cur->intensity;
         else
 		{
-            if (current->type == 'L')
-                l = vector_subtract(current->vector, p);
-            //тени
-            //TODO change check_intersection FIXED
-            if (check_intersection(data->figures, p, l))
+            if (cur->type == 'L')
+                t.v1 = vector_subtract(cur->vector, input->v1);
+            if (check_intersection(data->figures, input->v1, t.v1))
 			{
-                current = current->next;
+                cur = cur->next;
+				free(t.v1);
                 continue;
             }
-            //диффузность
-            n_dot_l = vector_dot_product(n, l);
-               if (n_dot_l > 0)
-                   i += current->intensity * n_dot_l / (vector_length(n) * vector_length(l));
-               //зеркальность
-               if (s != -1)
-			   {
-					temp_r = multiply_vector(2 * vector_dot_product(n, l), n);
-                   r = vector_subtract(temp_r, l);
-				   free(temp_r);
-                   r_dot_v = vector_dot_product(r, ray);
-                   if (r_dot_v > 0)
-                       i += current->intensity * pow(r_dot_v / (vector_length(r) * vector_length(ray)), s);
-               }
-			free(l); //если фришить l то почему-то появляются артефакты на цилиндре
-			l = NULL;
-			free(r);
-			r = NULL;
+            abc.b = dot(input->v2, t.v1);
+			if (abc.b > 0)
+				abc.a += cur->intensity * abc.b / (vector_length(input->v2) * vector_length(t.v1));
+			if (s != -1)
+			{
+				t.v3 = mult_vect(2 * dot(input->v2, t.v1), input->v2);
+				t.v2 = vector_subtract(t.v3, t.v1);
+				free(t.v3);
+				abc.c = dot(t.v2, input->v4);
+				if (abc.c > 0)
+					abc.a += cur->intensity * pow(abc.c / (vector_length(t.v2) * vector_length(input->v4)), s);
+			}
+			help_free(t.v1, t.v2, NULL, NULL);
         }
-        current = current->next;
+        cur = cur->next;
     }
-	free(l);
-	free(r);
-    return (i);
+    return (abc.a);
 }
 

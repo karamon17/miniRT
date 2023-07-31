@@ -52,6 +52,19 @@ void	help_free(t_vector *n, t_vector *p, t_vector *temp_n, t_vector *temp_m)
 	free(p);
 	free(temp_m);
 }
+void	help_get_color(t_vectors *t, t_figure *cl_fig, float *closest_dist, t_vector *ray)
+{
+	t->v1 = mult_vect(*closest_dist, ray);
+	t->v2 = vector_subtract(t->v1, cl_fig->center);
+	t->v3 = t->v2;
+	if (cl_fig->type == CYLINDER)
+	{
+		t->v4 = mult_vect(cl_fig->body.cyl.height / 2, cl_fig->body.cyl.normal);
+		t->v5 = vector_add(t->v4, cl_fig->center);
+		t->v2 = vector_subtract(t->v1, t->v5);
+		help_free(t->v4, t->v5, NULL, NULL);
+	}
+}
 
 int get_color(t_data *data, t_vector *ray)
 {
@@ -60,26 +73,17 @@ int get_color(t_data *data, t_vector *ray)
     t_figure 	*cl_fig;
 	t_vectors	t;
 
-    cl_fig = closest_intersection(data->figures, data->camera->origin, ray, &closest_dist);
+    cl_fig = closest_inters(data->figures, data->camera->origin, ray, &closest_dist);
     if (cl_fig && closest_dist != INFINITY)
     {
-		t.v1 = multiply_vector(closest_dist, ray);
-        t.v2 = vector_subtract(t.v1, cl_fig->center);
-		t.v3 = t.v2;
-		if (cl_fig->type == CYLINDER)
-		{
-			t.v4 = multiply_vector(cl_fig->body.cyl.height / 2, cl_fig->body.cyl.normal);
-			t.v5 = vector_add(t.v4, cl_fig->center);
-			t.v2 = vector_subtract(t.v1, t.v5);
-			help_free(t.v4, t.v5, NULL, NULL);
-		}
-        else if (cl_fig->type == PLANE && cl_fig->body.plane.normal->z > 0)
+		help_get_color(&t, cl_fig, &closest_dist, ray);
+        if (cl_fig->type == PLANE && cl_fig->body.plane.normal->z > 0)
 			t.v2 = vector_dup(cl_fig->body.plane.normal);
 		else if (cl_fig->type == PLANE && cl_fig->body.plane.normal->z <= 0)
-			t.v2 = multiply_vector(-1, cl_fig->body.plane.normal);
+			t.v2 = mult_vect(-1, cl_fig->body.plane.normal);
 		vector_normalize(t.v2);
-		t.v4 = multiply_vector(data->camera->direction->z, ray);
-		color = color_multiply(cl_fig->RGB_color, compute_lighting(data, t.v1, t.v2, t.v4, cl_fig->specular));
+		t.v4 = mult_vect(data->camera->direction->z, ray);
+		color = color_multiply(cl_fig->RGB_color, compute_lighting(data, &t, cl_fig->specular));
 		help_free(t.v2, t.v1, t.v3, t.v4);
 		return(color_to_int(color));
     }

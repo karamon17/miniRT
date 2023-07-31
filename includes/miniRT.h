@@ -31,8 +31,8 @@
 # define EPSILON 0.001
 
 t_light  *light_new(t_vector *vector, char	type, float	intensity);
-float	compute_lighting(t_data *data, t_vector *p, t_vector *n, t_vector *ray, float s);
-t_figure * closest_intersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist);
+float	compute_lighting(t_data *data, t_vectors *input, float s);
+t_figure * closest_inters(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist);
 float			cylinder_intersection(t_vector *o, t_vector *d, t_figure *cylinder);
 float		distance(t_vector *p1, t_vector *p2);
 t_vector	*vector_add(t_vector *v1, t_vector *v2);
@@ -106,17 +106,6 @@ typedef struct s_data
     t_movement *movement;
     t_figure *closest_figure;
 } t_data;
-
-typedef struct s_vectors
-{
-	t_vector *v1;
-	t_vector *v2;
-	t_vector *v3;
-	t_vector *v4;
-	t_vector *v5;
-	t_vector *v6;
-	t_vector *v7;
-} t_vectors;
 
 typedef struct s_abc
 {
