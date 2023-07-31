@@ -59,8 +59,6 @@ void rotate_quaternion(t_vector *vector, t_quaternion *direction);
 void rotate_figure(t_data *data, t_quaternion *direction);
 void rotate_light(t_data *data, t_quaternion *direction);
 void work_with_camera(int keycode, t_data *data);
-t_matrix_4 view_matrix(t_camera *camera);
-void update_figures_positions(t_data *data, t_matrix_4 matrix4);
 void rotate_camera(t_data *data, t_quaternion *direction, int is_yaw);
 void rotate_figure_for_camera(t_data *data, t_vector *figure_center, t_quaternion *direction);
 void move_camera(t_data *data, t_vector *direction, int is_positive);

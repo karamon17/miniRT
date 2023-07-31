@@ -18,7 +18,9 @@ t_data *init_data(char *input) {
 void init_camera(t_data *data) {
 
 	t_vector camera_position;
+	t_quaternion *rotate;
 
+	rotate = NULL;
 	camera_position = *data->camera->direction;
 	free(data->camera->direction);
 	data->camera->direction = vector_new(0, 0, 1);
@@ -27,16 +29,20 @@ void init_camera(t_data *data) {
 	vector_normalize(data->camera->right_vector);
 	vector_normalize(data->camera->up_vector);
 	if(camera_position.y == -1)
-		rotate_camera(data, data->movement->rotate_x_right, 0, 0);
+		rotate_camera(data, (rotate = quaternion_new(0.7071f, 0.7071f, 0, 0)), 0);
+	else if(camera_position.y == 1)
+		rotate_camera(data, (rotate = quaternion_new(0.7071f, -0.7071f, 0, 0)), 0);
 	else if(camera_position.x == -1)
-		rotate_camera(data, data->movement->rotate_y_right, 1, 0);
+		rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, 0.7071f, 0)), 0);
 	else if(camera_position.x == 1)
-		rotate_camera(data, data->movement->rotate_y_left, 1, 0);
+		rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, -0.7071f, 0)), 0);
 	else if(camera_position.z == 1)
 	{
-		rotate_camera(data, data->movement->rotate_y_right, 1, 0);
-		rotate_camera(data, data->movement->rotate_y_right, 1, 0);
+		rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, -0.7071f, 0)), 0);
+		free(rotate);
+		rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, -0.7071f, 0)), 0);
 	}
+	free(rotate);
 }
 
 void init_move_data(t_data *data) {
@@ -56,8 +62,6 @@ void init_move_data(t_data *data) {
 	move->rotate_x_right = quaternion_new(cosf(0.1308995f), -sinf(0.1308995f), 0, 0);
 	move->rotate_y_left = quaternion_new(cosf(0.1308995f), 0, sinf(0.1308995f), 0);
 	move->rotate_y_right = quaternion_new(cosf(0.1308995f), 0, -sinf(0.1308995f), 0);
-	move->rotate_z_left = quaternion_new(cosf(0.1308995f), 0, 0, sinf(0.1308995f));
-	move->rotate_z_right = quaternion_new(cosf(0.1308995f), 0, 0, -sinf(0.1308995f));
 	data->movement = move;
 }
 
