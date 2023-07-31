@@ -27,10 +27,32 @@
 
 //to remove
 #include "to_remove.h"
+
+# define EPSILON 0.001
+
 t_light  *light_new(t_vector *vector, char	type, float	intensity);
 float	compute_lighting(t_data *data, t_vector *p, t_vector *n, t_vector *ray, float s);
-t_figure * ClosestIntersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist, t_color **color);
-t_figure * check_intersection(t_figure *figure, t_vector *vector, t_vector *ray);
+t_figure * closest_intersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist);
+float			cylinder_intersection(t_vector *o, t_vector *d, t_figure *cylinder);
+float		distance(t_vector *p1, t_vector *p2);
+t_vector	*vector_add(t_vector *v1, t_vector *v2);
+t_vector		normalize2(t_vector p);
+t_figure *check_intersection(t_figure *figure, t_vector *vector, t_vector *ray);
+int get_color(t_data *data, t_vector *ray);
+t_color	*color_multiply(t_color *color, float intecivity);
+void init_camera(t_data *data);
+
+
+typedef struct s_win_params
+{
+    int mlx_x;
+    int mlx_y;
+    float x_angle;
+    float y_angle;
+    float x_ray;
+    float y_ray;
+
+} t_win_params;
 
 typedef struct s_checker
 {
@@ -38,25 +60,50 @@ typedef struct s_checker
 	int has_ambient;
 	int has_spot;
 	int has_object;
+    int object_light_toggle;
 
 } t_checker;
 
-typedef struct s_data
+typedef struct s_mlx_data
 {
     void	*mlx;
     void	*win;
+    void	*img;
+    int    *img_data;
+    float 	width;
+    float 	height;
+    int bpp;
+    int size_line;
+    int endian;
+} t_mlx_data;
+
+typedef struct s_movement
+{
+    t_vector *up;
+    t_vector *down;
+    t_vector *left;
+    t_vector *right;
+    t_vector *forward;
+    t_vector *backward;
+	t_quaternion *rotate_x_left;
+	t_quaternion *rotate_x_right;
+	t_quaternion *rotate_y_left;
+	t_quaternion *rotate_y_right;
+	t_quaternion *rotate_z_left;
+	t_quaternion *rotate_z_right;
+
+} t_movement;
+
+typedef struct s_data
+{
     char    *filename;
-	int 	width;
-	int 	height;
 	t_camera *camera;
 	t_figure *figures;
 	t_light *lights;
 	t_checker checker;
+    t_mlx_data *mlx_data;
+    t_movement *movement;
+    t_figure *closest_figure;
 } t_data;
-
-
-
-
-t_light  *light_new(t_vector *vector, char	type, float	intensity);
 
 #endif //MINIRT_PROJECT_MINIRT_H

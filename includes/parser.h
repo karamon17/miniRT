@@ -20,6 +20,7 @@ t_camera *new_camera(t_data *data);
 void parse_spot_light(char *line, t_data *data);
 void parse_sphere(char *line, t_data *data);
 void parse_plane(char *line, t_data *data);
+void parse_cylinder(char *line, t_data *data);
 
 
 //init
@@ -28,6 +29,9 @@ t_figure * add_figure(t_data *data, int type);
 void init_checker(t_data *data);
 t_data *init_data(char *input);
 void check_plane(t_figure *figure);
+void check_cylinder(t_figure *figure);
+void init_mlx_data(t_data *data);
+void init_move_data(t_data *data);
 
 //utils
 void free_array(char **array);

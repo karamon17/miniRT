@@ -13,5 +13,7 @@ void print_sphere_content(t_figure *pFigures);
 
 void print_plane_content(t_figure *pFigures);
 
+void print_coordinats(t_data *pData);
+
 
 #endif //MINIRT_TO_REMOVE_H

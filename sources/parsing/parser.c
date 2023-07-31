@@ -18,7 +18,8 @@ void parse_elements(char *file_content, t_data *data) {
 }
 
 
-void parse_element(char *element_line, t_data *data) {
+void parse_element(char *element_line, t_data *data)
+{
 	if (element_line[0] == '#')
 		return;
 	element_line = remove_overstricked_space(element_line);
@@ -32,14 +33,10 @@ void parse_element(char *element_line, t_data *data) {
 		parse_sphere(element_line, data);
 	else if (element_line[0] == 'p' && element_line[1] == 'l' && element_line[2] == ' ')
 		parse_plane(element_line, data);
-/*	else if (element_line[0] == 's' && element_line[1] == 'q' && element_line[2] == ' ')
-		parse_square(element_line, data);
 	else if (element_line[0] == 'c' && element_line[1] == 'y' && element_line[2] == ' ')
-		parse_cylinder(element_line, data);
-	else if (element_line[0] == 't' && element_line[1] == 'r' && element_line[2] == ' ')
-		parse_triangle(element_line, data);*/
-	else
-		error("in element line\n", EXIT_FAILURE);
+		parse_cylinder(element_line, data);	
+	// else
+	// 	error("in element line\n", EXIT_FAILURE);
 	free(element_line);
 }
 

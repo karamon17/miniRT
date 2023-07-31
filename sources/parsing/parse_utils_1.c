@@ -2,9 +2,9 @@
 
 float ft_atof(char *string)
 {
-	double result;
-	double sign;
-	double power;
+	float result;
+	float sign;
+	float power;
 	int i;
 
 	i = 0;
@@ -34,7 +34,7 @@ float ft_atof(char *string)
 	return (sign * result / power);
 }
 
-int is_outrange_of_float(double number) {
+int is_outrange_of_float(float number) {
 	if (number > 2147483647 || number < -2147483648)
 		return (1);
 	return (0);
