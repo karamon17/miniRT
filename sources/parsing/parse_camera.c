@@ -16,6 +16,6 @@ void parse_camera(char *line, t_data *data) {
 void check_camera(t_camera *camera) {
 	if (camera->fov < 0 || camera->fov > 180)
 		error("Wrong FOV\n", EXIT_FAILURE);
-/*	if (is_normalized(camera->direction) == 0)
-		error("Wrong camera direction. Has to be normalized\n", EXIT_FAILURE);*/
+	if (is_normalized(camera->direction) == 0)
+		error("Wrong camera direction. Has to be normalized\n", EXIT_FAILURE);
 }

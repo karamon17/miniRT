@@ -19,9 +19,12 @@ void init_camera(t_data *data) {
 
 	t_vector camera_position;
 	t_quaternion *rotate;
+	t_vector position;
 
 	rotate = NULL;
 	camera_position = *data->camera->direction;
+	position = *data->camera->origin;
+	position.z *= -1;
 	free(data->camera->direction);
 	data->camera->direction = vector_new(0, 0, 1);
 	data->camera->up_vector = vector_new(0, 1, 0);
@@ -43,8 +46,11 @@ void init_camera(t_data *data) {
 		rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, -0.7071f, 0)), 0);
 	}
 	free(rotate);
+	if(position.x != 0 || position.y != 0 || position.z != 0)
+		move_camera(data, &position, 0);
+	free(data->camera->origin);
+	data->camera->origin = vector_new(0, 0, 0);
 }
-
 void init_move_data(t_data *data) {
 
 	t_movement *move;

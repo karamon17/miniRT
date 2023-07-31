@@ -35,11 +35,11 @@ void rotate_camera(t_data *data, t_quaternion *direction, int is_yaw) {
 }
 
 void rotate_figure_for_camera(t_data *data, t_vector *figure_center, t_quaternion *direction) {
-	t_vector rotation_point = *data->camera->origin;
-
-	vector_subtract(figure_center, &rotation_point);
+	//t_vector rotation_point = *data->camera->origin;
+	(void ) data;
+	//vector_subtract(figure_center, &rotation_point);
 	rotate_quaternion(figure_center, direction);
-	vector_add(figure_center, &rotation_point);
+	//vector_add(figure_center, &rotation_point);
 }
 
 void press_camera_movement_keys(int keycode, t_data *data) {
