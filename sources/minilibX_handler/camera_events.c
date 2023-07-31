@@ -1,20 +1,87 @@
 #include "../../includes/miniRT.h"
 
+void rotate_camera(t_data *data, t_quaternion *direction);
+
+void rotate_figure_for_camera(t_data *data, t_figure *figure, t_quaternion *direction);
+
+void move_camera(t_data *data, t_vector *direction);
+
+void move_figure_for_camera(t_figure *figure, t_vector *direction, int is_positive);
+
 void press_camera_rotation_keys(int keycode, t_data *data) {
 	if (keycode == KEY_1)
-		rotate_quaternion(data->camera->direction, data->movement->rotate_y_left);
+		rotate_camera(data, data->movement->rotate_y_right);
 	else if (keycode == KEY_3)
-		rotate_quaternion(data->camera->direction, data->movement->rotate_y_right);
+		rotate_camera(data, data->movement->rotate_y_left);
 	else if (keycode == KEY_5)
-		rotate_quaternion(data->camera->direction, data->movement->rotate_x_left);
+		rotate_camera(data, data->movement->rotate_x_right);
 	else if (keycode == KEY_2)
-		rotate_quaternion(data->camera->direction, data->movement->rotate_x_right);
+		rotate_camera(data, data->movement->rotate_x_left);
+}
+
+t_vector quaternion_rotate_point(t_quaternion q, t_vector point) {
+	t_vector result;
+
+	float t2 = q.w * q.x;
+	float t3 = q.w * q.y;
+	float t4 = q.w * q.z;
+	float t5 = -q.x * q.x;
+	float t6 = q.x * q.y;
+	float t7 = q.x * q.z;
+	float t8 = -q.y * q.y;
+	float t9 = q.y * q.z;
+	float t10 = -q.z * q.z;
+
+	result.x = 2.0f * (t8 + t10) * point.x + 2.0f * (t6 - t4) * point.y + 2.0f * (t3 + t7) * point.z + point.x;
+	result.y = 2.0f * (t4 + t6) * point.x + 2.0f * (t5 + t10) * point.y + 2.0f * (t9 - t2) * point.z + point.y;
+	result.z = 2.0f * (t7 - t3) * point.x + 2.0f * (t2 + t9) * point.y + 2.0f * (t5 + t8) * point.z + point.z;
+
+	return result;
+}
+
+void rotate_camera(t_data *data, t_quaternion *direction) {
+
+	t_figure *figure;
+
+	figure = data->figures;
+
+	while(figure)
+	{
+		rotate_figure_for_camera(data, figure, direction);
+		figure = figure->next;
+	}
+	return ;
+}
+
+void rotate_figure_for_camera(t_data *data, t_figure *figure, t_quaternion *direction) {
+
+	t_vector rotation_point = *data->camera->origin;
+	t_vector *object_position = NULL;
+	object_position = figure->center;
+	if(figure->type == PLANE)
+		object_position = figure->figure_body.plane.normal;
+
+	t_vector rotation_axis = {object_position->x - rotation_point.x, object_position->y - rotation_point.y, object_position->z - rotation_point.z};
+	float length = sqrtf(rotation_axis.x * rotation_axis.x + rotation_axis.y * rotation_axis.y + rotation_axis.z * rotation_axis.z);
+	rotation_axis.x /= length;
+	rotation_axis.y /= length;
+	rotation_axis.z /= length;
+
+	object_position->x -= rotation_point.x;
+	object_position->y -= rotation_point.y;
+	object_position->z -= rotation_point.z;
+
+	rotate_quaternion(object_position, direction);
+
+	object_position->x += rotation_point.x;
+	object_position->y += rotation_point.y;
+	object_position->z += rotation_point.z;
 }
 
 void press_camera_movement_keys(int keycode, t_data *data) {
 
 	if (keycode == KEY_UP_ARROW)
-		move_vector(data->camera->origin, data->camera->up_vector, 0);
+		move_camera(data, data->camera->up_vector);
 	else if (keycode == KEY_DOWN_ARROW)
         move_vector(data->camera->origin, data->camera->up_vector, 1);
 	else if (keycode == KEY_LEFT_ARROW)
@@ -27,86 +94,40 @@ void press_camera_movement_keys(int keycode, t_data *data) {
         move_vector(data->camera->origin, data->camera->direction, 0);
    }
 
-
-void work_with_camera(int keycode, t_data *data) {
-	// t_camera *camera;
-	// t_matrix_4 view;
-
-	//camera = data->camera;
-	//update_figures_positions(data, view);
-	if(is_camera_movement_key(keycode))
-		press_camera_movement_keys(keycode, data);
-	else if(is_camera_rotation_key(keycode))
-		press_camera_rotation_keys(keycode, data);
-	// camera->right_vector = vector_cross_prodact(camera->direction, camera->up_vector);
-	// camera->up_vector = vector_cross_prodact(camera->right_vector, camera->direction);
-	// view = view_matrix(camera->origin, camera->direction, camera->up_vector);
-	// update_figures_positions(data, view);
-}
-
-void update_figures_positions(t_data *data, t_matrix_4 matrix4) {
+void move_camera(t_data *data, t_vector *direction) {
 	t_figure *figure;
 
 	figure = data->figures;
 	while (figure) {
-		multiply_matrix_vector(matrix4, figure->center);
+		move_figure_for_camera(figure, direction, 1);
 		figure = figure->next;
 	}
 }
 
-// t_matrix_4 view_matrix(t_vector *camera_position, t_vector *camera_direction, t_vector *up_vector)
-// {
-// 	t_vector *temp;
-// 	t_vector view_dir;
-// 	t_vector right_dir;
-// 	t_vector *up_dir;
-// 	t_matrix_4 result;
-	
-// 	temp = vector_subtract(camera_direction, camera_position);
-// 	view_dir = get_vector_normalize(temp);
-// 	free(temp);
-// 	temp = vector_cross_prodact(up_vector, &view_dir);
-// 	right_dir = get_vector_normalize(temp);
-// 	free(temp);
-// 	up_dir = vector_cross_prodact(&view_dir, &right_dir);
+void move_figure_for_camera(t_figure *figure, t_vector *direction, int is_positive) {
+	t_vector *object_position = NULL;
+	object_position = figure->center;
 
-// 	result.matrix[0][0] = right_dir.x;
-// 	result.matrix[0][1] = up_dir.x;
-// 	result.matrix[0][2] = view_dir.x;
-// 	result.matrix[0][3] = -vector_dot_product(&right_dir, camera_position);
-
-// 	result.matrix[1][0] = right_dir.y;
-// 	result.matrix[1][1] = up_dir.y;
-// 	result.matrix[1][2] = view_dir.y;
-// 	result.matrix[1][3] = -vector_dot_product(&up_dir, camera_position);
-
-// 	result.matrix[2][0] = right_dir.z;
-// 	result.matrix[2][1] = up_dir.z;
-// 	result.matrix[2][2] = view_dir.z;
-// 	result.matrix[2][3] = -vector_dot_product(&view_dir, camera_position);
-
-// 	result.matrix[3][0] = 0;
-// 	result.matrix[3][1] = 0;
-// 	result.matrix[3][2] = 0;
-// 	result.matrix[3][3] = 1;
-// 	free(up_dir);
-// 	return result;
-// }
-
-t_vector get_vector_normalize(t_vector *vector) {
-	float length = sqrtf(vector->x * vector->x + vector->y * vector->y + vector->z * vector->z);
-	t_vector result;
-	result.x = vector->x / length;
-	result.y = vector->y / length;
-	result.z = vector->z / length;
-	return result;
+	if(!is_positive)
+	{
+		object_position->x += direction->x;
+		object_position->y += direction->y;
+		object_position->z += direction->z;
+	}
+	else
+	{
+		object_position->x -= direction->x;
+		object_position->y -= direction->y;
+		object_position->z -= direction->z;
+	}
 }
 
-void multiply_matrix_vector(t_matrix_4 view, t_vector *object) {
-	float x = object->x * view.matrix[0][0] + object->y * view.matrix[0][1] + object->z * view.matrix[0][2] + view.matrix[0][3];
-	float y = object->x * view.matrix[1][0] + object->y * view.matrix[1][1] + object->z * view.matrix[1][2] + view.matrix[1][3];
-	float z = object->x * view.matrix[2][0] + object->y * view.matrix[2][1] + object->z * view.matrix[2][2] + view.matrix[2][3];
-	object->x = x;
-	object->y = y;
-	object->z = z;
+
+void work_with_camera(int keycode, t_data *data) {
+
+	if(is_camera_movement_key(keycode))
+		press_camera_movement_keys(keycode, data);
+	else if(is_camera_rotation_key(keycode))
+		press_camera_rotation_keys(keycode, data);
+
 }
