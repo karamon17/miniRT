@@ -61,6 +61,7 @@ t_figure *closest_intersection(t_figure *figure, t_vector *vector, t_vector *ray
     float dist;
 
     closest_figure = NULL;
+	*closest_dist = 0;
     while(figure)
     {
         if (figure->type == SPHERE)

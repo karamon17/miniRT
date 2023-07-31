@@ -106,4 +106,14 @@ typedef struct s_data
     t_figure *closest_figure;
 } t_data;
 
+typedef struct s_vectors
+{
+	t_vector *v1;
+	t_vector *v2;
+	t_vector *v3;
+	t_vector *v4;
+	t_vector *v5;
+} t_vectors;
+
+
 #endif //MINIRT_PROJECT_MINIRT_H

@@ -44,52 +44,45 @@ t_color *color_new(float r, float g, float b) {
 	return (color);
 }
 
+void	help_free(t_vector *n, t_vector *p, t_vector *temp_n, t_vector *temp_m)
+{
+	if (temp_n != n)
+		free(temp_n);
+	free(n);
+	free(p);
+	free(temp_m);
+}
+
 int get_color(t_data *data, t_vector *ray)
 {
     t_color 	*color;
     float 		closest_dist;
-    t_figure 	*closest_figure;
-	t_vector 	*n;
-	t_vector 	*p;
-	t_vector 	*temp_n;
-	t_vector *temp_m;
-	t_vector *temp_a;
+    t_figure 	*cl_fig;
+	t_vectors t;
 
-	closest_dist = 0;
-	closest_figure = NULL;
-    color = color_new(0, 0, 0);
-    closest_figure = closest_intersection(data->figures, data->camera->origin, ray, &closest_dist);
-    if (closest_figure && closest_dist != INFINITY)
+    cl_fig = closest_intersection(data->figures, data->camera->origin, ray, &closest_dist);
+    if (cl_fig && closest_dist != INFINITY)
     {
-		p = multiply_vector(closest_dist, ray);
-        n = vector_subtract(p, closest_figure->center);
-		temp_n = n;
-		if (closest_figure->type == CYLINDER)
+		t.v1 = multiply_vector(closest_dist, ray);
+        t.v2 = vector_subtract(t.v1, cl_fig->center);
+		t.v3 = t.v2;
+		if (cl_fig->type == CYLINDER)
 		{
-			temp_m = multiply_vector(closest_figure->figure_body.cylinder.height / 2, closest_figure->figure_body.cylinder.normal);
-			temp_a = vector_add(temp_m, closest_figure->center);
-			n = vector_subtract(p, temp_a);
-			free(temp_n);
-			free(temp_m);
-			free(temp_a);
+			t.v4 = multiply_vector(cl_fig->figure_body.cylinder.height / 2, cl_fig->figure_body.cylinder.normal);
+			t.v5 = vector_add(t.v4, cl_fig->center);
+			t.v2 = vector_subtract(t.v1, t.v5);
+			help_free(t.v4, t.v5, NULL, NULL);
 		}
-        else if (closest_figure->type == PLANE && closest_figure->figure_body.plane.normal->z > 0)
-		{
-			n = vector_dup(closest_figure->figure_body.plane.normal);
-			free(temp_n);
-		}	
-		else if (closest_figure->type == PLANE && closest_figure->figure_body.plane.normal->z <= 0)
-		{
-			n = multiply_vector(-1, closest_figure->figure_body.plane.normal);
-			free(temp_n);
-		}	
-		vector_normalize(n);
-		temp_m = multiply_vector(data->camera->direction->z, ray);
-		free(color);
-		color = color_multiply(closest_figure->RGB_color, compute_lighting(data, p, n, temp_m, closest_figure->specular));
-		free(temp_m);
-		free(n);
-		free(p);
+        else if (cl_fig->type == PLANE && cl_fig->figure_body.plane.normal->z > 0)
+			t.v2 = vector_dup(cl_fig->figure_body.plane.normal);
+		else if (cl_fig->type == PLANE && cl_fig->figure_body.plane.normal->z <= 0)
+			t.v2 = multiply_vector(-1, cl_fig->figure_body.plane.normal);
+		vector_normalize(t.v2);
+		t.v4 = multiply_vector(data->camera->direction->z, ray);
+		color = color_multiply(cl_fig->RGB_color, compute_lighting(data, t.v1, t.v2, t.v4, cl_fig->specular));
+		help_free(t.v2, t.v1, t.v3, t.v4);
+		return(color_to_int(color));
     }
-    return (color_to_int(color));
+	else
+    	return (color_to_int(color_new(0, 0, 0)));
 }
