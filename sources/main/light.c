@@ -1,5 +1,26 @@
 #include "../includes/miniRT.h"
 
+void	ft_specular(t_vectors 	*t, t_vectors *input, t_light 	*cur, t_abc *abc)
+{
+	if (abc->b != -1)
+	{
+		t->v3 = mult_vect(2 * dot(input->v2, t->v1), input->v2);
+		t->v2 = vector_subtract(t->v3, t->v1);
+		free(t->v3);
+		abc->c = dot(t->v2, input->v4);
+		if (abc->c > 0)
+			abc->a += cur->intensity * pow(abc->c / (vect_len(t->v2) * vect_len(input->v4)), abc->b);
+	}
+	help_free(t->v1, t->v2, NULL, NULL);
+}
+void	ft_ambient(t_vectors *t, t_light *cur, t_abc *abc)
+{
+	t->v1 = NULL;
+	t->v2 = NULL;
+	if (cur->type == 'A')
+		abc->a += cur->intensity;
+}
+
 float	compute_lighting(t_data *data, t_vectors *input, float s)
 {
 	t_abc		abc;
@@ -10,14 +31,10 @@ float	compute_lighting(t_data *data, t_vectors *input, float s)
 	abc.a = 0.0f;
 	while (cur)
     {
-		t.v1 = NULL;
-		t.v2 = NULL;
-        if (cur->type == 'A')
-            abc.a += cur->intensity;
-        else
+		ft_ambient(&t, cur, &abc);
+        if (cur->type == 'L')
 		{
-            if (cur->type == 'L')
-                t.v1 = vector_subtract(cur->vector, input->v1);
+            t.v1 = vector_subtract(cur->vector, input->v1);
             if (check_intersection(data->figures, input->v1, t.v1))
 			{
                 cur = cur->next;
@@ -26,17 +43,9 @@ float	compute_lighting(t_data *data, t_vectors *input, float s)
             }
             abc.b = dot(input->v2, t.v1);
 			if (abc.b > 0)
-				abc.a += cur->intensity * abc.b / (vector_length(input->v2) * vector_length(t.v1));
-			if (s != -1)
-			{
-				t.v3 = mult_vect(2 * dot(input->v2, t.v1), input->v2);
-				t.v2 = vector_subtract(t.v3, t.v1);
-				free(t.v3);
-				abc.c = dot(t.v2, input->v4);
-				if (abc.c > 0)
-					abc.a += cur->intensity * pow(abc.c / (vector_length(t.v2) * vector_length(input->v4)), s);
-			}
-			help_free(t.v1, t.v2, NULL, NULL);
+				abc.a += cur->intensity * abc.b / (vect_len(input->v2) * vect_len(t.v1));
+			abc.b = s;
+			ft_specular(&t, input, cur, &abc);
         }
         cur = cur->next;
     }

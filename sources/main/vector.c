@@ -52,7 +52,7 @@ t_vector	*vector_dup(t_vector *v1)
 	return (vector);
 }
 
-float vector_length(t_vector *v)
+float vect_len(t_vector *v)
 {
 	float   length;
 	length = sqrt(v->x * v->x + v->y * v->y + v->z * v->z);
@@ -63,7 +63,7 @@ void vector_normalize(t_vector *v)
 {
 	float   length;
 
-	length = vector_length(v);
+	length = vect_len(v);
 	v->x = v->x / length;
 	v->y = v->y / length;
 	v->z = v->z / length;
