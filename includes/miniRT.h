@@ -41,6 +41,7 @@ t_figure *check_intersection(t_figure *figure, t_vector *vector, t_vector *ray);
 int get_color(t_data *data, t_vector *ray);
 t_color	*color_multiply(t_color *color, float intecivity);
 void init_camera(t_data *data);
+void	help_free(t_vector *n, t_vector *p, t_vector *temp_n, t_vector *temp_m);
 
 
 typedef struct s_win_params
@@ -113,7 +114,15 @@ typedef struct s_vectors
 	t_vector *v3;
 	t_vector *v4;
 	t_vector *v5;
+	t_vector *v6;
+	t_vector *v7;
 } t_vectors;
 
+typedef struct s_abc
+{
+	float a;
+	float b;
+	float c;
+} t_abc;
 
 #endif //MINIRT_PROJECT_MINIRT_H

@@ -13,4 +13,3 @@ int main(int argc, char **argv)
     mlx_hooks_handler(data);
 	return (0);
 }
-

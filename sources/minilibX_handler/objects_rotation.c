@@ -11,7 +11,7 @@ void rotate_figure(t_data *data, t_quaternion *direction) {
     if(data->closest_figure == NULL || data->closest_figure->type == SPHERE)
         return;
     else if(data->closest_figure->type == PLANE)
-        rotate_quaternion(data->closest_figure->figure_body.plane.normal, direction);
+        rotate_quaternion(data->closest_figure->body.plane.normal, direction);
 	else if(data->closest_figure->type == CYLINDER)
-		rotate_quaternion(data->closest_figure->figure_body.cylinder.normal, direction);
+		rotate_quaternion(data->closest_figure->body.cyl.normal, direction);
 }

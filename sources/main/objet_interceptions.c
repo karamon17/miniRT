@@ -21,11 +21,11 @@ float plane_intercept(t_figure *plane, t_vector *vector, t_vector *ray)
     float a;
 	t_vector *temp;
 
-    a = vector_dot_product(plane->figure_body.plane.normal, ray);
+    a = vector_dot_product(plane->body.plane.normal, ray);
     if (a == 0)
         return (INFINITY);
 	temp = vector_subtract(plane->center, vector);
-    a = vector_dot_product(temp, plane->figure_body.plane.normal) / a;
+    a = vector_dot_product(temp, plane->body.plane.normal) / a;
 	free(temp);
     if (a < EPSILON)
         return (INFINITY);
@@ -44,7 +44,7 @@ float sphere_intercept(t_figure *sphere, t_vector *vector, t_vector *ray)
     oc = vector_subtract(vector, sphere->center);
     a = vector_dot_product(ray, ray);
     b = 2 * vector_dot_product(oc, ray);
-    c = vector_dot_product(oc, oc) - (sphere->figure_body.sphere.radius * sphere->figure_body.sphere.radius);
+    c = vector_dot_product(oc, oc) - (sphere->body.sphere.rad * sphere->body.sphere.rad);
     free(oc);
     discr = b * b - (4 * a * c);
     if (discr < 0)

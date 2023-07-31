@@ -58,7 +58,7 @@ int get_color(t_data *data, t_vector *ray)
     t_color 	*color;
     float 		closest_dist;
     t_figure 	*cl_fig;
-	t_vectors t;
+	t_vectors	t;
 
     cl_fig = closest_intersection(data->figures, data->camera->origin, ray, &closest_dist);
     if (cl_fig && closest_dist != INFINITY)
@@ -68,15 +68,15 @@ int get_color(t_data *data, t_vector *ray)
 		t.v3 = t.v2;
 		if (cl_fig->type == CYLINDER)
 		{
-			t.v4 = multiply_vector(cl_fig->figure_body.cylinder.height / 2, cl_fig->figure_body.cylinder.normal);
+			t.v4 = multiply_vector(cl_fig->body.cyl.height / 2, cl_fig->body.cyl.normal);
 			t.v5 = vector_add(t.v4, cl_fig->center);
 			t.v2 = vector_subtract(t.v1, t.v5);
 			help_free(t.v4, t.v5, NULL, NULL);
 		}
-        else if (cl_fig->type == PLANE && cl_fig->figure_body.plane.normal->z > 0)
-			t.v2 = vector_dup(cl_fig->figure_body.plane.normal);
-		else if (cl_fig->type == PLANE && cl_fig->figure_body.plane.normal->z <= 0)
-			t.v2 = multiply_vector(-1, cl_fig->figure_body.plane.normal);
+        else if (cl_fig->type == PLANE && cl_fig->body.plane.normal->z > 0)
+			t.v2 = vector_dup(cl_fig->body.plane.normal);
+		else if (cl_fig->type == PLANE && cl_fig->body.plane.normal->z <= 0)
+			t.v2 = multiply_vector(-1, cl_fig->body.plane.normal);
 		vector_normalize(t.v2);
 		t.v4 = multiply_vector(data->camera->direction->z, ray);
 		color = color_multiply(cl_fig->RGB_color, compute_lighting(data, t.v1, t.v2, t.v4, cl_fig->specular));

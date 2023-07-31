@@ -26,7 +26,7 @@ void print_figures_content(t_figure *pFigures) {
 void print_plane_content(t_figure *pFigures) {
 	printf("Plane:\n");
 	printf("Position: %f %f %f\n", pFigures->center->x, pFigures->center->y, pFigures->center->z);
-	printf("Normal: %f %f %f\n", pFigures->figure_body.plane.normal->x, pFigures->figure_body.plane.normal->y, pFigures->figure_body.plane.normal->z);
+	printf("Normal: %f %f %f\n", pFigures->body.plane.normal->x, pFigures->body.plane.normal->y, pFigures->body.plane.normal->z);
 	printf("Color: %f %f %f %f\n", pFigures->RGB_color->red, pFigures->RGB_color->green, pFigures->RGB_color->blue, pFigures->RGB_color->transparency);
 
 }
@@ -34,7 +34,7 @@ void print_plane_content(t_figure *pFigures) {
 void print_sphere_content(t_figure *pFigures) {
 	printf("Sphere:\n");
 	printf("Position: %f %f %f\n", pFigures->center->x, pFigures->center->y, pFigures->center->z);
-	printf("radius: %f\n", pFigures->figure_body.sphere.radius);
+	printf("radius: %f\n", pFigures->body.sphere.rad);
 	printf("Color: %f %f %f %f\n", pFigures->RGB_color->red, pFigures->RGB_color->green, pFigures->RGB_color->blue, pFigures->RGB_color->transparency);
 }
 
@@ -62,6 +62,6 @@ void print_camera_content(t_camera *pCamera) {
 void print_coordinats(t_data *pData) {
 	printf("Camera origin: %f %f %f\n", pData->camera->origin->x, pData->camera->origin->y, pData->camera->origin->z);
 	printf("Camera direction: %f %f %f\n", pData->camera->direction->x, pData->camera->direction->y, pData->camera->direction->z);
-	//printf("Sphere: %f %f %f\n", pData->figures->figure_body.sphere.center->x, pData->figures->figure_body.sphere.center->y, pData->figures->figure_body.sphere.center->z);
+	//printf("Sphere: %f %f %f\n", pData->figures->body.sphere.center->x, pData->figures->body.sphere.center->y, pData->figures->body.sphere.center->z);
 	//printf("light: %f %f %f\n", pData->lights->vector->x, pData->lights->vector->y, pData->lights->vector->z);
 }
