@@ -11,6 +11,7 @@ int	press_keys(int keycode, t_data *data)
 		work_with_camera(keycode, data);
 	//print_camera_content(data->camera);
 	//print_figures_content(data->figures);
+	mlx_destroy_image(data->mlx_data->mlx, data->mlx_data->img);
 	ray_trace(data->mlx_data, data);
 	return (0);
 }

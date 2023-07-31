@@ -42,7 +42,6 @@ int is_camera_movement_key(int keycode);
 void press_camera_movement_keys(int keycode, t_data *data);
 int is_camera_rotation_key(int keycode);
 void get_object(t_data *data, int x, int y);
-t_figure *get_closest_intersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist);
 void move_object(t_data *data, t_vector *direction);
 t_quaternion multiply_quaternion(t_quaternion q1, t_quaternion q2);
 t_quaternion *quaternion_new(float i, float i1, float i2, float i3);

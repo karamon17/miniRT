@@ -10,5 +10,5 @@ void move_object(t_data *data, t_vector *direction) {
 void move_figure(t_data *data, t_vector *direction) {
     if(data->closest_figure == NULL)
 		return ;
-        move_vector(data->closest_figure->center, direction, 1);
+    move_vector(data->closest_figure->center, direction, 1);
 }
