@@ -28,6 +28,7 @@ typedef union			u_figures
 	struct s_cylinder
 	{
 		t_vector	*normal;
+		t_vector    *real_center;
 		float		radius;
 		float		height;
 		float		dist1;
