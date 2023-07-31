@@ -102,15 +102,6 @@ t_vector *multiply_vector(float t, t_vector *v)
 	return (vector);
 }
 
-t_vector multiply_vector2(float t, t_vector v)
-{
-	t_vector vector;
-
-	vector.x = t * v.x;
-	vector.y = t * v.y;
-	vector.z = t * v.z;
-	return (vector);
-}
 
 float		distance(t_vector *p1, t_vector *p2)
 {

@@ -14,14 +14,13 @@ void rotate_quaternion(t_vector *vector, t_quaternion *direction) {
     vector->z = new_direction.z;
 }
 
-void move_vector2(t_vector vector, t_vector direction) {
-    vector.x += direction.x;
-    vector.y += direction.y;
-    vector.z += direction.z;
-}
+void move_vector(t_vector *vector, t_vector *direction, int direction_flag) {
+	float speed;
 
-void move_vector(t_vector *vector, t_vector *direction) {
-    vector->x += direction->x;
-    vector->y += direction->y;
-    vector->z += direction->z;
+	speed = 10;
+	if (direction_flag == 0)
+		speed *= -1;
+    vector->x += direction->x * speed;
+    vector->y += direction->y * speed;
+    vector->z += direction->z * speed;
 }

@@ -37,7 +37,7 @@ void parse_element(char *element_line, t_data *data)
 		parse_cylinder(element_line, data);	
 	// else
 	// 	error("in element line\n", EXIT_FAILURE);
-	//free(element_line);
+	free(element_line);
 }
 
 

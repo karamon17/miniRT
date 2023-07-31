@@ -17,6 +17,5 @@ t_vector *multiply_vector(float t, t_vector *v);
 t_vector *add_vector(t_vector *vector1, t_vector *vector2);
 t_vector *vector_cross_prodact(t_vector *vector1, t_vector *vector2);
 t_vector	*vector_dup(t_vector *v1);
-t_vector multiply_vector2(float t, t_vector v);
 
 #endif //MINIRT_PROJECT_VECTOR_H

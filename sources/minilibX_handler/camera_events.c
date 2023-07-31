@@ -14,17 +14,17 @@ void press_camera_rotation_keys(int keycode, t_data *data) {
 void press_camera_movement_keys(int keycode, t_data *data) {
 
 	if (keycode == KEY_UP_ARROW)
-		move_vector(data->camera->origin, multiply_vector( 1 ,data->camera->up_vector));
+		move_vector(data->camera->origin, data->camera->up_vector, 0);
 	else if (keycode == KEY_DOWN_ARROW)
-        move_vector(data->camera->origin, multiply_vector(-1,data->camera->up_vector));
+        move_vector(data->camera->origin, data->camera->up_vector, 1);
 	else if (keycode == KEY_LEFT_ARROW)
-		move_vector(data->camera->origin, multiply_vector( 1 ,data->camera->right_vector));
+		move_vector(data->camera->origin, data->camera->right_vector, 1);
     else if (keycode == KEY_RIGHT_ARROW)
-        move_vector(data->camera->origin, multiply_vector( -1 ,data->camera->right_vector));
+        move_vector(data->camera->origin, data->camera->right_vector, 0);
     else if ( keycode == KEY_PLUS)
-        move_vector(data->camera->origin, multiply_vector(1,data->camera->direction));
+        move_vector(data->camera->origin, data->camera->direction, 1);
     else if (keycode == KEY_MINUS)
-        move_vector(data->camera->origin, multiply_vector(-1,data->camera->direction));
+        move_vector(data->camera->origin, data->camera->direction, 0);
    }
 
 

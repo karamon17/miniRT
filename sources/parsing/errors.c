@@ -31,13 +31,12 @@ void check_correct_file_extension(char *filename) {
 }
 
 void check_elements(t_data *data) {
-	(void)data;
-	// if (data->checker.camera_init == 0)
-	// 	error("No camera in scene\n", EXIT_FAILURE);
-	// if (data->checker.has_ambient == 0)
-	// 	error("No ambient light in scene\n", EXIT_FAILURE);
-	// if (data->checker.has_spot == 0)
-	// 	error("No light in scene\n", EXIT_FAILURE);
-	// if (data->checker.has_object == 0)
-	// 	error("No object in scene\n", EXIT_FAILURE);
+	if (data->checker.camera_init == 0)
+		error("No camera in scene\n", EXIT_FAILURE);
+	if (data->checker.has_ambient == 0)
+		error("No ambient light in scene\n", EXIT_FAILURE);
+	if (data->checker.has_spot == 0)
+		error("No light in scene\n", EXIT_FAILURE);
+	if (data->checker.has_object == 0)
+		error("No object in scene\n", EXIT_FAILURE);
 }

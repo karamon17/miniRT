@@ -33,7 +33,7 @@ void init_move_data(t_data *data) {
 	t_movement *move;
 	int mod;
 
-	mod = 50;
+	mod = 1;
 	move = malloc(sizeof(t_movement));
 	move->up = vector_new(0, 1*mod, 0);
 	move->down = vector_new(0, -1*mod, 0);
