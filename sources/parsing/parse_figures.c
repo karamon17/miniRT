@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_figures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbudilov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 14:00:49 by vbudilov          #+#    #+#             */
-/*   Updated: 2023/08/01 14:00:51 by vbudilov         ###   ########.fr       */
+/*   Updated: 2023/08/01 14:47:45 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	parse_cylinder(char *line, t_data *data)
 
 void	check_plane(t_figure *figure)
 {
-	if (is_normalized(figure->body.plane.normal) == 0)
+	if (is_normalized(&figure->body.plane.normal) == 0)
 		error("Wrong plane normal\n", EXIT_FAILURE);
 }
 

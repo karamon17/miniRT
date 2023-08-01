@@ -31,7 +31,7 @@
 # define EPSILON 0.001
 
 float	compute_lighting(t_data *data, t_vectors *input, float s);
-t_figure * closest_inters(t_figure *figure, t_vector vector, t_vector ray, float *closest_dist);
+t_figure *closest_inters(t_figure *figure, t_vector vector, t_vector ray, float *closest_dist);
 float			cylinder_intersection(t_vector o, t_vector d, t_figure *cylinder);
 float		distance(t_vector *p1, t_vector *p2);
 t_vector	*vector_add(t_vector *v1, t_vector *v2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_common.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbudilov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 14:00:40 by vbudilov          #+#    #+#             */
-/*   Updated: 2023/08/01 14:00:41 by vbudilov         ###   ########.fr       */
+/*   Updated: 2023/08/01 14:48:38 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ float	parse_intesity(char *string)
 	return (intensity);
 }
 
-t_vector	*parse_vector(char *string)
+t_vector	parse_vector(char *string)
 {
 	char		**elements;
-	t_vector	*vector;
+	t_vector	vector;
 
 	elements = ft_split(string, ',');
 	if (array_lenth(elements) != 3)
@@ -73,10 +73,9 @@ t_vector	*parse_vector(char *string)
 	if (!ft_strisdigit(elements[0]) || !ft_strisdigit
 		(elements[1]) || !ft_strisdigit(elements[2]))
 		error("Wrong arguments in vector\n", EXIT_FAILURE);
-	vector = malloc(sizeof(t_vector));
-	vector->x = ft_atof(elements[0]);
-	vector->y = ft_atof(elements[1]);
-	vector->z = ft_atof(elements[2]);
+	vector.x = ft_atof(elements[0]);
+	vector.y = ft_atof(elements[1]);
+	vector.z = ft_atof(elements[2]);
 	free_array(elements);
-	return (vector);
+	return(vector);
 }
