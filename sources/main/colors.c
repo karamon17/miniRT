@@ -68,7 +68,7 @@ int get_color(t_data *data, t_vector ray)
 			t.v2 = mult_vect2(-1, cl_fig->body.plane.normal);
 		vector_normalize(t.v2);
 		t.v4 = mult_vect2(data->camera->direction.z, ray);
-		return(color_to_int(color_multiply(cl_fig->RGB_color, compute_lighting(data, &t, cl_fig->specular))));
+		return(color_to_int(color_multiply(cl_fig->rgb_color, compute_lighting(data, &t, cl_fig->specular))));
     }
 	else
     	return (color_to_int(color_new(0, 0, 0)));
