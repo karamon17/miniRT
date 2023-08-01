@@ -1,13 +1,14 @@
 #include "../../includes/miniRT.h"
 
-int	ft_exit(int keycode, void *f)
+int ft_exit(int keycode, void *f)
 {
-	(void)f;
-	(void)keycode;
+	(void) f;
+	(void) keycode;
 	exit(0);
 }
 
-void get_object(t_data *data, int x, int y){
+void get_object(t_data *data, int x, int y)
+{
 	float closest_dist = 0;
 	t_figure *closest_figure;
 
@@ -16,7 +17,7 @@ void get_object(t_data *data, int x, int y){
 	float x_angle = (data->mlx_data->width / 2.f * -1) + x;
 	float y_ray = y_angle * vplane->y_pixel;
 	float x_ray = x_angle * vplane->x_pixel;
-	t_vector ray = vector_new2(x_ray , y_ray, -1);
+	t_vector ray = vector_new2(x_ray, y_ray, -1);
 	closest_figure = closest_inters(data->figures, data->camera->origin, ray, &closest_dist);
 	data->closest_figure = closest_figure;
 	//free(ray);

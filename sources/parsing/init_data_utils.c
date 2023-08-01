@@ -63,22 +63,22 @@ t_quaternion	*quaternion_new(float i, float i1, float i2, float i3)
 	return (quaternion);
 }
 
-// void	adjast_camera(t_data *data, t_vector camera_position,
-// 					t_quaternion *rotate)
-// {
-// 	// if (camera_position.y == -1)
-// 	// 	rotate_camera(data, (rotate = quaternion_new(0.7071f, 0.7071f, 0, 0)));
-// 	// else if (camera_position.y == 1)
-// 	// 	rotate_camera(data, (rotate = quaternion_new(0.7071f, -0.7071f, 0, 0)));
-// 	// else if (camera_position.x == -1)
-// 	// 	rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, 0.7071f, 0)));
-// 	// else if (camera_position.x == 1)
-// 	// 	rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, -0.7071f, 0)));
-// 	// else if (camera_position.z == 1)
-// 	// {
-// 	// 	rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, -0.7071f, 0)));
-// 	// 	free(rotate);
-// 	// 	rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, -0.7071f, 0)));
-// 	// }
-// 	// free(rotate);
-// }
+void	adjast_camera(t_data *data, t_vector camera_position,
+				t_quaternion *rotate)
+{
+	if (camera_position.y == -1)
+		rotate_camera(data, (rotate = quaternion_new(0.7071f, 0.7071f, 0, 0)));
+	else if (camera_position.y == 1)
+		rotate_camera(data, (rotate = quaternion_new(0.7071f, -0.7071f, 0, 0)));
+	else if (camera_position.x == -1)
+		rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, 0.7071f, 0)));
+	else if (camera_position.x == 1)
+		rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, -0.7071f, 0)));
+	else if (camera_position.z == 1)
+	{
+		rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, -0.7071f, 0)));
+		free(rotate);
+		rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, -0.7071f, 0)));
+	}
+	free(rotate);
+}

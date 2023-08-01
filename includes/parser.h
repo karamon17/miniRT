@@ -41,7 +41,7 @@ char *remove_overstricked_space(char *line);
 int	ft_strisdigit(char *string);
 int is_normalized(t_vector *vector);
 void add_to_list(t_figure *figures_list, t_figure *figure);
-//void adjast_camera(t_data *data, t_vector camera_position, t_quaternion *rotate);
+void adjast_camera(t_data *data, t_vector camera_position, t_quaternion *rotate);
 void do_atof(char *string, int *i, float *result, float *power);
 
 

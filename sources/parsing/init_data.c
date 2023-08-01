@@ -36,17 +36,16 @@ void	init_camera(t_data *data)
 	rotate = NULL;
 	camera_position = data->camera->direction;
 	position = data->camera->origin;
-	//free(data->camera->direction);
 	data->camera->direction = vector_new2(0, 0, 1);
 	data->camera->up_vector = vector_new2(0, 1, 0);
 	data->camera->right_vector = vector_cross_prodact2(data->camera->up_vector,
 			data->camera->direction);
 	vector_normalize(data->camera->right_vector);
 	vector_normalize(data->camera->up_vector);
-	//adjast_camera(data, camera_position, rotate);
-	// if (position.x != 0 || position.y != 0 || position.z != 0)
-	// 	move_camera(data, &position, 1);
-	//free(data->camera->origin);
+	adjast_camera(data, camera_position, rotate);
+	if (position.x != 0 || position.y != 0 || position.z != 0)
+		move_camera(data, &position, 1);
+	free(data->camera->origin);
 	data->camera->origin = vector_new2(0, 0, 0);
 }
 

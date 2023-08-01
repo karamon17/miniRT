@@ -77,5 +77,5 @@ t_vector	parse_vector(char *string)
 	vector.y = ft_atof(elements[1]);
 	vector.z = ft_atof(elements[2]);
 	free_array(elements);
-	return(vector);
+	return (vector);
 }
