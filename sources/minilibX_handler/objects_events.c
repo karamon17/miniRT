@@ -1,6 +1,6 @@
 #include "../../includes/miniRT.h"
 
-void work_with_object(int keycode, t_data *data)
+void	work_with_object(int keycode, t_data *data)
 {
 	if (is_object_movement_key(keycode))
 		press_object_movement_keys(keycode, data);
@@ -8,7 +8,7 @@ void work_with_object(int keycode, t_data *data)
 		press_object_rotation_keys(keycode, data);
 }
 
-int press_object_movement_keys(int keycode, t_data *data)
+int	press_object_movement_keys(int keycode, t_data *data)
 {
 	if (keycode == KEY_S)
 		move_object(data, data->movement->down);
@@ -25,7 +25,7 @@ int press_object_movement_keys(int keycode, t_data *data)
 	return (0);
 }
 
-void press_object_rotation_keys(int keycode, t_data *data)
+void	press_object_rotation_keys(int keycode, t_data *data)
 {
 	if (keycode == KEY_Z)
 		rotate_object(data, data->movement->rotate_y_left);

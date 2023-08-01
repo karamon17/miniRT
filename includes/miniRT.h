@@ -85,10 +85,10 @@ typedef struct s_movement
     t_vector right;
     t_vector forward;
     t_vector backward;
-	t_quaternion *rotate_x_left;
-	t_quaternion *rotate_x_right;
-	t_quaternion *rotate_y_left;
-	t_quaternion *rotate_y_right;
+	t_quaternion rotate_x_left;
+	t_quaternion rotate_x_right;
+	t_quaternion rotate_y_left;
+	t_quaternion rotate_y_right;
 
 } t_movement;
 

@@ -1,6 +1,6 @@
 #include "../../includes/miniRT.h"
 
-void press_camera_rotation_keys(int keycode, t_data *data)
+void	press_camera_rotation_keys(int keycode, t_data *data)
 {
 	if (keycode == KEY_1)
 		rotate_camera(data, data->movement->rotate_y_right);
@@ -12,49 +12,54 @@ void press_camera_rotation_keys(int keycode, t_data *data)
 		rotate_camera(data, data->movement->rotate_x_left);
 }
 
-void rotate_camera(t_data *data, t_quaternion *direction)
+void	rotate_camera(t_data *data, t_quaternion direction)
 {
-	t_figure *figure;
-	t_vector *temp_h;
-	t_vector *c;
+	t_figure	*figure;
+	t_vector	temp_h;
+	t_vector	c;
 
 	figure = data->figures;
-	while (figure) {
+	while (figure)
+	{
 		if (figure->type == SPHERE)
-			rotate_figure_for_camera(data, figure->center, direction);
+			rotate_figure_for_camera(data, &figure->center, direction);
 		else if (figure->type == PLANE)
 			rotate_figure_for_camera(data,
-									 figure->body.plane.normal, direction);
-		else if (figure->type == CYLINDER) {
-			temp_h = mult_vect(figure->body.cyl.height,
-							   figure->body.cyl.normal);
-			c = vector_add(figure->center, temp_h);
-			rotate_figure_for_camera(data, c, direction);
-			figure->center = vector_subtract(c, temp_h);
-			free(c);
-			free(temp_h);
+				&figure->body.plane.normal, direction);
+		else if (figure->type == CYLINDER)
+		{
+			temp_h = mult_vect2(figure->body.cyl.height,
+					figure->body.cyl.normal);
+			c = vector_add2(figure->center, temp_h);
+			rotate_figure_for_camera(data, &c, direction);
+			figure->center = vector_subtract2(c, temp_h);
 		}
 		figure = figure->next;
 	}
+	rotate_light_for_camera(data, direction);
+}
+
+void	rotate_light_for_camera(t_data *data, t_quaternion direction)
+{
 	if (data->lights->type != 'L')
-		rotate_figure_for_camera(data, data->lights->next->vector, direction);
+		rotate_figure_for_camera(data, &data->lights->next->vector, direction);
 	else
-		rotate_figure_for_camera(data, data->lights->vector, direction);
+		rotate_figure_for_camera(data, &data->lights->vector, direction);
 }
 
-void rotate_figure_for_camera(t_data *data, t_vector *figure_center, t_quaternion *direction)
+void	rotate_figure_for_camera(t_data *data,
+			t_vector *figure_center, t_quaternion direction)
 {
-	t_vector rotation_point;
+	t_vector	rotation_point;
 
-	rotation_point = *data->camera->origin;
-	vector_subtract(figure_center, &rotation_point);
+	rotation_point = data->camera->origin;
+	vector_subtract2(*figure_center, rotation_point);
 	rotate_quaternion(figure_center, direction);
-	vector_add(figure_center, &rotation_point);
+	vector_add2(*figure_center, rotation_point);
 }
 
-void press_camera_movement_keys(int keycode, t_data *data)
+void	press_camera_movement_keys(int keycode, t_data *data)
 {
-
 	if (keycode == KEY_UP_ARROW)
 		move_camera(data, data->camera->up_vector, 1);
 	else if (keycode == KEY_DOWN_ARROW)
@@ -67,46 +72,4 @@ void press_camera_movement_keys(int keycode, t_data *data)
 		move_camera(data, data->camera->direction, 0);
 	else if (keycode == KEY_MINUS)
 		move_camera(data, data->camera->direction, 1);
-}
-
-void move_camera(t_data *data, t_vector *direction, int is_positive)
-{
-	t_figure *figure;
-
-	figure = data->figures;
-	while (figure) {
-		move_obj_for_camera(figure->center, direction, is_positive);
-		figure = figure->next;
-	}
-	if (data->lights->type != 'L')
-		move_obj_for_camera(data->lights->next->vector, direction, is_positive);
-	else
-		move_obj_for_camera(data->lights->vector, direction, is_positive);
-}
-
-void move_obj_for_camera(t_vector *figure_center,
-						 t_vector *direction, int is_positive)
-{
-	float speed;
-
-	speed = 10.f;
-	if (!is_positive) {
-		figure_center->x += direction->x * speed;
-		figure_center->y += direction->y * speed;
-		figure_center->z += direction->z * speed;
-	} else {
-		figure_center->x -= direction->x * speed;
-		figure_center->y -= direction->y * speed;
-		figure_center->z -= direction->z * speed;
-	}
-}
-
-
-void work_with_camera(int keycode, t_data *data)
-{
-
-	if (is_camera_movement_key(keycode))
-		press_camera_movement_keys(keycode, data);
-	else if (is_camera_rotation_key(keycode))
-		press_camera_rotation_keys(keycode, data);
 }

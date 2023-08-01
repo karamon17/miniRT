@@ -17,7 +17,7 @@ typedef struct s_quaternion
 	float x;
 	float y;
 	float z;
-} t_quaternion;
+}			t_quaternion;
 
 typedef union			u_figures
 {

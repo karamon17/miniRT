@@ -1,6 +1,6 @@
 #include "../includes/miniRT.h"
 
-int press_keys(int keycode, t_data *data)
+int	press_keys(int keycode, t_data *data)
 {
 	if (keycode == KEY_ESC)
 		exit(0);
@@ -14,7 +14,7 @@ int press_keys(int keycode, t_data *data)
 	return (0);
 }
 
-void mlx_hooks_handler(t_data *data)
+void	mlx_hooks_handler(t_data *data)
 {
 	mlx_hook(data->mlx_data->win, 4, 1, mouse_handle, data);
 	mlx_hook(data->mlx_data->win, 2, 1, press_keys, data);

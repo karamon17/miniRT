@@ -30,10 +30,8 @@ t_data	*init_data(char *input)
 void	init_camera(t_data *data)
 {
 	t_vector		camera_position;
-	t_quaternion	*rotate;
 	t_vector		position;
 
-	rotate = NULL;
 	camera_position = data->camera->direction;
 	position = data->camera->origin;
 	data->camera->direction = vector_new2(0, 0, 1);
@@ -42,10 +40,9 @@ void	init_camera(t_data *data)
 			data->camera->direction);
 	vector_normalize(data->camera->right_vector);
 	vector_normalize(data->camera->up_vector);
-	adjast_camera(data, camera_position, rotate);
+	adjast_camera(data, camera_position);
 	if (position.x != 0 || position.y != 0 || position.z != 0)
-		move_camera(data, &position, 1);
-	free(data->camera->origin);
+		move_camera(data, position, 1);
 	data->camera->origin = vector_new2(0, 0, 0);
 }
 
