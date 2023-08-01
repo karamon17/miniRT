@@ -2,23 +2,20 @@
 
 void press_camera_rotation_keys(int keycode, t_data *data) {
 	if (keycode == KEY_1)
-		rotate_camera(data, data->movement->rotate_y_right, 1);
+		rotate_camera(data, data->movement->rotate_y_right);
 	else if (keycode == KEY_3)
-		rotate_camera(data, data->movement->rotate_y_left, 1);
+		rotate_camera(data, data->movement->rotate_y_left);
 	else if (keycode == KEY_5)
-		rotate_camera(data, data->movement->rotate_x_right, 0);
+		rotate_camera(data, data->movement->rotate_x_right);
 	else if (keycode == KEY_2)
-		rotate_camera(data, data->movement->rotate_x_left, 0);
+		rotate_camera(data, data->movement->rotate_x_left);
 }
 
-void rotate_camera(t_data *data, t_quaternion *direction, int is_yaw) {
-
-	(void )is_yaw;
+void rotate_camera(t_data *data, t_quaternion *direction) {
 
 	t_figure *figure;
 
 	figure = data->figures;
-
 	while(figure)
 	{
 		if(figure->type == SPHERE)
@@ -30,6 +27,8 @@ void rotate_camera(t_data *data, t_quaternion *direction, int is_yaw) {
 			t_vector *c = vector_add(figure->center, temp_h);
 			rotate_figure_for_camera(data, c, direction);
 			figure->center = vector_subtract(c, temp_h);
+			free(c);
+			free(temp_h);
 		}
 		figure = figure->next;
 	}
@@ -40,11 +39,11 @@ void rotate_camera(t_data *data, t_quaternion *direction, int is_yaw) {
 }
 
 void rotate_figure_for_camera(t_data *data, t_vector *figure_center, t_quaternion *direction) {
-	t_vector rotation_point = *data->camera->origin;
-
-	vector_subtract(figure_center, &rotation_point);
+	//t_vector rotation_point = *data->camera->origin;
+	(void)data;
+	//vector_subtract(figure_center, &rotation_point);
 	rotate_quaternion(figure_center, direction);
-	vector_add(figure_center, &rotation_point);
+	//vector_add(figure_center, &rotation_point);
 }
 void press_camera_movement_keys(int keycode, t_data *data) {
 
