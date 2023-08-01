@@ -21,9 +21,9 @@ void rotate_camera(t_data *data, t_quaternion *direction) {
 		if(figure->type == SPHERE)
 			rotate_figure_for_camera(data, figure->center, direction);
 		else if(figure->type == PLANE)
-			rotate_figure_for_camera(data, figure->figure_body.plane.normal, direction);
+			rotate_figure_for_camera(data, figure->body.plane.normal, direction);
 		else if(figure->type == CYLINDER) {
-			t_vector *temp_h = multiply_vector(figure->figure_body.cylinder.height, figure->figure_body.cylinder.normal);
+			t_vector *temp_h = mult_vect(figure->body.cyl.height, figure->body.cyl.normal);
 			t_vector *c = vector_add(figure->center, temp_h);
 			rotate_figure_for_camera(data, c, direction);
 			figure->center = vector_subtract(c, temp_h);
