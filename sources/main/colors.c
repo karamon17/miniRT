@@ -46,11 +46,14 @@ t_color *color_new(float r, float g, float b) {
 
 void	help_free(t_vector *n, t_vector *p, t_vector *temp_n, t_vector *temp_m)
 {
-	if (temp_n != n)
+	if (temp_n && temp_n != n)
 		free(temp_n);
-	free(n);
-	free(p);
-	free(temp_m);
+	if (n)
+		free(n);
+	if (p)
+		free(p);
+	if (temp_m)
+		free(temp_m);
 }
 void	help_get_color(t_vectors *t, t_figure *cl_fig, float *closest_dist, t_vector *ray)
 {
