@@ -19,13 +19,13 @@ typedef struct s_light
 	t_vector		vector;
 	char			type;
 	float			intensity;
-	t_color			*RGB_color;
+	t_color			RGB_color;
 	struct s_light	*next;
 } t_light;
 
 t_light *new_ambient_light(t_data *data);
 
-int color_to_int(t_color *color);
-t_color *color_new(float r, float g, float b);
+int color_to_int(t_color color);
+t_color color_new(float r, float g, float b);
 
 #endif

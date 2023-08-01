@@ -1,31 +1,19 @@
 #include "../includes/miniRT.h"
 
-void	help_solve_cylinder(t_abc	*abc, t_vectors *t, t_figure *cyl)
-{
-	abc->a = dot2(t->v1, t->v1);
-	abc->b = 2 * dot2(t->v1, t->v2);
-	abc->c = dot2(t->v2, t->v2) - cyl->body.cyl.rad * cyl->body.cyl.rad;
-}
 
 static int		solve_cylinder(float x[2], t_vector o, t_vector d, t_figure *cyl)
 {
-	t_vectors 	t;
+	t_vector	v1;
+	t_vector	v2;
 	t_abc		abc;
 
-	t.v1 = mult_vect2(dot2(d, cyl->body.cyl.normal), cyl->body.cyl.normal);
-	t.v3 = t.v1;
-	t.v1 = vector_subtract2(d, t.v1);
-	//free(t.v3);
-	t.v3 = vector_subtract2(o, cyl->center);
-	t.v2 = mult_vect2(dot2(t.v3, cyl->body.cyl.normal), cyl->body.cyl.normal);
-	t.v4 = t.v2;
-	t.v5 = vector_subtract2(o, cyl->center);
-	t.v2 = vector_subtract2(t.v5, t.v2);
-	//help_free(t.v4, t.v5, t.v3, NULL);
-	help_solve_cylinder(&abc, &t, cyl);
+	v1 = vector_subtract2(d, mult_vect2(dot2(d, cyl->body.cyl.normal), cyl->body.cyl.normal));
+	v2 = vector_subtract2(vector_subtract2(o, cyl->center), mult_vect2(dot2(vector_subtract2(o, cyl->center), cyl->body.cyl.normal), cyl->body.cyl.normal));
+	abc.a = dot2(v1, v1);
+	abc.b = 2 * dot2(v1, v2);
+	abc.c = dot2(v2, v2) - cyl->body.cyl.rad * cyl->body.cyl.rad;
 	x[0] = (-abc.b + sqrt(abc.b * abc.b - 4 * abc.a * abc.c)) / (2 * abc.a);
 	x[1] = (-abc.b - sqrt(abc.b * abc.b - 4 * abc.a * abc.c)) / (2 * abc.a);
-	//help_free(t.v1, t.v2, NULL, NULL);
 	if ((x[0] != x[0] && x[1] != x[1]) || (x[0] < EPSILON && x[1] < EPSILON))
 	{
 		x[0] = INFINITY;
@@ -35,32 +23,11 @@ static int		solve_cylinder(float x[2], t_vector o, t_vector d, t_figure *cyl)
 	return (1);
 }
 
-t_vector	help_calc_cy_normal(t_vectors *t, t_vector o, float dist)
-{
-	t_vector temp;
-	t->v2 = mult_vect2(dist, t->v7);
-	t->v3 = vector_subtract2(t->v6, o);
-	t->v4 = vector_subtract2(t->v1, t->v2);
-	t->v5 = vector_subtract2(t->v4, t->v3);
-	//help_free(t->v1, t->v2, t->v3, t->v4);
-	temp = normalize2(t->v5);
-	//free(t->v5);
-	return (temp);
-}
-
-void	help_calc(t_vectors *t, float *height, t_figure *cyl)
-{
-	*height = cyl->body.cyl.height;
-	t->v6 = cyl->center;
-	t->v7 = cyl->body.cyl.normal;
-}
-
 static t_vector calc_cy_normal(float x2[2], t_vector o, t_vector d, t_figure *cyl)
 {
 	t_abc		abc;
-	t_vectors 	t;
 
-	help_calc(&t, &abc.c, cyl);
+	abc.c = cyl->body.cyl.height;
 	if ((cyl->body.cyl.dist1 >= 0 && cyl->body.cyl.dist1 <= abc.c
 				&& x2[0] > EPSILON) && (cyl->body.cyl.dist2 >= 0
 				&& cyl->body.cyl.dist2 <= abc.c && x2[1] > EPSILON))
@@ -79,30 +46,19 @@ static t_vector calc_cy_normal(float x2[2], t_vector o, t_vector d, t_figure *cy
 		abc.b = x2[1];
 	}
 	x2[0] = abc.b;
-	t.v1 = mult_vect2(abc.b, d);
-	return (help_calc_cy_normal(&t, o, abc.a));
+	return (normalize2(vector_subtract2(vector_subtract2(mult_vect2(abc.b, d), mult_vect2(abc.a, cyl->body.cyl.normal)), vector_subtract2(cyl->center, o))));
 }
 
 static float	cy_intersection(t_vector o, t_vector d, t_vector *cy_normal, t_figure *cyl)
 {
 	float		x2[2];
 	float 		height;
-	t_vectors 	t;
 
-	t.v4 = cyl->center;
-	t.v5 = cyl->body.cyl.normal;
 	height = cyl->body.cyl.height;
 	if (solve_cylinder(x2, o, d, cyl) == 0)
 		return (INFINITY);
-	t.v1 = mult_vect2(x2[0], d);
-	t.v2 = vector_subtract2(t.v4, o);
-	t.v3 = vector_subtract2(t.v1, t.v2);
-	cyl->body.cyl.dist1 = dot2(t.v5, t.v3);
-	//help_free(t.v1, t.v3, NULL, NULL);
-	t.v1 = mult_vect2(x2[1], d);
-	t.v3 = vector_subtract2(t.v1, t.v2);
-	cyl->body.cyl.dist2 = dot2(t.v5, t.v3);
-	//help_free(t.v1, t.v2, t.v3, NULL);
+	cyl->body.cyl.dist1 = dot2(cyl->body.cyl.normal, vector_subtract2(mult_vect2(x2[0], d), vector_subtract2(cyl->center, o)));
+	cyl->body.cyl.dist2 = dot2(cyl->body.cyl.normal, vector_subtract2(mult_vect2(x2[1], d), vector_subtract2(cyl->center, o)));
 	if (!((cyl->body.cyl.dist1 >= 0 && cyl->body.cyl.dist1 <= height
 					&& x2[0] > EPSILON) || (cyl->body.cyl.dist2 >= 0
 					&& cyl->body.cyl.dist2 <= height && x2[0] > EPSILON)))
@@ -113,52 +69,26 @@ static float	cy_intersection(t_vector o, t_vector d, t_vector *cy_normal, t_figu
 
 void	ft_newplane(t_figure *new_plane, t_figure *new_plane2, t_vector v4, t_figure *cyl)
 {
-	t_vectors 	t;
-
-	t.v4 = cyl->body.cyl.normal;
-	t.v5 = mult_vect2(cyl->body.cyl.height, t.v4);
-	t.v3 = vector_add2(cyl->center, t.v5);
 	new_plane->body.plane.normal = v4;
 	new_plane->center = cyl->center;
 	new_plane2->body.plane.normal = v4;
-	new_plane2->center = t.v3;
-	//free(t.v5);
-}
-
-void	help_caps(t_vectors *t, t_abc *id, t_figure *cyl, t_vector d)
-{
-	t->v5 = mult_vect2(cyl->body.cyl.height, cyl->body.cyl.normal);
-	t->v3 = vector_add2(cyl->center, t->v5);
-	t->v6 = mult_vect2(id->a, d);
-	t->v7 = mult_vect2(id->b, d);
-}
-
-void	help_caps2(t_vectors *t, t_abc *ab, t_figure *cyl, t_vector o)
-{
-	t->v1 = vector_add2(o, t->v6);
-	t->v2 = vector_add2(o, t->v7);
-	ab->a = distance2(t->v1, cyl->center);
-	ab->b = distance2(t->v2, t->v3);
-	//help_free(t->v6, t->v7, t->v5, NULL);
-	//help_free(t->v1, t->v2, t->v3, NULL);
+	new_plane2->center = vector_add2(cyl->center, mult_vect2(cyl->body.cyl.height, cyl->body.cyl.normal));
 }
 
 static float	caps_intersection(t_vector o, t_vector d, t_figure *cyl)
 {
 	t_abc		id;
 	t_abc		ab;
-	t_vectors 	t;
 	t_figure 	new_plane;
 	t_figure 	new_plane2;
 
 	ft_newplane(&new_plane, &new_plane2, cyl->body.cyl.normal, cyl);
 	id.a = plane_intercept(&new_plane, o, d);
 	id.b = plane_intercept(&new_plane2, o, d);
-	//free(new_plane2.center);
 	if (id.a < INFINITY || id.b < INFINITY)
 	{
-		help_caps(&t, &id, cyl, d);
-		help_caps2(&t, &ab, cyl, o);
+		ab.a = distance2(vector_add2(o, mult_vect2(id.a, d)), cyl->center);
+		ab.b = distance2(vector_add2(o, mult_vect2(id.b, d)), vector_add2(cyl->center, mult_vect2(cyl->body.cyl.height, cyl->body.cyl.normal)));
 		if ((id.a < INFINITY && ab.a <= cyl->body.cyl.rad)
 				&& (id.b < INFINITY && ab.b <= cyl->body.cyl.rad))
 			return (id.a < id.b ? id.a : id.b);

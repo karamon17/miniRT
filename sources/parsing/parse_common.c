@@ -6,15 +6,15 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 14:00:40 by vbudilov          #+#    #+#             */
-/*   Updated: 2023/08/01 14:48:38 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/01 15:38:16 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-t_color	*parse_color(char *string)
+t_color	parse_color(char *string)
 {
-	t_color	*color;
+	t_color	color;
 	char	**splited_string;
 	int		i;
 
@@ -22,14 +22,13 @@ t_color	*parse_color(char *string)
 	splited_string = ft_split(string, ',');
 	if (array_lenth(splited_string) != 3)
 		error("Error in color declaration\n", EXIT_FAILURE);
-	color = malloc(sizeof(t_color));
 	if (!ft_strisdigit(splited_string[0]) || !ft_strisdigit
 		(splited_string[1]) || !ft_strisdigit(splited_string[2]))
 		error("color is not a number\n", EXIT_FAILURE);
-	color->transparency = 0;
-	color->red = ft_atof(splited_string[0]);
-	color->green = ft_atof(splited_string[1]);
-	color->blue = ft_atof(splited_string[2]);
+	color.transparency = 0;
+	color.red = ft_atof(splited_string[0]);
+	color.green = ft_atof(splited_string[1]);
+	color.blue = ft_atof(splited_string[2]);
 	check_color(color);
 	while (splited_string[i])
 	{
@@ -40,13 +39,13 @@ t_color	*parse_color(char *string)
 	return (color);
 }
 
-void	check_color(t_color *color)
+void	check_color(t_color color)
 {
-	if (color->red < 0 || color->red > 255)
+	if (color.red < 0 || color.red > 255)
 		error("red color out of range\n", EXIT_FAILURE);
-	if (color->green < 0 || color->green > 255)
+	if (color.green < 0 || color.green > 255)
 		error("green color out of range\n", EXIT_FAILURE);
-	if (color->blue < 0 || color->blue > 255)
+	if (color.blue < 0 || color.blue > 255)
 		error("blue color out of range\n", EXIT_FAILURE);
 }
 

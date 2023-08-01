@@ -24,7 +24,6 @@ void ray_trace(t_mlx_data *mlx_data, t_data *data)
             vector_normalize(ray);
             color = get_color(data, ray);
             mlx_data->img_data[w_params.mlx_x + w_params.mlx_y * (int)mlx_data->width] = color;
-            //free(ray);
             w_params.x_angle++;
             w_params.mlx_x++;
         }

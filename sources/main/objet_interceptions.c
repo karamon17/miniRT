@@ -34,22 +34,19 @@ float plane_intercept(t_figure *plane, t_vector vector, t_vector ray)
 
 float sphere_intercept(t_figure *sphere, t_vector vector, t_vector ray)
 {
-    float a;
-    float b;
-    float c;
-    float discr;
-    float dist_1;
-    t_vector oc;
+	t_abc		abc;
+    float 		discr;
+    float 		dist_1;
+    t_vector 	oc;
 
     oc = vector_subtract2(vector, sphere->center);
-    a = dot2(ray, ray);
-    b = 2 * dot2(oc, ray);
-    c = dot2(oc, oc) - (sphere->body.sphere.rad * sphere->body.sphere.rad);
-    //free(oc);
-    discr = b * b - (4 * a * c);
+    abc.a = dot2(ray, ray);
+    abc.b = 2 * dot2(oc, ray);
+    abc.c = dot2(oc, oc) - (sphere->body.sphere.rad * sphere->body.sphere.rad);
+    discr = abc.b * abc.b - (4 * abc.a * abc.c);
     if (discr < 0)
         return (0);
-    dist_1 = (-b - sqrt(discr)) / 2 / a;
+    dist_1 = (-abc.b - sqrt(discr)) / 2 / abc.a;
     if (dist_1 > 0)
         return (dist_1);
     return (0);
@@ -57,8 +54,8 @@ float sphere_intercept(t_figure *sphere, t_vector vector, t_vector ray)
 
 t_figure *closest_inters(t_figure *figure, t_vector vector, t_vector ray, float *closest_dist)
 {
-    t_figure *closest_figure;
-    float dist;
+    t_figure 	*closest_figure;
+    float 		dist;
 
     closest_figure = NULL;
 	*closest_dist = 0;

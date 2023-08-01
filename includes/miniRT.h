@@ -38,7 +38,7 @@ t_vector	*vector_add(t_vector *v1, t_vector *v2);
 t_vector		normalize2(t_vector p);
 t_figure *check_intersection(t_figure *figure, t_vector vector, t_vector ray);
 int get_color(t_data *data, t_vector ray);
-t_color	*color_multiply(t_color *color, float intecivity);
+t_color	color_multiply(t_color color, float intecivity);
 void init_camera(t_data *data);
 //void	help_free(t_vector *n, t_vector *p, t_vector *temp_n, t_vector *temp_m);
 

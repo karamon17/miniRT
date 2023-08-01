@@ -13,7 +13,7 @@ void parse_elements(char *file_content, t_data *data);
 void parse_element(char *element_line, t_data *data);
 void parse_ambient_light(char *line, t_data *data);
 float parse_intesity(char *string);
-t_color *parse_color(char *string);
+t_color parse_color(char *string);
 void parse_camera(char *line, t_data *data);
 t_vector parse_vector(char *string);
 t_camera *new_camera(t_data *data);
