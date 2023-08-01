@@ -39,9 +39,9 @@ t_figure	*check_intersection(t_figure *figure,
 int			get_color(t_data *data, t_vector ray);
 t_color		color_multiply(t_color color, float intecivity);
 void		init_camera(t_data *data);
-void	ft_newplane(t_figure *new_plane, t_figure *new_plane2, \
+void		ft_newplane(t_figure *new_plane, t_figure *new_plane2, \
 t_vector v4, t_figure *cyl);
-float	cy_intersection(t_vector o, t_vector d, \
+float		cy_intersection(t_vector o, t_vector d, \
 t_vector *cy_normal, t_figure *cyl);
 
 typedef struct s_win_params
@@ -111,5 +111,10 @@ typedef struct s_abc
 	float	b;
 	float	c;
 }	t_abc;
+
+t_view_plane	*init_image_and_vplane(t_mlx_data *mlx_data,
+				t_data *data, t_view_plane *vplane);
+void			handle_x_raw(t_win_params *w_params,
+				t_view_plane *vplane, t_mlx_data *mlx_data, t_data *data);
 
 #endif
