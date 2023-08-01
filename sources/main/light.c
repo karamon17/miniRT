@@ -6,30 +6,41 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:16:22 by gkhaishb          #+#    #+#             */
-/*   Updated: 2023/08/01 17:15:26 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/01 18:42:31 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-void	ft_specular(t_vectors *t, t_vectors *input, t_light *cur, t_abc *abc)
+float	ft_specular(t_vector l, t_vectors *input, t_light *cur, t_abc *abc)
 {
+	t_vector	r;
+	float		res;
+
+	res = 0;
 	if (abc->b != -1)
 	{
-		t->v3 = mult_vect(2 * dot(input->v2, t->v1), input->v2);
-		t->v2 = vector_subtract(t->v3, t->v1);
-		abc->c = dot(t->v2, input->v4);
+		r = vector_subtract(mult_vect(2 * dot(input->v2, l), \
+			input->v2), l);
+		abc->c = dot(r, input->v4);
+		// if (round(pow(abc->c / (vect_len(r) \
+		// 	* vect_len(input->v4)), abc->b)) != 0)
+		// 	printf("%f\n", pow(abc->c / (vect_len(r) \
+		// 		* vect_len(input->v4)), abc->b));
 		if (abc->c > 0)
-			abc->a += cur->intensity * pow(abc->c / (vect_len(t->v2) \
+			res = cur->intensity * pow(abc->c / (vect_len(r) \
 			* vect_len(input->v4)), abc->b);
 	}
+	if (round(res) != 0)
+		printf ("%f\n", res);
+	return (res);
 }
 
 float	compute_lighting(t_data *data, t_vectors *input, float s)
 {
 	t_abc		abc;
 	t_light		*cur;
-	t_vectors	t;
+	t_vector	l;
 
 	cur = data->lights;
 	abc.a = 0.0f;
@@ -39,17 +50,17 @@ float	compute_lighting(t_data *data, t_vectors *input, float s)
 			abc.a += cur->intensity;
 		if (cur->type == 'L')
 		{
-			t.v1 = vector_subtract(cur->vector, input->v1);
-			if (check_intersection(data->figures, input->v1, t.v1))
+			l = vector_subtract(cur->vector, input->v1);
+			if (check_intersection(data->figures, input->v1, l))
 			{
 				cur = cur->next;
 				continue ;
 			}
-			if (dot(input->v2, t.v1) > 0)
-				abc.a += cur->intensity * dot(input->v2, t.v1) / \
-				(vect_len(input->v2) * vect_len(t.v1));
+			if (dot(input->v2, l) > 0)
+				abc.a += cur->intensity * dot(input->v2, l) / \
+				(vect_len(input->v2) * vect_len(l));
 			abc.b = s;
-			ft_specular(&t, input, cur, &abc);
+			abc.a += ft_specular(l, input, cur, &abc);
 		}
 		cur = cur->next;
 	}
