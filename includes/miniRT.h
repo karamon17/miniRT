@@ -30,9 +30,14 @@
 
 # define EPSILON 0.001
 
+<<<<<<< HEAD
 t_light  *light_new(t_vector *vector, char	type, float	intensity);
 float	compute_lighting(t_data *data, t_vectors *input, float s);
 t_figure * closest_inters(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist);
+=======
+float	compute_lighting(t_data *data, t_vector *p, t_vector *n, t_vector *ray, float s);
+t_figure * closest_intersection(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist);
+>>>>>>> camera_rotation
 float			cylinder_intersection(t_vector *o, t_vector *d, t_figure *cylinder);
 float		distance(t_vector *p1, t_vector *p2);
 t_vector	*vector_add(t_vector *v1, t_vector *v2);
@@ -90,8 +95,6 @@ typedef struct s_movement
 	t_quaternion *rotate_x_right;
 	t_quaternion *rotate_y_left;
 	t_quaternion *rotate_y_right;
-	t_quaternion *rotate_z_left;
-	t_quaternion *rotate_z_right;
 
 } t_movement;
 

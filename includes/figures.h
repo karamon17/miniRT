@@ -4,8 +4,12 @@
 #include "miniRT.h"
 #include "light.h"
 #include "vector.h"
-
-typedef struct s_sphere t_sphere;
+enum e_axis
+{
+	X_AXIS,
+	Y_AXIS,
+	Z_AXIS,
+} t_axis;
 
 typedef struct s_quaternion
 {
@@ -49,9 +53,9 @@ typedef struct		s_figures
     t_vector	*center;
 	float		specular;
 	t_color		*RGB_color;
+	t_vector 	*normal;
 	enum e_figures	type;
 	struct s_figures* next;
-	t_vector	*normal;
 }					t_figure;
 
 #endif //MINIRT_PROJECT_SPHERE_H
