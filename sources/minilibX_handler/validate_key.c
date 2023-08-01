@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_key.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/01 16:17:59 by gkhaishb          #+#    #+#             */
+/*   Updated: 2023/08/01 16:20:40 by gkhaishb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/miniRT.h"
 
 int	is_camera_rotation_key(int keycode)
@@ -23,13 +35,6 @@ int	is_object_rotation_key(int keycode)
 {
 	return (keycode == KEY_Z || keycode == KEY_C
 		|| keycode == KEY_R || keycode == KEY_F);
-}
-
-int	is_chosen_object(int keycode, t_data *data)
-{
-	return (data->closest_figure != NULL
-		&& (is_object_movement_key(keycode)
-			|| is_object_rotation_key(keycode)));
 }
 
 void	switch_object_light(int keycode, t_data *data)

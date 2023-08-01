@@ -6,7 +6,7 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 13:45:20 by vbudilov          #+#    #+#             */
-/*   Updated: 2023/08/01 14:50:49 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/01 16:20:01 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_quaternion	quaternion_new(float i, float i1, float i2, float i3)
 	return (quaternion);
 }
 
-void adjast_camera(t_data *data, t_vector camera_position)
+void	adjast_camera(t_data *data, t_vector camera_position)
 {
 	if (camera_position.y == -1)
 		rotate_camera(data, (quaternion_new(0.7071f, 0.7071f, 0, 0)));

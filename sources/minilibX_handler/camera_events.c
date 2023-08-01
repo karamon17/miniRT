@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   camera_events.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/01 16:17:34 by gkhaishb          #+#    #+#             */
+/*   Updated: 2023/08/01 16:17:35 by gkhaishb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/miniRT.h"
 
 void	press_camera_rotation_keys(int keycode, t_data *data)
@@ -25,7 +37,7 @@ void	rotate_camera(t_data *data, t_quaternion direction)
 			rotate_figure_for_camera(data, &figure->center, direction);
 		else if (figure->type == PLANE)
 			rotate_figure_for_camera(data,
-				&figure->body.plane.normal, direction);
+				&figure->center, direction);
 		else if (figure->type == CYLINDER)
 		{
 			temp_h = mult_vect2(figure->body.cyl.height,

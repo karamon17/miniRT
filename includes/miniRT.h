@@ -25,9 +25,6 @@
 #include "mlx.h"
 #include "../libft/libft.h"
 
-//to remove
-#include "to_remove.h"
-
 # define EPSILON 0.001
 
 float	compute_lighting(t_data *data, t_vectors *input, float s);

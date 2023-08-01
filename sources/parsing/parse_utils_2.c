@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbudilov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 14:01:27 by vbudilov          #+#    #+#             */
-/*   Updated: 2023/08/01 14:01:28 by vbudilov         ###   ########.fr       */
+/*   Updated: 2023/08/01 16:10:53 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_figure	*add_figure(t_data *data, int type)
 
 	figure = malloc(sizeof(t_figure));
 	figure->type = type;
-	figure->specular = -1.f;
+	figure->specular = -1;
 	figure->next = NULL;
 	if (data->figures == NULL)
 		data->figures = figure;

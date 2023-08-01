@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   camera_events_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/01 16:17:31 by gkhaishb          #+#    #+#             */
+/*   Updated: 2023/08/01 16:21:51 by gkhaishb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/miniRT.h"
 
 void	move_camera(t_data *data, t_vector direction, int is_positive)
@@ -11,8 +23,8 @@ void	move_camera(t_data *data, t_vector direction, int is_positive)
 		figure = figure->next;
 	}
 	if (data->lights->type != 'L')
-		move_obj_for_camera(&data->lights->next->vector,
-							direction, is_positive);
+		move_obj_for_camera(&data->lights->next->vector, \
+		direction, is_positive);
 	else
 		move_obj_for_camera(&data->lights->vector, direction, is_positive);
 }
