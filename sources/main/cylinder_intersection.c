@@ -120,7 +120,7 @@ static float	cy_intersection(t_vector *o, t_vector *d, t_vector *cy_normal, t_fi
 	cylinder->figure_body.cylinder.dist2 = vector_dot_product(normal, temp_x_c);
 	free(temp_x);
 	free(temp_c);
-	free(temp_x_c);
+	free(temp_x_c)	;
 	if (!((cylinder->figure_body.cylinder.dist1 >= 0 && cylinder->figure_body.cylinder.dist1 <= height
 					&& x2[0] > EPSILON) || (cylinder->figure_body.cylinder.dist2 >= 0
 					&& cylinder->figure_body.cylinder.dist2 <= height && x2[0] > EPSILON)))

@@ -13,18 +13,23 @@ void press_camera_rotation_keys(int keycode, t_data *data) {
 
 void rotate_camera(t_data *data, t_quaternion *direction, int is_yaw) {
 
+	(void )is_yaw;
+
 	t_figure *figure;
 
 	figure = data->figures;
 
 	while(figure)
 	{
-		if(figure->type == SPHERE || (figure->type == CYLINDER && is_yaw))
+		if(figure->type == SPHERE)
 			rotate_figure_for_camera(data, figure->center, direction);
 		else if(figure->type == PLANE)
 			rotate_figure_for_camera(data, figure->figure_body.plane.normal, direction);
-		else if(figure->type == CYLINDER && !is_yaw) {
-			rotate_figure_for_camera(data, figure->center, direction);
+		else if(figure->type == CYLINDER) {
+			t_vector *temp_h = multiply_vector(figure->figure_body.cylinder.height, figure->figure_body.cylinder.normal);
+			t_vector *c = vector_add(figure->center, temp_h);
+			rotate_figure_for_camera(data, c, direction);
+			figure->center = vector_subtract(c, temp_h);
 		}
 		figure = figure->next;
 	}
@@ -35,13 +40,12 @@ void rotate_camera(t_data *data, t_quaternion *direction, int is_yaw) {
 }
 
 void rotate_figure_for_camera(t_data *data, t_vector *figure_center, t_quaternion *direction) {
-	//t_vector rotation_point = *data->camera->origin;
-	(void ) data;
-	//vector_subtract(figure_center, &rotation_point);
-	rotate_quaternion(figure_center, direction);
-	//vector_add(figure_center, &rotation_point);
-}
+	t_vector rotation_point = *data->camera->origin;
 
+	vector_subtract(figure_center, &rotation_point);
+	rotate_quaternion(figure_center, direction);
+	vector_add(figure_center, &rotation_point);
+}
 void press_camera_movement_keys(int keycode, t_data *data) {
 
 	if (keycode == KEY_UP_ARROW)
@@ -49,13 +53,13 @@ void press_camera_movement_keys(int keycode, t_data *data) {
 	else if (keycode == KEY_DOWN_ARROW)
 		move_camera(data, data->camera->up_vector, 0);
 	else if (keycode == KEY_LEFT_ARROW)
-		move_camera(data, data->camera->right_vector, 1);
+		move_camera(data, data->camera->right_vector, 0);
     else if (keycode == KEY_RIGHT_ARROW)
-        move_camera(data, data->camera->right_vector, 0);
+        move_camera(data, data->camera->right_vector, 1);
     else if ( keycode == KEY_PLUS)
-        move_camera(data, data->camera->direction, 1);
-    else if (keycode == KEY_MINUS)
         move_camera(data, data->camera->direction, 0);
+    else if (keycode == KEY_MINUS)
+        move_camera(data, data->camera->direction, 1);
    }
 
 void move_camera(t_data *data, t_vector *direction, int is_positive) {
