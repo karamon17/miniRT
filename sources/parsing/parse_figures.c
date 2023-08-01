@@ -23,7 +23,7 @@ void	parse_sphere(char *line, t_data *data)
 	sphere_figure = add_figure(data, SPHERE);
 	sphere_figure->center = parse_vector(elements[1]);
 	sphere_figure->body.sphere.rad = ft_atof(elements[2]) / 2.f;
-	sphere_figure->RGB_color = parse_color(elements[3]);
+	sphere_figure->rgb_color = parse_color(elements[3]);
 	check_sphere(sphere_figure);
 	data->checker.has_object++;
 	free_array(elements);
@@ -40,7 +40,7 @@ void	parse_plane(char *line, t_data *data)
 	plane_figure = add_figure(data, PLANE);
 	plane_figure->center = parse_vector(elements[1]);
 	plane_figure->body.plane.normal = parse_vector(elements[2]);
-	plane_figure->RGB_color = parse_color(elements[3]);
+	plane_figure->rgb_color = parse_color(elements[3]);
 	check_plane(plane_figure);
 	data->checker.has_object++;
 	free_array(elements);
@@ -59,7 +59,7 @@ void	parse_cylinder(char *line, t_data *data)
 	cylinder_figure->body.cyl.normal = parse_vector(elements[2]);
 	cylinder_figure->body.cyl.rad = ft_atof(elements[3]) / 2.f;
 	cylinder_figure->body.cyl.height = ft_atof(elements[4]);
-	cylinder_figure->RGB_color = parse_color(elements[5]);
+	cylinder_figure->rgb_color = parse_color(elements[5]);
 	check_cylinder(cylinder_figure);
 	data->checker.has_object++;
 	free_array(elements);
