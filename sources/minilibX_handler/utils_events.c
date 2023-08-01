@@ -16,9 +16,9 @@ void get_object(t_data *data, int x, int y){
 	float x_angle = (data->mlx_data->width / 2.f * -1) + x;
 	float y_ray = y_angle * vplane->y_pixel;
 	float x_ray = x_angle * vplane->x_pixel;
-	t_vector *ray = vector_new(x_ray , y_ray, -1);
-	closest_figure = closest_inters(data->figures, data->camera->origin, ray, &closest_dist);
+	t_vector ray = vector_new2(x_ray , y_ray, -1);
+	closest_figure = closest_inters(data->figures, data->camera->origin, &ray, &closest_dist);
 	data->closest_figure = closest_figure;
-	free(ray);
+	//free(ray);
 	free(vplane);
 }
