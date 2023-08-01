@@ -6,7 +6,7 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:16:17 by gkhaishb          #+#    #+#             */
-/*   Updated: 2023/08/01 17:07:55 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:16:05 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,19 @@ int	get_color(t_data *data, t_vector ray)
 	&closest_dist);
 	if (cl_fig && closest_dist != INFINITY)
 	{
-		t.v1 = mult_vect2(closest_dist, ray);
-		t.v2 = vector_subtract2(t.v1, cl_fig->center);
+		t.v1 = mult_vect(closest_dist, ray);
+		t.v2 = vector_subtract(t.v1, cl_fig->center);
 		if (cl_fig->type == CYLINDER)
-			t.v2 = vector_subtract2(t.v1, vector_add2(mult_vect2(\
+			t.v2 = vector_subtract(t.v1, vector_add(mult_vect(\
 				cl_fig->body.cyl.height / 2, cl_fig->body.cyl.normal), \
 				cl_fig->center));
 		if (cl_fig->type == PLANE && cl_fig->body.plane.normal.z > 0)
 			t.v2 = cl_fig->body.plane.normal;
 		else if (cl_fig->type == PLANE && cl_fig->body.plane.normal.z <= 0)
-			t.v2 = mult_vect2(-1, cl_fig->body.plane.normal);
+			t.v2 = mult_vect(-1, cl_fig->body.plane.normal);
 		vector_normalize(t.v2);
-		t.v4 = mult_vect2(data->camera->direction.z, ray);
-		return (color_to_int(color_multiply(cl_fig->RGB_color, \
+		t.v4 = mult_vect(data->camera->direction.z, ray);
+		return (color_to_int(color_multiply(cl_fig->rgb_color, \
 		compute_lighting(data, &t, cl_fig->specular))));
 	}
 	else

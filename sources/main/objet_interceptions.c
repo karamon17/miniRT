@@ -6,7 +6,7 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:16:27 by gkhaishb          #+#    #+#             */
-/*   Updated: 2023/08/01 17:07:16 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:15:19 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ float	plane_intercept(t_figure *plane, t_vector vector, t_vector ray)
 	float		a;
 	t_vector	temp;
 
-	a = dot2(plane->body.plane.normal, ray);
+	a = dot(plane->body.plane.normal, ray);
 	if (a == 0)
 		return (INFINITY);
-	temp = vector_subtract2(plane->center, vector);
-	a = dot2(temp, plane->body.plane.normal) / a;
+	temp = vector_subtract(plane->center, vector);
+	a = dot(temp, plane->body.plane.normal) / a;
 	if (a < EPSILON)
 		return (INFINITY);
 	return (a);
@@ -51,10 +51,10 @@ float	sphere_intercept(t_figure *sphere, t_vector vector, t_vector ray)
 	float		dist_1;
 	t_vector	oc;
 
-	oc = vector_subtract2(vector, sphere->center);
-	abc.a = dot2(ray, ray);
-	abc.b = 2 * dot2(oc, ray);
-	abc.c = dot2(oc, oc) - (sphere->body.sphere.rad * sphere->body.sphere.rad);
+	oc = vector_subtract(vector, sphere->center);
+	abc.a = dot(ray, ray);
+	abc.b = 2 * dot(oc, ray);
+	abc.c = dot(oc, oc) - (sphere->body.sphere.rad * sphere->body.sphere.rad);
 	discr = abc.b * abc.b - (4 * abc.a * abc.c);
 	if (discr < 0)
 		return (0);

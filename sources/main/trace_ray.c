@@ -6,7 +6,7 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:17:19 by gkhaishb          #+#    #+#             */
-/*   Updated: 2023/08/01 17:01:10 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:14:38 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ray_trace(t_mlx_data *mlx_data, t_data *data)
 		while (w_params.x_angle < mlx_data->width / 2)
 		{
 			w_params.x_ray = w_params.x_angle * vplane->x_pixel;
-			ray = vector_new2(w_params.x_ray, w_params.y_ray, -1);
+			ray = vector_new(w_params.x_ray, w_params.y_ray, -1);
 			vector_normalize(ray);
 			color = get_color(data, ray);
 			mlx_data->img_data[w_params.mlx_x + w_params.mlx_y * (int)mlx_data->width] = color;

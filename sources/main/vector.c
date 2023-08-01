@@ -6,13 +6,13 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:17:22 by gkhaishb          #+#    #+#             */
-/*   Updated: 2023/08/01 17:05:40 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:14:55 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-t_vector	vector_new2(float x, float y, float z)
+t_vector	vector_new(float x, float y, float z)
 {
 	t_vector	vector;
 
@@ -22,7 +22,7 @@ t_vector	vector_new2(float x, float y, float z)
 	return (vector);
 }
 
-t_vector	vector_subtract2(t_vector v1, t_vector v2)
+t_vector	vector_subtract(t_vector v1, t_vector v2)
 {
 	t_vector	vector;
 
@@ -32,7 +32,7 @@ t_vector	vector_subtract2(t_vector v1, t_vector v2)
 	return (vector);
 }
 
-t_vector	vector_add2(t_vector v1, t_vector v2)
+t_vector	vector_add(t_vector v1, t_vector v2)
 {
 	t_vector	vector;
 

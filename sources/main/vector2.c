@@ -6,13 +6,13 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:05:19 by gkhaishb          #+#    #+#             */
-/*   Updated: 2023/08/01 17:05:58 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:15:42 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-t_vector	normalize2(t_vector p)
+t_vector	normalize(t_vector p)
 {
 	t_vector	nv;
 	float		mod;
@@ -24,7 +24,7 @@ t_vector	normalize2(t_vector p)
 	return (nv);
 }
 
-float	dot2(t_vector v1, t_vector v2)
+float	dot(t_vector v1, t_vector v2)
 {
 	float	dot_product;
 
@@ -32,7 +32,7 @@ float	dot2(t_vector v1, t_vector v2)
 	return (dot_product);
 }
 
-t_vector	mult_vect2(float t, t_vector v)
+t_vector	mult_vect(float t, t_vector v)
 {
 	t_vector	vector;
 
@@ -42,7 +42,7 @@ t_vector	mult_vect2(float t, t_vector v)
 	return (vector);
 }
 
-float	distance2(t_vector p1, t_vector p2)
+float	distance(t_vector p1, t_vector p2)
 {
 	float	d;
 
@@ -51,11 +51,11 @@ float	distance2(t_vector p1, t_vector p2)
 	return (d);
 }
 
-t_vector	vector_cross_prodact2(t_vector vector1, t_vector vector2)
+t_vector	vector_cross_prodact(t_vector vector1, t_vector vector2)
 {
 	t_vector	result;
 
-	result = vector_new2(0, 0, 0);
+	result = vector_new(0, 0, 0);
 	result.x = vector1.y * vector2.z - vector1.z * vector2.y;
 	result.y = vector1.z * vector2.x - vector1.x * vector2.z;
 	result.z = vector1.x * vector2.y - vector1.y * vector2.x;

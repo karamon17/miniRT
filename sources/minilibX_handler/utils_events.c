@@ -6,7 +6,7 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:17:57 by gkhaishb          #+#    #+#             */
-/*   Updated: 2023/08/01 16:20:47 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:14:38 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	get_object(t_data *data, int x, int y)
 	w_params.x_angle = (data->mlx_data->width / 2.f * -1) + x;
 	w_params.y_ray = w_params.y_angle * vplane->y_pixel;
 	w_params.x_ray = w_params.x_angle * vplane->x_pixel;
-	ray = vector_new2(w_params.x_ray,
+	ray = vector_new(w_params.x_ray,
 			w_params.y_ray, -1);
 	closest_figure = closest_inters(data->figures,
 			data->camera->origin, ray, &closest_dist);

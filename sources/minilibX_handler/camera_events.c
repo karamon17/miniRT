@@ -6,7 +6,7 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:17:34 by gkhaishb          #+#    #+#             */
-/*   Updated: 2023/08/01 16:17:35 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:15:26 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ void	rotate_camera(t_data *data, t_quaternion direction)
 				&figure->center, direction);
 		else if (figure->type == CYLINDER)
 		{
-			temp_h = mult_vect2(figure->body.cyl.height,
+			temp_h = mult_vect(figure->body.cyl.height,
 					figure->body.cyl.normal);
-			c = vector_add2(figure->center, temp_h);
+			c = vector_add(figure->center, temp_h);
 			rotate_figure_for_camera(data, &c, direction);
-			figure->center = vector_subtract2(c, temp_h);
+			figure->center = vector_subtract(c, temp_h);
 		}
 		figure = figure->next;
 	}
@@ -65,9 +65,9 @@ void	rotate_figure_for_camera(t_data *data,
 	t_vector	rotation_point;
 
 	rotation_point = data->camera->origin;
-	vector_subtract2(*figure_center, rotation_point);
+	vector_subtract(*figure_center, rotation_point);
 	rotate_quaternion(figure_center, direction);
-	vector_add2(*figure_center, rotation_point);
+	vector_add(*figure_center, rotation_point);
 }
 
 void	press_camera_movement_keys(int keycode, t_data *data)

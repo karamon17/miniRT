@@ -31,9 +31,9 @@ static float	caps_intersection(t_vector o, t_vector d, t_figure *cyl)
 	id.b = plane_intercept(&new_plane2, o, d);
 	if (id.a < INFINITY || id.b < INFINITY)
 	{
-		ab.a = distance2(vector_add2(o, mult_vect2(id.a, d)), cyl->center);
-		ab.b = distance2(vector_add2(o, mult_vect2(id.b, d)), vector_add2(\
-		cyl->center, mult_vect2(cyl->body.cyl.height, cyl->body.cyl.normal)));
+		ab.a = distance(vector_add(o, mult_vect(id.a, d)), cyl->center);
+		ab.b = distance(vector_add(o, mult_vect(id.b, d)), vector_add(\
+		cyl->center, mult_vect(cyl->body.cyl.height, cyl->body.cyl.normal)));
 		if ((id.a < INFINITY && ab.a <= cyl->body.cyl.rad)
 			&& (id.b < INFINITY && ab.b <= cyl->body.cyl.rad))
 			return (ft_ternar(id.a, id.b));
