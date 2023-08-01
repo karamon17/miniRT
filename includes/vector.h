@@ -23,10 +23,8 @@ float vect_len(t_vector v);
 void vector_normalize(t_vector v);
 t_vector	vector_new(float x, float y, float z);
 t_vector	vector_subtract(t_vector v1, t_vector v2);
-t_vector	vector_add(t_vector v1, t_vector v2);
 float		dot(t_vector v1, t_vector v2);
 t_vector	mult_vect(float t, t_vector v);
-float		distance(t_vector p1, t_vector p2);
 t_vector	vector_cross_prodact(t_vector vector1, t_vector vector2);
 
 #endif //MINIRT_PROJECT_VECTOR_H

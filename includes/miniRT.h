@@ -30,9 +30,9 @@
 float		compute_lighting(t_data *data, t_vectors *input, float s);
 t_figure	*closest_inters(t_figure *figure, t_vector vector,
 				t_vector ray, float *closest_dist);
-float		cylinder_intersection(t_vector o, t_vector d, t_figure *cylinder);
-float		distance(t_vector *p1, t_vector *p2);
-t_vector	*vector_add(t_vector *v1, t_vector *v2);
+float		cylinder_intersect(t_vector o, t_vector d, t_figure *cylinder);
+float		distance(t_vector p1, t_vector p2);
+t_vector	vector_add(t_vector v1, t_vector v2);
 t_vector	normalize(t_vector p);
 t_figure	*check_intersection(t_figure *figure,
 				t_vector vector, t_vector ray);
@@ -41,8 +41,8 @@ t_color		color_multiply(t_color color, float intecivity);
 void		init_camera(t_data *data);
 void	ft_newplane(t_figure *new_plane, t_figure *new_plane2, \
 t_vector v4, t_figure *cyl);
-t_vector *cy_normal, t_figure *cyl);
 float	cy_intersection(t_vector o, t_vector d, \
+t_vector *cy_normal, t_figure *cyl);
 
 typedef struct s_win_params
 {
