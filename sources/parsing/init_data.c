@@ -1,25 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_data.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vbudilov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/01 13:45:12 by vbudilov          #+#    #+#             */
+/*   Updated: 2023/08/01 13:45:13 by vbudilov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/miniRT.h"
 
-t_data *init_data(char *input) {
-
-	t_data *rt_data;
+t_data	*init_data(char *input)
+{
+	t_data	*rt_data;
 
 	rt_data = malloc(sizeof(t_data));
 	rt_data->filename = input;
 	rt_data->lights = NULL;
 	rt_data->figures = NULL;
-    rt_data->closest_figure = NULL;
+	rt_data->closest_figure = NULL;
 	init_checker(rt_data);
 	init_mlx_data(rt_data);
 	init_move_data(rt_data);
 	return (rt_data);
 }
 
-void init_camera(t_data *data) {
-
-	t_vector camera_position;
-	t_quaternion *rotate;
-	t_vector position;
+void	init_camera(t_data *data)
+{
+	t_vector		camera_position;
+	t_quaternion	*rotate;
+	t_vector		position;
 
 	rotate = NULL;
 	camera_position = *data->camera->direction;
@@ -27,62 +39,44 @@ void init_camera(t_data *data) {
 	free(data->camera->direction);
 	data->camera->direction = vector_new(0, 0, 1);
 	data->camera->up_vector = vector_new(0, 1, 0);
-	data->camera->right_vector = vector_cross_prodact(data->camera->up_vector, data->camera->direction);
+	data->camera->right_vector = vector_cross_prodact(data->camera->up_vector,
+			data->camera->direction);
 	vector_normalize(data->camera->right_vector);
 	vector_normalize(data->camera->up_vector);
-	if(camera_position.y == -1)
-		rotate_camera(data, (rotate = quaternion_new(0.7071f, 0.7071f, 0, 0)));
-	else if(camera_position.y == 1)
-		rotate_camera(data, (rotate = quaternion_new(0.7071f, -0.7071f, 0, 0)));
-	else if(camera_position.x == -1)
-		rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, 0.7071f, 0)));
-	else if(camera_position.x == 1)
-		rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, -0.7071f, 0)));
-	else if(camera_position.z == 1)
-	{
-		rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, -0.7071f, 0)));
-		free(rotate);
-		rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, -0.7071f, 0)));
-	}
-	free(rotate);
-	if(position.x != 0 || position.y != 0 || position.z != 0)
+	adjast_camera(data, camera_position, rotate);
+	if (position.x != 0 || position.y != 0 || position.z != 0)
 		move_camera(data, &position, 1);
 	free(data->camera->origin);
 	data->camera->origin = vector_new(0, 0, 0);
 }
-void init_move_data(t_data *data) {
 
-	t_movement *move;
-	int mod;
+void	init_move_data(t_data *data)
+{
+	t_movement	*move;
+	int			mod;
 
 	mod = 1;
 	move = malloc(sizeof(t_movement));
-	move->up = vector_new(0, 1*mod, 0);
-	move->down = vector_new(0, -1*mod, 0);
-	move->left = vector_new(-1*mod, 0, 0);
-	move->right = vector_new(1*mod, 0, 0);
-	move->forward = vector_new(0, 0, -1*mod);
-	move->backward = vector_new(0, 0, 1*mod);
-	move->rotate_x_left = quaternion_new(cosf(0.1308995f), sinf(0.1308995f), 0, 0);
-	move->rotate_x_right = quaternion_new(cosf(0.1308995f), -sinf(0.1308995f), 0, 0);
-	move->rotate_y_left = quaternion_new(cosf(0.1308995f), 0, sinf(0.1308995f), 0);
-	move->rotate_y_right = quaternion_new(cosf(0.1308995f), 0, -sinf(0.1308995f), 0);
+	move->up = vector_new(0, 1 * mod, 0);
+	move->down = vector_new(0, -1 * mod, 0);
+	move->left = vector_new(-1 * mod, 0, 0);
+	move->right = vector_new(1 * mod, 0, 0);
+	move->forward = vector_new(0, 0, -1 * mod);
+	move->backward = vector_new(0, 0, 1 * mod);
+	move->rotate_x_left = quaternion_new(cosf(0.1308995f),
+			sinf(0.1308995f), 0, 0);
+	move->rotate_x_right = quaternion_new(cosf(0.1308995f),
+			-sinf(0.1308995f), 0, 0);
+	move->rotate_y_left = quaternion_new(cosf(0.1308995f),
+			0, sinf(0.1308995f), 0);
+	move->rotate_y_right = quaternion_new(cosf(0.1308995f),
+			0, -sinf(0.1308995f), 0);
 	data->movement = move;
 }
 
-t_quaternion *quaternion_new(float i, float i1, float i2, float i3) {
-	t_quaternion *quaternion;
-
-	quaternion = malloc(sizeof(t_quaternion));
-	quaternion->w = i;
-	quaternion->x = i1;
-	quaternion->y = i2;
-	quaternion->z = i3;
-	return (quaternion);
-}
-
-void init_mlx_data(t_data *data) {
-	t_mlx_data *mlx_data;
+void	init_mlx_data(t_data *data)
+{
+	t_mlx_data	*mlx_data;
 
 	mlx_data = malloc(sizeof(t_mlx_data));
 	mlx_data->mlx = mlx_init();
@@ -94,51 +88,13 @@ void init_mlx_data(t_data *data) {
 	mlx_data->size_line = 800 * 4;
 	mlx_data->endian = 0;
 	data->mlx_data = mlx_data;
-
 }
 
-void init_checker(t_data *data) {
+void	init_checker(t_data *data)
+{
 	data->checker.camera_init = 0;
 	data->checker.has_ambient = 0;
 	data->checker.has_spot = 0;
 	data->checker.has_object = 0;
-    data->checker.object_light_toggle = 1;
+	data->checker.object_light_toggle = 1;
 }
-
-t_light *new_ambient_light(t_data *data) {
-	t_light *light;
-
-	light = malloc(sizeof(t_light));
-	light->type = 'A';
-	if (data->lights == NULL)
-		data->lights = light;
-	else
-		data->lights->next = light;
-	light->next = NULL;
-	return (light);
-}
-
-t_light *new_spot_light(t_data *data) {
-	t_light *light;
-
-	light = malloc(sizeof(t_light));
-	light->type = 'L';
-	if (data->lights == NULL)
-		data->lights = light;
-	else
-		data->lights->next = light;
-	light->next = NULL;
-	data->checker.has_spot++;
-	return (light);
-}
-
-t_camera *new_camera(t_data *data) {
-	t_camera *camera;
-
-	camera = malloc(sizeof(t_camera));
-	camera->next = NULL;
-	data->checker.camera_init++;
-	return (camera);
-}
-
-
