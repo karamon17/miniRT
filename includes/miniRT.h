@@ -31,16 +31,16 @@
 # define EPSILON 0.001
 
 float	compute_lighting(t_data *data, t_vectors *input, float s);
-t_figure * closest_inters(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist);
-float			cylinder_intersection(t_vector *o, t_vector *d, t_figure *cylinder);
+t_figure * closest_inters(t_figure *figure, t_vector vector, t_vector ray, float *closest_dist);
+float			cylinder_intersection(t_vector o, t_vector d, t_figure *cylinder);
 float		distance(t_vector *p1, t_vector *p2);
 t_vector	*vector_add(t_vector *v1, t_vector *v2);
 t_vector		normalize2(t_vector p);
-t_figure *check_intersection(t_figure *figure, t_vector *vector, t_vector *ray);
-int get_color(t_data *data, t_vector *ray);
+t_figure *check_intersection(t_figure *figure, t_vector vector, t_vector ray);
+int get_color(t_data *data, t_vector ray);
 t_color	*color_multiply(t_color *color, float intecivity);
 void init_camera(t_data *data);
-void	help_free(t_vector *n, t_vector *p, t_vector *temp_n, t_vector *temp_m);
+//void	help_free(t_vector *n, t_vector *p, t_vector *temp_n, t_vector *temp_m);
 
 
 typedef struct s_win_params
@@ -79,12 +79,12 @@ typedef struct s_mlx_data
 
 typedef struct s_movement
 {
-    t_vector *up;
-    t_vector *down;
-    t_vector *left;
-    t_vector *right;
-    t_vector *forward;
-    t_vector *backward;
+    t_vector up;
+    t_vector down;
+    t_vector left;
+    t_vector right;
+    t_vector forward;
+    t_vector backward;
 	t_quaternion *rotate_x_left;
 	t_quaternion *rotate_x_right;
 	t_quaternion *rotate_y_left;

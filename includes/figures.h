@@ -27,11 +27,11 @@ typedef union			u_figures
 	} sphere;
 	struct s_plane
 	{
-		t_vector	*normal;
+		t_vector	normal;
 	} plane;
 	struct s_cylinder
 	{
-		t_vector	*normal;
+		t_vector	normal;
 		float		rad;
 		float		height;
 		float		dist1;
@@ -50,10 +50,10 @@ enum e_figures
 typedef struct		s_figures
 {
 	union u_figures body;
-    t_vector	*center;
+    t_vector	center;
 	float		specular;
 	t_color		*RGB_color;
-	t_vector 	*normal;
+	t_vector 	normal;
 	enum e_figures	type;
 	struct s_figures* next;
 }					t_figure;

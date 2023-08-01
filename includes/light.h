@@ -16,7 +16,7 @@ typedef struct t_color
 
 typedef struct s_light
 {
-	t_vector		*vector;
+	t_vector		vector;
 	char			type;
 	float			intensity;
 	t_color			*RGB_color;

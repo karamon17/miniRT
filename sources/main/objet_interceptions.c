@@ -1,7 +1,7 @@
 #include "../includes/miniRT.h"
 
 
-t_figure *check_intersection(t_figure *figure, t_vector *vector, t_vector *ray)
+t_figure *check_intersection(t_figure *figure, t_vector vector, t_vector ray)
 {
     while(figure)
     {
@@ -16,36 +16,36 @@ t_figure *check_intersection(t_figure *figure, t_vector *vector, t_vector *ray)
     return (0);
 }
 
-float plane_intercept(t_figure *plane, t_vector *vector, t_vector *ray)
+float plane_intercept(t_figure *plane, t_vector vector, t_vector ray)
 {
     float a;
-	t_vector *temp;
+	t_vector temp;
 
-    a = dot(plane->body.plane.normal, ray);
+    a = dot2(plane->body.plane.normal, ray);
     if (a == 0)
         return (INFINITY);
-	temp = vector_subtract(plane->center, vector);
-    a = dot(temp, plane->body.plane.normal) / a;
-	free(temp);
+	temp = vector_subtract2(plane->center, vector);
+    a = dot2(temp, plane->body.plane.normal) / a;
+	//free(temp);
     if (a < EPSILON)
         return (INFINITY);
     return (a);
 }
 
-float sphere_intercept(t_figure *sphere, t_vector *vector, t_vector *ray)
+float sphere_intercept(t_figure *sphere, t_vector vector, t_vector ray)
 {
     float a;
     float b;
     float c;
     float discr;
     float dist_1;
-    t_vector *oc;
+    t_vector oc;
 
-    oc = vector_subtract(vector, sphere->center);
-    a = dot(ray, ray);
-    b = 2 * dot(oc, ray);
-    c = dot(oc, oc) - (sphere->body.sphere.rad * sphere->body.sphere.rad);
-    free(oc);
+    oc = vector_subtract2(vector, sphere->center);
+    a = dot2(ray, ray);
+    b = 2 * dot2(oc, ray);
+    c = dot2(oc, oc) - (sphere->body.sphere.rad * sphere->body.sphere.rad);
+    //free(oc);
     discr = b * b - (4 * a * c);
     if (discr < 0)
         return (0);
@@ -55,7 +55,7 @@ float sphere_intercept(t_figure *sphere, t_vector *vector, t_vector *ray)
     return (0);
 }
 
-t_figure *closest_inters(t_figure *figure, t_vector *vector, t_vector *ray, float *closest_dist)
+t_figure *closest_inters(t_figure *figure, t_vector vector, t_vector ray, float *closest_dist)
 {
     t_figure *closest_figure;
     float dist;

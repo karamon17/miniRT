@@ -44,32 +44,32 @@ t_color *color_new(float r, float g, float b) {
 	return (color);
 }
 
-void	help_free(t_vector *n, t_vector *p, t_vector *temp_n, t_vector *temp_m)
+// void	help_free(t_vector *n, t_vector *p, t_vector *temp_n, t_vector *temp_m)
+// {
+// 	if (temp_n && temp_n != n)
+// 		free(temp_n);
+// 	if (n)
+// 		free(n);
+// 	if (p)
+// 		free(p);
+// 	if (temp_m)
+// 		free(temp_m);
+// }
+void	help_get_color(t_vectors *t, t_figure *cl_fig, float *closest_dist, t_vector ray)
 {
-	if (temp_n && temp_n != n)
-		free(temp_n);
-	if (n)
-		free(n);
-	if (p)
-		free(p);
-	if (temp_m)
-		free(temp_m);
-}
-void	help_get_color(t_vectors *t, t_figure *cl_fig, float *closest_dist, t_vector *ray)
-{
-	t->v1 = mult_vect(*closest_dist, ray);
-	t->v2 = vector_subtract(t->v1, cl_fig->center);
+	t->v1 = mult_vect2(*closest_dist, ray);
+	t->v2 = vector_subtract2(t->v1, cl_fig->center);
 	t->v3 = t->v2;
 	if (cl_fig->type == CYLINDER)
 	{
-		t->v4 = mult_vect(cl_fig->body.cyl.height / 2, cl_fig->body.cyl.normal);
-		t->v5 = vector_add(t->v4, cl_fig->center);
-		t->v2 = vector_subtract(t->v1, t->v5);
-		help_free(t->v4, t->v5, NULL, NULL);
+		t->v4 = mult_vect2(cl_fig->body.cyl.height / 2, cl_fig->body.cyl.normal);
+		t->v5 = vector_add2(t->v4, cl_fig->center);
+		t->v2 = vector_subtract2(t->v1, t->v5);
+		//help_free(t->v4, t->v5, NULL, NULL);
 	}
 }
 
-int get_color(t_data *data, t_vector *ray)
+int get_color(t_data *data, t_vector ray)
 {
     t_color 	*color;
     float 		closest_dist;
@@ -80,14 +80,14 @@ int get_color(t_data *data, t_vector *ray)
     if (cl_fig && closest_dist != INFINITY)
     {
 		help_get_color(&t, cl_fig, &closest_dist, ray);
-        if (cl_fig->type == PLANE && cl_fig->body.plane.normal->z > 0)
-			t.v2 = vector_dup(cl_fig->body.plane.normal);
-		else if (cl_fig->type == PLANE && cl_fig->body.plane.normal->z <= 0)
-			t.v2 = mult_vect(-1, cl_fig->body.plane.normal);
+        if (cl_fig->type == PLANE && cl_fig->body.plane.normal.z > 0)
+			t.v2 = cl_fig->body.plane.normal;
+		else if (cl_fig->type == PLANE && cl_fig->body.plane.normal.z <= 0)
+			t.v2 = mult_vect2(-1, cl_fig->body.plane.normal);
 		vector_normalize(t.v2);
-		t.v4 = mult_vect(data->camera->direction->z, ray);
+		t.v4 = mult_vect2(data->camera->direction.z, ray);
 		color = color_multiply(cl_fig->RGB_color, compute_lighting(data, &t, cl_fig->specular));
-		help_free(t.v2, t.v1, t.v3, t.v4);
+		//help_free(t.v2, t.v1, t.v3, t.v4);
 		return(color_to_int(color));
     }
 	else

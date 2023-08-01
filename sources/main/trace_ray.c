@@ -3,7 +3,7 @@
 void ray_trace(t_mlx_data *mlx_data, t_data *data)
 {
     t_win_params 	w_params;
-    t_vector 		*ray;
+    t_vector 		ray;
     t_view_plane 	*vplane;
     int 			color;
 
@@ -20,11 +20,11 @@ void ray_trace(t_mlx_data *mlx_data, t_data *data)
         while (w_params.x_angle < mlx_data->width / 2)
         {
             w_params.x_ray = w_params.x_angle * vplane->x_pixel;
-            ray = vector_new(w_params.x_ray, w_params.y_ray, -1);
+            ray = vector_new2(w_params.x_ray, w_params.y_ray, -1);
             vector_normalize(ray);
             color = get_color(data, ray);
             mlx_data->img_data[w_params.mlx_x + w_params.mlx_y * (int)mlx_data->width] = color;
-            free(ray);
+            //free(ray);
             w_params.x_angle++;
             w_params.mlx_x++;
         }

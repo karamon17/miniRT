@@ -46,16 +46,16 @@ float parse_intesity(char *string) {
 	return (intensity);
 }
 
-t_vector *parse_vector(char *string) {
+t_vector parse_vector(char *string) {
 	char **elements = ft_split(string, ',');
 	if (array_lenth(elements) != 3)
 		error("Wrong arguments in vector\n", EXIT_FAILURE);
 	if(!ft_strisdigit(elements[0]) || !ft_strisdigit(elements[1]) || !ft_strisdigit(elements[2]))
 		error("Wrong arguments in vector\n", EXIT_FAILURE);
-	t_vector *vector = malloc(sizeof(t_vector));
-	vector->x = ft_atof(elements[0]);
-	vector->y = ft_atof(elements[1]);
-	vector->z = ft_atof(elements[2]);
+	t_vector vector;// = malloc(sizeof(t_vector));
+	vector.x = ft_atof(elements[0]);
+	vector.y = ft_atof(elements[1]);
+	vector.z = ft_atof(elements[2]);
 	free_array(elements);
 	return (vector);
 }
