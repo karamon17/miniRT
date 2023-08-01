@@ -51,34 +51,30 @@ t_camera	*new_camera(t_data *data)
 	return (camera);
 }
 
-t_quaternion	*quaternion_new(float i, float i1, float i2, float i3)
+t_quaternion	quaternion_new(float i, float i1, float i2, float i3)
 {
-	t_quaternion	*quaternion;
+	t_quaternion	quaternion;
 
-	quaternion = malloc(sizeof(t_quaternion));
-	quaternion->w = i;
-	quaternion->x = i1;
-	quaternion->y = i2;
-	quaternion->z = i3;
+	quaternion.w = i;
+	quaternion.x = i1;
+	quaternion.y = i2;
+	quaternion.z = i3;
 	return (quaternion);
 }
 
-// void	adjast_camera(t_data *data, t_vector camera_position,
-// 					t_quaternion *rotate)
-// {
-// 	// if (camera_position.y == -1)
-// 	// 	rotate_camera(data, (rotate = quaternion_new(0.7071f, 0.7071f, 0, 0)));
-// 	// else if (camera_position.y == 1)
-// 	// 	rotate_camera(data, (rotate = quaternion_new(0.7071f, -0.7071f, 0, 0)));
-// 	// else if (camera_position.x == -1)
-// 	// 	rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, 0.7071f, 0)));
-// 	// else if (camera_position.x == 1)
-// 	// 	rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, -0.7071f, 0)));
-// 	// else if (camera_position.z == 1)
-// 	// {
-// 	// 	rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, -0.7071f, 0)));
-// 	// 	free(rotate);
-// 	// 	rotate_camera(data, (rotate = quaternion_new(0.7071f, 0, -0.7071f, 0)));
-// 	// }
-// 	// free(rotate);
-// }
+void adjast_camera(t_data *data, t_vector camera_position)
+{
+	if (camera_position.y == -1)
+		rotate_camera(data, (quaternion_new(0.7071f, 0.7071f, 0, 0)));
+	else if (camera_position.y == 1)
+		rotate_camera(data, (quaternion_new(0.7071f, -0.7071f, 0, 0)));
+	else if (camera_position.x == -1)
+		rotate_camera(data, (quaternion_new(0.7071f, 0, 0.7071f, 0)));
+	else if (camera_position.x == 1)
+		rotate_camera(data, (quaternion_new(0.7071f, 0, -0.7071f, 0)));
+	else if (camera_position.z == 1)
+	{
+		rotate_camera(data, (quaternion_new(0.7071f, 0, -0.7071f, 0)));
+		rotate_camera(data, (quaternion_new(0.7071f, 0, -0.7071f, 0)));
+	}
+}
