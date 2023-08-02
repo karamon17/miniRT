@@ -6,7 +6,7 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 14:00:49 by vbudilov          #+#    #+#             */
-/*   Updated: 2023/08/01 17:16:05 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/02 11:18:42 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	parse_sphere(char *line, t_data *data)
 	elements = ft_split(line, ' ');
 	if (array_lenth(elements) != 4)
 		error("Wrong amount of arguments in sphere_figure\n", EXIT_FAILURE);
-	sphere_figure = add_figure(data, SPHERE);
+	sphere_figure = add_figure(data, SPHERE, 100);
 	sphere_figure->center = parse_vector(elements[1]);
 	sphere_figure->body.sphere.rad = ft_atof(elements[2]) / 2.f;
 	sphere_figure->rgb_color = parse_color(elements[3]);
@@ -37,7 +37,7 @@ void	parse_plane(char *line, t_data *data)
 	elements = ft_split(line, ' ');
 	if (array_lenth(elements) != 4)
 		error("Wrong amount of arguments in plane_figure\n", EXIT_FAILURE);
-	plane_figure = add_figure(data, PLANE);
+	plane_figure = add_figure(data, PLANE, 300);
 	plane_figure->center = parse_vector(elements[1]);
 	plane_figure->body.plane.normal = parse_vector(elements[2]);
 	plane_figure->rgb_color = parse_color(elements[3]);
@@ -54,7 +54,7 @@ void	parse_cylinder(char *line, t_data *data)
 	elements = ft_split(line, ' ');
 	if (array_lenth(elements) != 6)
 		error("Wrong amount of arguments in cylinder_figure\n", EXIT_FAILURE);
-	cylinder_figure = add_figure(data, CYLINDER);
+	cylinder_figure = add_figure(data, CYLINDER, 1000);
 	cylinder_figure->center = parse_vector(elements[1]);
 	cylinder_figure->body.cyl.normal = parse_vector(elements[2]);
 	cylinder_figure->body.cyl.rad = ft_atof(elements[3]) / 2.f;

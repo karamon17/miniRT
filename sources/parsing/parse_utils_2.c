@@ -6,7 +6,7 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 14:01:27 by vbudilov          #+#    #+#             */
-/*   Updated: 2023/08/01 17:58:12 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/02 11:18:17 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ void	add_to_list(t_figure *figures_list, t_figure *figure)
 	current_figure->next = figure;
 }
 
-t_figure	*add_figure(t_data *data, int type)
+t_figure	*add_figure(t_data *data, int type, float specular)
 {
 	t_figure	*figure;
 
 	figure = malloc(sizeof(t_figure));
 	figure->type = type;
-	figure->specular = 500;
+	figure->specular = specular;
 	figure->next = NULL;
 	if (data->figures == NULL)
 		data->figures = figure;

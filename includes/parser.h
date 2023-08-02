@@ -23,7 +23,7 @@ void		parse_plane(char *line, t_data *data);
 void		parse_cylinder(char *line, t_data *data);
 //init
 t_light		*new_spot_light(t_data *data);
-t_figure	*add_figure(t_data *data, int type);
+t_figure	*add_figure(t_data *data, int type, float specular);
 void		init_checker(t_data *data);
 t_data		*init_data(char *input);
 void		check_plane(t_figure *figure);
