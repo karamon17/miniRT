@@ -76,7 +76,7 @@ t_figure	*add_figure(t_data *data, int type)
 
 	figure = malloc(sizeof(t_figure));
 	figure->type = type;
-	figure->specular = 500;
+	figure->specular = -1;
 	figure->next = NULL;
 	if (data->figures == NULL)
 		data->figures = figure;

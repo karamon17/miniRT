@@ -34,16 +34,17 @@ void	init_camera(t_data *data)
 
 	camera_position = data->camera->direction;
 	position = data->camera->origin;
-	data->camera->direction = vector_new(0, 0, 1);
+	data->camera->origin = vector_new(0, 0, 0);
+	data->camera->direction = vector_new(0, 0, -1);
 	data->camera->up_vector = vector_new(0, 1, 0);
 	data->camera->right_vector = vector_cross_prodact(data->camera->up_vector,
 			data->camera->direction);
 	vector_normalize(data->camera->right_vector);
 	vector_normalize(data->camera->up_vector);
-	adjast_camera(data, camera_position);
 	if (position.x != 0 || position.y != 0 || position.z != 0)
 		move_camera(data, position, 1);
-	data->camera->origin = vector_new(0, 0, 0);
+	adjast_camera(data, camera_position);
+
 }
 
 void	init_move_data(t_data *data)
@@ -73,13 +74,17 @@ void	init_move_data(t_data *data)
 void	init_mlx_data(t_data *data)
 {
 	t_mlx_data	*mlx_data;
+	int height;
+	int width;
 
+	height = 1000;
+	width = 1000;
 	mlx_data = malloc(sizeof(t_mlx_data));
 	mlx_data->mlx = mlx_init();
-	mlx_data->win = mlx_new_window(mlx_data->mlx, 800, 600, "miniRT");
-	mlx_data->img = mlx_new_image(mlx_data->mlx, 800, 600);
-	mlx_data->width = 800;
-	mlx_data->height = 600;
+	mlx_data->win = mlx_new_window(mlx_data->mlx, width, height, "miniRT");
+	mlx_data->img = mlx_new_image(mlx_data->mlx, width, height);
+	mlx_data->width = (float )width;
+	mlx_data->height = (float )height;
 	mlx_data->bpp = 32;
 	mlx_data->size_line = 800 * 4;
 	mlx_data->endian = 0;
