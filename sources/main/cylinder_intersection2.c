@@ -31,15 +31,13 @@ static float	caps_intersection(t_vector o, t_vector d, t_figure *cyl)
 	id.b = plane_intercept(&new_plane2, o, d);
 	if (id.a < INFINITY || id.b < INFINITY)
 	{
-		ab.a = distance(vector_add(o, mult_vect(id.a, d)), cyl->center);
-		ab.b = distance(vector_add(o, mult_vect(id.b, d)), vector_add(\
-		cyl->center, mult_vect(cyl->body.cyl.height, cyl->body.cyl.normal)));
-		if ((id.a < INFINITY && ab.a <= cyl->body.cyl.rad)
-			&& (id.b < INFINITY && ab.b <= cyl->body.cyl.rad))
+		ab.a = distance(vector_add(o, mult_vect(id.a, d)), new_plane.center);
+		ab.b = distance(vector_add(o, mult_vect(id.b, d)), new_plane2.center);
+		if (ab.a <= cyl->body.cyl.rad && ab.b <= cyl->body.cyl.rad)
 			return (ft_ternar(id.a, id.b));
-		else if (id.a < INFINITY && ab.a <= cyl->body.cyl.rad)
+		else if (ab.a <= cyl->body.cyl.rad)
 			return (id.a);
-		else if (id.b < INFINITY && ab.b <= cyl->body.cyl.rad)
+		else if (ab.b <= cyl->body.cyl.rad)
 			return (id.b);
 	}
 	return (INFINITY);
@@ -60,7 +58,11 @@ float	cylinder_intersect(t_vector o, t_vector d, t_figure *cylinder)
 			cylinder->normal = cy_normal;
 			return (cylinder_inter);
 		}
-		cylinder->normal = cylinder->body.cyl.normal;
+		//cylinder->normal = cylinder->body.cyl.normal;
+		if (cylinder->body.cyl.normal.z > 0)
+			cylinder->normal = mult_vect(-1, cylinder->body.cyl.normal);
+		else if (cylinder->body.cyl.normal.z <= 0)
+			cylinder->normal = cylinder->body.cyl.normal;
 		return (caps_inter);
 	}
 	return (INFINITY);

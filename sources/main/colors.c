@@ -6,7 +6,7 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:16:17 by gkhaishb          #+#    #+#             */
-/*   Updated: 2023/08/02 11:15:19 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/02 16:22:01 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,7 @@ int	get_color(t_data *data, t_vector ray)
 		t.v1 = mult_vect(closest_dist, ray);
 		t.v2 = vector_subtract(t.v1, cl_fig->center);
 		if (cl_fig->type == CYLINDER)
-			t.v2 = vector_subtract(t.v1, vector_add(mult_vect(\
-				cl_fig->body.cyl.height / 2, cl_fig->body.cyl.normal), \
-				cl_fig->center));
+			t.v2 = cl_fig->normal;
 		if (cl_fig->type == PLANE && cl_fig->body.plane.normal.z > 0)
 			t.v2 = cl_fig->body.plane.normal;
 		else if (cl_fig->type == PLANE && cl_fig->body.plane.normal.z <= 0)

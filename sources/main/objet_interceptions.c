@@ -6,7 +6,7 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:16:27 by gkhaishb          #+#    #+#             */
-/*   Updated: 2023/08/01 17:15:19 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/02 12:11:29 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,12 @@ t_figure	*check_intersection(t_figure *figure, t_vector vector, t_vector ray)
 
 float	plane_intercept(t_figure *plane, t_vector vector, t_vector ray)
 {
-	float		a;
-	t_vector	temp;
+	float	a;
 
 	a = dot(plane->body.plane.normal, ray);
 	if (a == 0)
 		return (INFINITY);
-	temp = vector_subtract(plane->center, vector);
-	a = dot(temp, plane->body.plane.normal) / a;
+	a = dot(vector_subtract(plane->center, vector), plane->body.plane.normal) / a;
 	if (a < EPSILON)
 		return (INFINITY);
 	return (a);
