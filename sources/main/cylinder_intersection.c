@@ -98,10 +98,10 @@ t_vector *cy_normal, t_figure *cyl)
 }
 
 void	ft_newplane(t_figure *new_plane, t_figure *new_plane2, \
-t_vector v4, t_figure *cyl)
+t_vector cyl_normal, t_figure *cyl)
 {
-	new_plane->body.plane.normal = v4;
+	new_plane->body.plane.normal = cyl_normal;
 	new_plane->center = cyl->center;
-	new_plane2->body.plane.normal = mult_vect(-1, v4);
-	new_plane2->center = vector_add(cyl->center, mult_vect(cyl->body.cyl.height, v4));
+	new_plane2->body.plane.normal = cyl_normal;
+	new_plane2->center = vector_add(cyl->center, mult_vect(cyl->body.cyl.height, cyl_normal));
 }
