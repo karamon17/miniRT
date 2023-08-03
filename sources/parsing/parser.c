@@ -57,3 +57,26 @@ void	parse_element(char *element_line, t_data *data)
 		error("in element line\n", EXIT_FAILURE);
 	free(element_line);
 }
+
+char	*remove_overstricked_space(char *line)
+{
+	char	**splited_line;
+	char	*new_line;
+	int		i;
+	int		length;
+
+	i = 0;
+	new_line = malloc(sizeof(char) * 1);
+	new_line[0] = '\0';
+	splited_line = ft_split(line, ' ');
+	length = array_lenth(splited_line);
+	while (i < length)
+	{
+		new_line = ft_strjoin(new_line, splited_line[i]);
+		if (i != length - 1)
+			new_line = ft_strjoin(new_line, " ");
+		i++;
+	}
+	free_array(splited_line);
+	return (new_line);
+}

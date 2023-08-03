@@ -52,6 +52,6 @@ int			ft_strisdigit(char *string);
 int			is_normalized(t_vector *vector);
 void		add_to_list(t_figure *figures_list, t_figure *figure);
 void		adjast_camera(t_data *data, t_vector camera_position);
-void		do_atof(char *string, int *i, float *result, float *power);
+void		do_atof(char *string, int *i, double *result, double *power);
 
 #endif

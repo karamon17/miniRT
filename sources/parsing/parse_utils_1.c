@@ -12,13 +12,39 @@
 
 #include "../../includes/miniRT.h"
 
+int	string_is_float(char *string)
+{
+	int	i;
+	int	dot;
+
+	i = 0;
+	dot = 0;
+	if (string[i] == '-')
+		i++;
+	while (string[i])
+	{
+		if (string[i] == '.')
+			dot++;
+		if (dot > 1)
+			return (0);
+		if ((string[i] < '0' || string[i] > '9') && string[i] != '.')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 float	ft_atof(char *string)
 {
-	float	result;
-	float	sign;
-	float	power;
+	double	result;
+	double	sign;
+	double	power;
 	int		i;
 
+	if (string_is_float(string) == 0)
+		error("Wrong float format\n", EXIT_FAILURE);
+	if (is_outrange_of_float(string))
+		error("float out of range\n", EXIT_FAILURE);
 	i = 0;
 	result = 0;
 	sign = 1;
@@ -29,12 +55,10 @@ float	ft_atof(char *string)
 		i++;
 	}
 	do_atof(string, &i, &result, &power);
-	if (is_outrange_of_float(sign * result / power))
-		error("float out of range\n", EXIT_FAILURE);
 	return (sign * result / power);
 }
 
-void	do_atof(char *string, int *i, float *result, float *power)
+void	do_atof(char *string, int *i, double *result, double *power)
 {
 	while (string[*i] >= '0' && string[*i] <= '9')
 	{
@@ -51,9 +75,28 @@ void	do_atof(char *string, int *i, float *result, float *power)
 	}
 }
 
-int	is_outrange_of_float(float number)
+int	is_outrange_of_float(char *number)
 {
-	if (number > 2147483647.f || number < -2147483648.f)
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	if (number[i] == '-')
+		i++;
+	while (number[i])
+		i++;
+	if (i > 10)
+		return (1);
+	if (number[i] == '.')
+		i++;
+	j = i;
+	while (number[i])
+	{
+		i++;
+		j++;
+	}
+	if (j > 10)
 		return (1);
 	return (0);
 }
@@ -66,27 +109,4 @@ int	array_lenth(char **array)
 	while (array[i])
 		i++;
 	return (i);
-}
-
-char	*remove_overstricked_space(char *line)
-{
-	char	**splited_line;
-	char	*new_line;
-	int		i;
-	int		length;
-
-	i = 0;
-	new_line = malloc(sizeof(char) * 1);
-	new_line[0] = '\0';
-	splited_line = ft_split(line, ' ');
-	length = array_lenth(splited_line);
-	while (i < length)
-	{
-		new_line = ft_strjoin(new_line, splited_line[i]);
-		if (i != length - 1)
-			new_line = ft_strjoin(new_line, " ");
-		i++;
-	}
-	free_array(splited_line);
-	return (new_line);
 }
