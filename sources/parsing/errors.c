@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbudilov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 13:36:51 by vbudilov          #+#    #+#             */
-/*   Updated: 2023/08/01 13:36:57 by vbudilov         ###   ########.fr       */
+/*   Updated: 2023/08/03 12:56:02 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,6 @@ void	check_cylinder(t_figure *figure)
 		error("Wrong cylinder radius\n", EXIT_FAILURE);
 	if (figure->body.cyl.height <= 0)
 		error("Wrong cylinder height\n", EXIT_FAILURE);
+	if (is_normalized(&figure->body.cyl.normal) == 0)
+		error("Wrong cylinder normal\n", EXIT_FAILURE);
 }
