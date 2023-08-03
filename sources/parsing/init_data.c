@@ -76,8 +76,8 @@ void	init_mlx_data(t_data *data)
 	int			height;
 	int			width;
 
-	height = 300;
-	width = 300;
+	height = 1000;
+	width = 1000;
 	mlx_data = malloc(sizeof(t_mlx_data));
 	mlx_data->mlx = mlx_init();
 	mlx_data->win = mlx_new_window(mlx_data->mlx, width, height, "miniRT");

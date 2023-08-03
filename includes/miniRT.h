@@ -39,6 +39,8 @@
 
 # define EPSILON 0.001
 
+typedef struct s_win_params	t_win_params;
+
 float			compute_lighting(t_data *data, t_vectors *input, float s);
 t_figure		*closest_inters(t_figure *figure, t_vector vector,
 					t_vector ray, float *closest_dist);
