@@ -6,7 +6,7 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:16:25 by gkhaishb          #+#    #+#             */
-/*   Updated: 2023/08/01 16:16:26 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/03 15:45:20 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_data	*data;
 
-	if (argc < 2 || argc > 3)
+	if (argc != 2)
 		wrong_argc(argv[0]);
 	data = init_data(argv[1]);
 	parse_rt_file(data);
