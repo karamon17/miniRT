@@ -44,7 +44,6 @@ void	init_camera(t_data *data)
 	if (position.x != 0 || position.y != 0 || position.z != 0)
 		move_camera(data, position, 1);
 	adjast_camera(data, camera_position);
-
 }
 
 void	init_move_data(t_data *data)
@@ -74,11 +73,11 @@ void	init_move_data(t_data *data)
 void	init_mlx_data(t_data *data)
 {
 	t_mlx_data	*mlx_data;
-	int height;
-	int width;
+	int			height;
+	int			width;
 
-	height = 1000;
-	width = 1000;
+	height = 300;
+	width = 300;
 	mlx_data = malloc(sizeof(t_mlx_data));
 	mlx_data->mlx = mlx_init();
 	mlx_data->win = mlx_new_window(mlx_data->mlx, width, height, "miniRT");
