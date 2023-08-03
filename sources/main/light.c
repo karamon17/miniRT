@@ -6,7 +6,7 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:16:22 by gkhaishb          #+#    #+#             */
-/*   Updated: 2023/08/03 10:25:35 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/03 12:23:48 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ float	compute_lighting(t_data *data, t_vectors *input, float s)
 		{
 			l = vector_subtract(cur->vector, input->v1);
 			if (check_intersection(data->figures, input->v1, l))
-			{
-				cur = cur->next;
-				continue ;
-			}
+				return (abc.a);
 			if (dot(input->v2, l) > 0)
 				abc.a += cur->intensity * dot(input->v2, l) / \
 				(vect_len(input->v2) * vect_len(l));
