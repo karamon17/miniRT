@@ -22,8 +22,8 @@ miniRT is a 3D rendering engine based on the ray tracing algorithm. This project
 
 
 ## Gallery
-<img src="" width="100%"/>
-<img src="" width="100%"/>
+<img src="scenes/im1.png" width="100%"/>
+<img src="scenes/img2.png" width="100%"/>
 <img src="" width="100%"/>
 
 
@@ -45,8 +45,14 @@ miniRT is a 3D rendering engine based on the ray tracing algorithm. This project
 
 `WASD` or to translate shapes
 
-`z, c, r, f` to rotate shapes
+`z, c, r, f` to rotate shapes/lights
 
-`Arrow Keys` to manipulate the camera
+`spase` to select shapes/lights
+
+`q, r` to manipulate shapes
+
+`Arrow Keys` to translate the camera
 
 `+, -` to manipulate the camera
+
+`1, 2, 3, 5` to rotate camera
