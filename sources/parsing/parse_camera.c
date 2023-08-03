@@ -17,13 +17,15 @@ void	parse_camera(char *line, t_data *data)
 	char		**elements;
 	t_camera	*camera;
 
+	if (data->checker.camera_init >= 1)
+		error("Too many cameras\n", EXIT_FAILURE);
 	elements = ft_split(line, ' ');
 	if (elements[4] != NULL)
 		error("Wrong amount of arguments in camera\n", EXIT_FAILURE);
 	camera = new_camera(data);
 	camera->origin = parse_vector(elements[1]);
 	camera->direction = parse_vector(elements[2]);
-	camera->fov = (float) ft_atoi(elements[3]);
+	camera->fov = (float) ft_atof(elements[3]);
 	check_camera(camera);
 	data->camera = camera;
 	free_array(elements);
