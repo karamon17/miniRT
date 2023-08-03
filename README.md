@@ -24,11 +24,9 @@ miniRT is a 3D rendering engine based on the ray tracing algorithm. This project
 ## Gallery
 <img src="scenes/im1.png" width="100%"/>
 <img src="scenes/img2.png" width="100%"/>
-<img src="" width="100%"/>
 
 
 # Features
-## Mandatory
 
 * Rendering of 3D shapes like spheres, cylinders and planes
 * Set shape properties like height, radius, position, and orientation before rendering
