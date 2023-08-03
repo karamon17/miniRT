@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   objects_events.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/01 16:17:49 by gkhaishb          #+#    #+#             */
+/*   Updated: 2023/08/01 16:21:02 by gkhaishb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/miniRT.h"
 
-void work_with_object(int keycode, t_data *data) {
-    if(is_object_movement_key(keycode))
-        press_object_movement_keys(keycode, data);
-    else if(is_object_rotation_key(keycode))
-        press_object_rotation_keys(keycode, data);
+void	work_with_object(int keycode, t_data *data)
+{
+	if (is_object_movement_key(keycode))
+		press_object_movement_keys(keycode, data);
+	else if (is_object_rotation_key(keycode))
+		press_object_rotation_keys(keycode, data);
 }
 
 int	press_object_movement_keys(int keycode, t_data *data)
@@ -24,7 +37,8 @@ int	press_object_movement_keys(int keycode, t_data *data)
 	return (0);
 }
 
-void press_object_rotation_keys(int keycode, t_data *data) {
+void	press_object_rotation_keys(int keycode, t_data *data)
+{
 	if (keycode == KEY_Z)
 		rotate_object(data, data->movement->rotate_y_left);
 	else if (keycode == KEY_C)

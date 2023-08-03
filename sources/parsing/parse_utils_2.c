@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_utils_2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/01 14:01:27 by vbudilov          #+#    #+#             */
+/*   Updated: 2023/08/02 11:18:17 by gkhaishb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/miniRT.h"
 
-void free_array(char **array) {
-	int i;
+void	free_array(char **array)
+{
+	int	i;
 
 	i = 0;
 	while (array[i])
@@ -14,7 +27,7 @@ void free_array(char **array) {
 
 int	ft_strisdigit(char *string)
 {
-	int has_dot;
+	int	has_dot;
 
 	has_dot = 0;
 	if (!*string)
@@ -25,37 +38,47 @@ int	ft_strisdigit(char *string)
 		string++;
 	while (*string)
 	{
-		if (!ft_isdigit(*string) && *string !='.')
+		if (!ft_isdigit(*string) && *string != '.')
 			return (0);
-		if(*string == '.')
+		if (*string == '.')
 			has_dot++;
-		if(has_dot > 1)
+		if (has_dot > 1)
 			return (0);
 		string++;
 	}
 	return (1);
 }
 
-int is_normalized(t_vector *vector) {
-	float length = sqrt(vector->x * vector->x + vector->y * vector->y + vector->z * vector->z);
+int	is_normalized(t_vector *vector)
+{
+	float	length;
+
+	length = sqrtf(vector->x * vector->x + vector->y
+			* vector->y + vector->z * vector->z);
 	if (length == 1)
 		return (1);
 	return (0);
 }
 
-void add_to_list(t_figure *figures_list, t_figure *figure) {
-	t_figure *current_figure = figures_list;
+void	add_to_list(t_figure *figures_list, t_figure *figure)
+{
+	t_figure	*current_figure;
+
+	current_figure = figures_list;
 	while (current_figure->next != NULL)
 		current_figure = current_figure->next;
 	current_figure->next = figure;
 }
 
-t_figure * add_figure(t_data *data, int type) {
-	t_figure *figure = malloc(sizeof(t_figure));
+t_figure	*add_figure(t_data *data, int type, float specular)
+{
+	t_figure	*figure;
+
+	figure = malloc(sizeof(t_figure));
 	figure->type = type;
-	figure->specular = -1.f;
+	figure->specular = specular;
 	figure->next = NULL;
-	if(data->figures == NULL)
+	if (data->figures == NULL)
 		data->figures = figure;
 	else
 		add_to_list(data->figures, figure);

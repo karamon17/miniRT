@@ -1,57 +1,66 @@
-#ifndef MINIRT_PROJECT_SPHERE_H
-#define MINIRT_PROJECT_SPHERE_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   figures.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/03 11:52:53 by gkhaishb          #+#    #+#             */
+/*   Updated: 2023/08/03 11:52:54 by gkhaishb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "miniRT.h"
-#include "light.h"
-#include "vector.h"
+#ifndef FIGURES_H
+# define FIGURES_H
 
-typedef struct s_sphere t_sphere;
+# include "miniRT.h"
+# include "light.h"
+# include "vector.h"
 
 typedef struct s_quaternion
 {
-	float w;
-	float x;
-	float y;
-	float z;
-} t_quaternion;
+	float	w;
+	float	x;
+	float	y;
+	float	z;
+}			t_quaternion;
 
-typedef union			u_figures
+union u_figures
 {
 	struct s_sphere
 	{
-		float		radius;
+		float		rad;
 	} sphere;
 	struct s_plane
 	{
-		t_vector	*normal;
+		t_vector	normal;
 	} plane;
 	struct s_cylinder
 	{
-		t_vector	*normal;
-		float		radius;
+		t_vector	normal;
+		float		rad;
 		float		height;
 		float		dist1;
 		float		dist2;
-	} cylinder;
+	} cyl;
+};
 
-} u_figures;
-
-enum e_figures
+typedef enum e_figures
 {
 	SPHERE,
 	PLANE,
 	CYLINDER,
-} t_figures_type;
+}	t_figures_type;
 
-typedef struct		s_figures
+typedef struct s_figures
 {
-	union u_figures figure_body;
-    t_vector	*center;
-	float		specular;
-	t_color		*RGB_color;
-	enum e_figures	type;
-	struct s_figures* next;
-	t_vector	*normal;
+	union u_figures		body;
+	t_vector			center;
+	float				specular;
+	t_color				rgb_color;
+	t_vector			normal;
+	enum e_figures		type;
+	struct s_figures	*next;
 }					t_figure;
 
-#endif //MINIRT_PROJECT_SPHERE_H
+#endif

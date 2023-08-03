@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbudilov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 22:34:46 by vbudilov          #+#    #+#             */
-/*   Updated: 2023/01/23 22:34:52 by vbudilov         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:08:15 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (s2[s2_index] != '\0')
 		new_str[s1_index++] = s2[s2_index++];
 	new_str[s1_index] = '\0';
-    free((char *)s1);
+	free((char *)s1);
 	return (new_str);
 }

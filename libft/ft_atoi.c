@@ -24,12 +24,8 @@ int	ft_atoi(const char *str)
 	while (str[index] == ' ' || str[index] == '\n' || str[index] == '\t'
 		|| str[index] == '\v' || str[index] == '\f' || str[index] == '\r')
 		index++;
-	if (str[index] == '-' || str[index] == '+')
-	{
-		if (str[index] == '-')
-			sign = -1;
-		index++;
-	}
+	if (str[index] == '-')
+		sign = -1;
 	while (str[index] >= '0' && str[index] <= '9')
 	{
 		res = (res * 10) + (str[index] - '0');

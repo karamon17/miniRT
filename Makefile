@@ -1,4 +1,4 @@
-NAME     = minirt
+NAME     = miniRT
 GCC      = gcc
 CFLAGS   = -Wall -Wextra -Werror -g #-fsanitize=address
 RM       = rm -rf

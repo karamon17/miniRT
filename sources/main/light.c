@@ -1,57 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   light.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/01 16:16:22 by gkhaishb          #+#    #+#             */
+/*   Updated: 2023/08/03 12:23:48 by gkhaishb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/miniRT.h"
 
-float	compute_lighting(t_data *data, t_vector *p, t_vector *n, t_vector *ray, float s)
+float	ft_specular(t_vector l, t_vectors *input, t_light *cur, t_abc abc)
 {
-    float	i;
-	float n_dot_l;
-	float r_dot_v;
-	t_light *current;
-	t_vector *r;
-	t_vector *temp_r;
-	t_vector *l;
+	t_vector	r;
+	float		res;
 
-	l = NULL;
-	r = NULL;
-	current = data->lights;
-	i = 0.0f;
-	while (current)
-    {
-        if (current->type == 'A')
-            i += current->intensity;
-        else
-		{
-            if (current->type == 'L')
-                l = vector_subtract(current->vector, p);
-            //тени
-            //TODO change check_intersection FIXED
-            if (check_intersection(data->figures, p, l))
-			{
-                current = current->next;
-                continue;
-            }
-            //диффузность
-            n_dot_l = vector_dot_product(n, l);
-               if (n_dot_l > 0)
-                   i += current->intensity * n_dot_l / (vector_length(n) * vector_length(l));
-               //зеркальность
-               if (s != -1)
-			   {
-					temp_r = multiply_vector(2 * vector_dot_product(n, l), n);
-                   r = vector_subtract(temp_r, l);
-				   free(temp_r);
-                   r_dot_v = vector_dot_product(r, ray);
-                   if (r_dot_v > 0)
-                       i += current->intensity * pow(r_dot_v / (vector_length(r) * vector_length(ray)), s);
-               }
-			free(l); //если фришить l то почему-то появляются артефакты на цилиндре
-			l = NULL;
-			free(r);
-			r = NULL;
-        }
-        current = current->next;
-    }
-	free(l);
-	free(r);
-    return (i);
+	res = 0;
+	if (abc.b != -1)
+	{
+		r = vector_subtract(mult_vect(2 * dot(input->v2, l), \
+			input->v2), l);
+		abc.c = dot(r, input->v4);
+		if (abc.c > 0)
+			res = cur->intensity * pow(abc.c / (vect_len(r) \
+			* vect_len(input->v4)), abc.b);
+	}
+	return (res);
 }
 
+float	compute_lighting(t_data *data, t_vectors *input, float s)
+{
+	t_abc		abc;
+	t_light		*cur;
+	t_vector	l;
+
+	cur = data->lights;
+	abc.a = 0.0f;
+	while (cur)
+	{
+		if (cur->type == 'A')
+			abc.a += cur->intensity;
+		if (cur->type == 'L')
+		{
+			l = vector_subtract(cur->vector, input->v1);
+			if (check_intersection(data->figures, input->v1, l))
+				return (abc.a);
+			if (dot(input->v2, l) > 0)
+				abc.a += cur->intensity * dot(input->v2, l) / \
+				(vect_len(input->v2) * vect_len(l));
+			abc.b = s;
+			abc.a += ft_specular(l, input, cur, abc);
+		}
+		cur = cur->next;
+	}
+	return (abc.a);
+}
