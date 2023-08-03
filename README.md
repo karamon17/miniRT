@@ -1,12 +1,52 @@
-# minirt
-Заметки из этого видео: https://youtu.be/e1xrz9wNpB8 
-1) функции использовать void, они быстрее работают
-2) использовать тип float, а не double, тоже из-за скорости работы
-3) нужно перевести всю сцену координат в координаты камеры, тут про это: https://youtu.be/e1xrz9wNpB8?t=868 и пересчитывать в коде это надо каждый раз когда двигается камера
-4) у каждого объекта кроме сферы есть нормаль и ее тоже надо умножать на матрицу, то есть переводить в координаты камеры
-5) векторы надо нормализовать, искать длину вектора.
-6) надо использовать скалярное и векторное произведение векторов, а также произведение матриц
+<br />
+<div align="center">
+  <a href="https://github.com/karamon17/minirt">
+    <img src="assets/banner.gif" max-width="100%" height="100%"/>
+  </a>
 
-Замечания по нашему проекту, что не правильно работает:
-1) Угол обзора расплющивает сферы. При 70 градусах сферы круглые, при 130 градусах сферы становятся как яйца
-2) Во многих ситуациях присутствуют артефакты, что-то не то с тенями, если мощность лампочки 0, то теней не должно быть
+  <h3 align="center">MiniRT</h3>
+
+  <p align="center">
+    Ray Traced 3D Engine Written in C
+    <br />
+    <br />
+    <a href="https://github.com/karamon17/">Gevorg</a>
+    |
+    <a href="https://github.com/VladimirBudilov">Vladimir</a>
+  </p>
+</div>
+
+
+# About
+miniRT is a 3D rendering engine based on the ray tracing algorithm. This project has a big focus on interactivity, you can move, rotate, and scale shapes in real-time.
+
+
+## Gallery
+<img src="" width="100%"/>
+<img src="" width="100%"/>
+<img src="" width="100%"/>
+
+
+# Features
+## Mandatory
+
+* Rendering of 3D shapes like spheres, cylinders and planes
+* Set shape properties like height, radius, position, and orientation before rendering
+* Set camera position and orientation before rendering
+* Set point light position, color, and intensity before rendering
+* Phong model of lighting using ambient, diffuse, and specular components
+* Shadows
+* Edit mode: Edit shape properties like position, orientation, scale, and color in real-time
+* Camera mode: Move camera around the scene
+
+## Controls
+
+`mouse click` select different shapes
+
+`WASD` or to translate shapes
+
+`z, c, r, f` to rotate shapes
+
+`Arrow Keys` to manipulate the camera
+
+`+, -` to manipulate the camera
