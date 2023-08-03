@@ -103,5 +103,6 @@ t_vector cyl_normal, t_figure *cyl)
 	new_plane->body.plane.normal = cyl_normal;
 	new_plane->center = cyl->center;
 	new_plane2->body.plane.normal = cyl_normal;
-	new_plane2->center = vector_add(cyl->center, mult_vect(cyl->body.cyl.height, cyl_normal));
+	new_plane2->center = vector_add(cyl->center, \
+	mult_vect(cyl->body.cyl.height, cyl_normal));
 }

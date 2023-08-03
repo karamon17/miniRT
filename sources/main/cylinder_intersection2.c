@@ -59,7 +59,7 @@ float	cylinder_intersect(t_vector o, t_vector d, t_figure *cylinder)
 			return (cylinder_inter);
 		}
 		if (cylinder->body.cyl.normal.z > 0)
-			cylinder->normal =  cylinder->body.cyl.normal;
+			cylinder->normal = cylinder->body.cyl.normal;
 		else if (cylinder->body.cyl.normal.z <= 0)
 			cylinder->normal = mult_vect(-1, cylinder->body.cyl.normal);
 		return (caps_inter);

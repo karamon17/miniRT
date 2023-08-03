@@ -6,7 +6,7 @@
 /*   By: gkhaishb <gkhaishb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:16:27 by gkhaishb          #+#    #+#             */
-/*   Updated: 2023/08/03 10:50:34 by gkhaishb         ###   ########.fr       */
+/*   Updated: 2023/08/03 11:55:40 by gkhaishb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ float	plane_intercept(t_figure *plane, t_vector vector, t_vector ray)
 	a = dot(plane->body.plane.normal, ray);
 	if (a == 0)
 		return (INFINITY);
-	a = dot(vector_subtract(plane->center, vector), plane->body.plane.normal) / a;
+	a = dot(vector_subtract(plane->center, vector), \
+	plane->body.plane.normal) / a;
 	if (a < EPSILON)
 		return (INFINITY);
 	return (a);
